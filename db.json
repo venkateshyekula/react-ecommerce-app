@@ -1,0 +1,463 @@
+{
+  "products": [
+    {
+      "id": "prod-001",
+      "name": "Samsung Galaxy S24",
+      "description": "Premium Android smartphone with AMOLED display, powerful processor, and pro-grade camera system.",
+      "category": "Electronics",
+      "brand": "Samsung",
+      "price": 74999,
+      "rating": 4.6,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+      "stock": 15,
+      "discount": 10,
+      "specifications": {
+        "Display": "6.2 inch AMOLED",
+        "Storage": "256GB",
+        "RAM": "8GB",
+        "Camera": "50MP + 12MP + 10MP",
+        "Battery": "4000mAh"
+      }
+    },
+    {
+      "id": "prod-002",
+      "name": "Apple iPhone 15",
+      "description": "Latest Apple iPhone with Dynamic Island, A16 Bionic chip, and advanced camera features.",
+      "category": "Electronics",
+      "brand": "Apple",
+      "price": 79900,
+      "rating": 4.7,
+      "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+      "stock": 10,
+      "discount": 5,
+      "specifications": {
+        "Display": "6.1 inch Super Retina XDR",
+        "Storage": "128GB",
+        "Chip": "A16 Bionic",
+        "Camera": "48MP Main Camera",
+        "Battery": "All-day battery life"
+      }
+    },
+    {
+      "id": "prod-003",
+      "name": "Sony WH-1000XM5 Headphones",
+      "description": "Industry-leading noise cancelling wireless headphones with premium sound quality.",
+      "category": "Electronics",
+      "brand": "Sony",
+      "price": 29990,
+      "rating": 4.8,
+      "image": "https://placehold.co/600x400/e6f4ea/188038?text=Sony+Headphones",
+      "stock": 20,
+      "discount": 12,
+      "specifications": {
+        "Type": "Wireless Over-ear",
+        "Noise Cancellation": "Active Noise Cancellation",
+        "Battery": "Up to 30 hours",
+        "Connectivity": "Bluetooth 5.2",
+        "Warranty": "1 Year"
+      }
+    },
+    {
+      "id": "prod-004",
+      "name": "Dell Inspiron 15 Laptop",
+      "description": "Reliable everyday laptop with Intel processor, full HD display, and fast SSD storage.",
+      "category": "Electronics",
+      "brand": "Dell",
+      "price": 58999,
+      "rating": 4.3,
+      "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+      "stock": 8,
+      "discount": 15,
+      "specifications": {
+        "Processor": "Intel Core i5",
+        "RAM": "16GB",
+        "Storage": "512GB SSD",
+        "Display": "15.6 inch FHD",
+        "OS": "Windows 11"
+      }
+    },
+    {
+      "id": "prod-005",
+      "name": "HP Pavilion Gaming Laptop",
+      "description": "Performance gaming laptop with dedicated graphics and high refresh rate display.",
+      "category": "Electronics",
+      "brand": "HP",
+      "price": 69999,
+      "rating": 4.4,
+      "image": "https://placehold.co/600x400/f3e8fd/9334e6?text=HP+Gaming+Laptop",
+      "stock": 0,
+      "discount": 18,
+      "specifications": {
+        "Processor": "AMD Ryzen 5",
+        "RAM": "16GB",
+        "Storage": "512GB SSD",
+        "Graphics": "NVIDIA GTX 1650",
+        "Display": "15.6 inch 144Hz"
+      }
+    },
+    {
+      "id": "prod-006",
+      "name": "Levi's Slim Fit Jeans",
+      "description": "Comfortable slim fit jeans made with durable denim fabric for casual wear.",
+      "category": "Clothing",
+      "brand": "Levi's",
+      "price": 2999,
+      "rating": 4.2,
+      "image": "https://placehold.co/600x400/e8eaed/3c4043?text=Levis+Jeans",
+      "stock": 25,
+      "discount": 20,
+      "specifications": {
+        "Fit": "Slim Fit",
+        "Fabric": "Denim",
+        "Color": "Blue",
+        "Wash Care": "Machine Wash",
+        "Ideal For": "Men"
+      }
+    },
+    {
+      "id": "prod-007",
+      "name": "Nike Sports T-Shirt",
+      "description": "Lightweight breathable sports t-shirt suitable for workouts and daily comfort.",
+      "category": "Clothing",
+      "brand": "Nike",
+      "price": 1499,
+      "rating": 4.1,
+      "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+      "stock": 30,
+      "discount": 10,
+      "specifications": {
+        "Fabric": "Polyester",
+        "Fit": "Regular",
+        "Sleeve": "Half Sleeve",
+        "Color": "Black",
+        "Ideal For": "Unisex"
+      }
+    },
+    {
+      "id": "prod-008",
+      "name": "Adidas Running Jacket",
+      "description": "Stylish running jacket with lightweight material and comfortable fit.",
+      "category": "Clothing",
+      "brand": "Adidas",
+      "price": 3499,
+      "rating": 4.3,
+      "image": "https://placehold.co/600x400/fef7e0/ea8600?text=Adidas+Jacket",
+      "stock": 14,
+      "discount": 15,
+      "specifications": {
+        "Fabric": "Polyester Blend",
+        "Fit": "Regular",
+        "Closure": "Zip",
+        "Pockets": "2 Side Pockets",
+        "Ideal For": "Men"
+      }
+    },
+    {
+      "id": "prod-009",
+      "name": "Puma Casual Hoodie",
+      "description": "Soft cotton blend hoodie designed for casual outings and relaxed comfort.",
+      "category": "Clothing",
+      "brand": "Puma",
+      "price": 2599,
+      "rating": 4,
+      "image": "https://placehold.co/600x400/f1f3f4/5f6368?text=Puma+Hoodie",
+      "stock": 18,
+      "discount": 12,
+      "specifications": {
+        "Fabric": "Cotton Blend",
+        "Fit": "Regular",
+        "Sleeve": "Full Sleeve",
+        "Closure": "Pullover",
+        "Ideal For": "Unisex"
+      }
+    },
+    {
+      "id": "prod-010",
+      "name": "Atomic Habits",
+      "description": "A practical guide to building good habits and breaking bad ones.",
+      "category": "Books",
+      "brand": "Penguin",
+      "price": 599,
+      "rating": 4.8,
+      "image": "https://placehold.co/600x400/e6f4ea/137333?text=Atomic+Habits",
+      "stock": 50,
+      "discount": 25,
+      "specifications": {
+        "Author": "James Clear",
+        "Language": "English",
+        "Binding": "Paperback",
+        "Pages": "320",
+        "Genre": "Self-help"
+      }
+    },
+    {
+      "id": "prod-011",
+      "name": "The Psychology of Money",
+      "description": "Timeless lessons on wealth, greed, and happiness.",
+      "category": "Books",
+      "brand": "Jaico",
+      "price": 399,
+      "rating": 4.7,
+      "image": "https://placehold.co/600x400/fce8e6/a50e0e?text=Psychology+of+Money",
+      "stock": 40,
+      "discount": 20,
+      "specifications": {
+        "Author": "Morgan Housel",
+        "Language": "English",
+        "Binding": "Paperback",
+        "Pages": "252",
+        "Genre": "Finance"
+      }
+    },
+    {
+      "id": "prod-012",
+      "name": "Clean Code",
+      "description": "A handbook of agile software craftsmanship for developers.",
+      "category": "Books",
+      "brand": "Pearson",
+      "price": 749,
+      "rating": 4.6,
+      "image": "https://placehold.co/600x400/e8f0fe/1967d2?text=Clean+Code",
+      "stock": 28,
+      "discount": 15,
+      "specifications": {
+        "Author": "Robert C. Martin",
+        "Language": "English",
+        "Binding": "Paperback",
+        "Pages": "464",
+        "Genre": "Programming"
+      }
+    },
+    {
+      "id": "prod-013",
+      "name": "Ikigai",
+      "description": "The Japanese secret to a long and happy life.",
+      "category": "Books",
+      "brand": "Random House",
+      "price": 349,
+      "rating": 4.4,
+      "image": "https://placehold.co/600x400/fef7e0/f9ab00?text=Ikigai",
+      "stock": 0,
+      "discount": 10,
+      "specifications": {
+        "Author": "Hector Garcia",
+        "Language": "English",
+        "Binding": "Hardcover",
+        "Pages": "208",
+        "Genre": "Self-help"
+      }
+    },
+    {
+      "id": "prod-014",
+      "name": "Nike Air Zoom Pegasus",
+      "description": "Comfortable running shoes with responsive cushioning and durable outsole.",
+      "category": "Footwear",
+      "brand": "Nike",
+      "price": 8995,
+      "rating": 4.5,
+      "image": "https://placehold.co/600x400/eaf4ff/185abc?text=Nike+Pegasus",
+      "stock": 16,
+      "discount": 12,
+      "specifications": {
+        "Type": "Running Shoes",
+        "Material": "Mesh",
+        "Sole": "Rubber",
+        "Closure": "Lace-up",
+        "Ideal For": "Men"
+      }
+    },
+    {
+      "id": "prod-015",
+      "name": "Adidas Ultraboost",
+      "description": "Premium running shoes with responsive boost cushioning and stylish design.",
+      "category": "Footwear",
+      "brand": "Adidas",
+      "price": 12999,
+      "rating": 4.7,
+      "image": "https://placehold.co/600x400/f3e8fd/9334e6?text=Adidas+Ultraboost",
+      "stock": 12,
+      "discount": 8,
+      "specifications": {
+        "Type": "Running Shoes",
+        "Material": "Primeknit",
+        "Sole": "Continental Rubber",
+        "Closure": "Lace-up",
+        "Ideal For": "Unisex"
+      }
+    },
+    {
+      "id": "prod-016",
+      "name": "Puma Smash Sneakers",
+      "description": "Classic sneakers for casual wear with comfortable fit and durable design.",
+      "category": "Footwear",
+      "brand": "Puma",
+      "price": 3499,
+      "rating": 4.1,
+      "image": "https://placehold.co/600x400/e8eaed/3c4043?text=Puma+Sneakers",
+      "stock": 22,
+      "discount": 18,
+      "specifications": {
+        "Type": "Casual Shoes",
+        "Material": "Synthetic Leather",
+        "Sole": "Rubber",
+        "Closure": "Lace-up",
+        "Ideal For": "Men"
+      }
+    },
+    {
+      "id": "prod-017",
+      "name": "Bata Formal Shoes",
+      "description": "Elegant formal shoes suitable for office and business occasions.",
+      "category": "Footwear",
+      "brand": "Bata",
+      "price": 2499,
+      "rating": 3.9,
+      "image": "https://placehold.co/600x400/fff4e5/e8710a?text=Bata+Formal+Shoes",
+      "stock": 19,
+      "discount": 10,
+      "specifications": {
+        "Type": "Formal Shoes",
+        "Material": "Synthetic Leather",
+        "Sole": "TPR",
+        "Closure": "Slip-on",
+        "Ideal For": "Men"
+      }
+    },
+    {
+      "id": "prod-018",
+      "name": "Fastrack Analog Watch",
+      "description": "Stylish analog watch with durable strap and water-resistant design.",
+      "category": "Accessories",
+      "brand": "Fastrack",
+      "price": 2199,
+      "rating": 4.2,
+      "image": "https://placehold.co/600x400/fce8e6/c5221f?text=Fastrack+Watch",
+      "stock": 24,
+      "discount": 15,
+      "specifications": {
+        "Display": "Analog",
+        "Strap": "Leather",
+        "Water Resistance": "30m",
+        "Dial Shape": "Round",
+        "Warranty": "1 Year"
+      }
+    },
+    {
+      "id": "prod-019",
+      "name": "Boat Airdopes 141",
+      "description": "True wireless earbuds with long battery life and low latency mode.",
+      "category": "Accessories",
+      "brand": "Boat",
+      "price": 1499,
+      "rating": 4,
+      "image": "https://placehold.co/600x400/e6f4ea/188038?text=Boat+Airdopes",
+      "stock": 35,
+      "discount": 30,
+      "specifications": {
+        "Type": "TWS Earbuds",
+        "Battery": "Up to 42 hours",
+        "Connectivity": "Bluetooth",
+        "Water Resistance": "IPX4",
+        "Warranty": "1 Year"
+      }
+    },
+    {
+      "id": "prod-020",
+      "name": "JBL Bluetooth Speaker",
+      "description": "Portable Bluetooth speaker with deep bass and splash-proof design.",
+      "category": "Accessories",
+      "brand": "JBL",
+      "price": 3999,
+      "rating": 4.4,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=JBL+Speaker",
+      "stock": 13,
+      "discount": 16,
+      "specifications": {
+        "Type": "Portable Speaker",
+        "Battery": "12 hours",
+        "Connectivity": "Bluetooth",
+        "Water Resistance": "IPX7",
+        "Output": "20W"
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": "user-001",
+      "name": "Test User",
+      "email": "test@example.com",
+      "password": "password123",
+      "mobile": "9876543210",
+      "address": "MG Road, Bengaluru, Karnataka"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-db-001",
+      "userId": "user-001",
+      "orderId": "ORD-20260701-1001",
+      "orderDate": "2026-07-01T10:30:00.000Z",
+      "items": [
+        {
+          "productId": "prod-003",
+          "name": "Sony WH-1000XM5 Headphones",
+          "brand": "Sony",
+          "price": 29990,
+          "image": "https://placehold.co/600x400/e6f4ea/188038?text=Sony+Headphones",
+          "quantity": 1,
+          "subtotal": 29990
+        }
+      ],
+      "totalAmount": 29990,
+      "paymentMethod": "UPI",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "orderStatus": "Shipped",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": true
+        },
+        {
+          "label": "Packed",
+          "isCompleted": true
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": true,
+          "subSteps": [
+            {
+              "title": "In Transit - Out of Bengaluru Hub Facility",
+              "timestamp": "02 Jul 2026, 03:45 PM",
+              "location": "Bengaluru"
+            },
+            {
+              "title": "Arrived at Regional Sorting Center",
+              "timestamp": "02 Jul 2026, 09:15 AM",
+              "location": "Bengaluru"
+            },
+            {
+              "title": "Dispatched from Warehouse Facility",
+              "timestamp": "01 Jul 2026, 11:30 PM",
+              "location": "Mumbai Hub"
+            }
+          ]
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ]
+    }
+  ]
+}
