@@ -209,6 +209,133 @@ main {
   font-size: 1.5rem;
 }
 
+.home-category-navbar {
+  position: sticky;
+  top: 68px;
+  z-index: 1009;
+  min-height: 68px;
+  background-color: #ffffff;
+  border-top: 1.5px solid #eef0f4;
+  box-shadow: var(--app-shadow-md) !important;
+  display: flex;
+  align-items: center;
+}
+
+.home-category-navbar-inner {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.home-category-title {
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5f6368;
+}
+
+.home-category-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0.35rem 0;
+}
+
+.home-category-pill {
+  min-height: 42px;
+  padding: 0.5rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid #e3e7ee;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.22s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.home-category-pill:hover {
+  color: var(--bs-primary);
+  border-color: rgba(13, 110, 253, 0.35);
+  transform: translateY(-1px);
+  background: #ffffff;
+}
+
+.home-category-pill.active {
+  color: #ffffff;
+  background: var(--bs-primary);
+}
+
+.home-category-pill i {
+  font-size: 1rem;
+}
+
+.home-category-section-icon {
+  width: 45px;
+  height: 45px;
+  flex: 0 0 auto;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.category-scroll-block:last-child {
+  border-bottom: 0 !important;
+}
+
+@media (max-width: 991.98px) {
+  .home-category-navbar {
+    top: 68px;
+  }
+
+  .home-category-navbar-inner {
+    gap: 0.85rem;
+  }
+
+  .home-category-pill {
+    padding: 0.48rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .home-category-navbar {
+    top: 64px;
+    min-height: 62px;
+  }
+
+  .home-category-navbar-inner {
+    min-height: 62px;
+  }
+
+  .home-category-title {
+    display: none;
+  }
+
+  .home-category-scroll {
+    width: 100%;
+  }
+
+  .home-category-pill {
+    min-height: 38px;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.84rem;
+  }
+}
+
 /* Auth */
 
 .auth-page {

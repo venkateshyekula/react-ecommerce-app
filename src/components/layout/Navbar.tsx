@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white ecommerce-navbar sticky-top shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white ecommerce-navbar sticky-top">
       <div className="container">
         <Link className="navbar-brand fw-bold text-primary" to="/">
           <i className="bi bi-bag-check-fill me-2" />
