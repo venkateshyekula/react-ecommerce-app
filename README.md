@@ -665,7 +665,7 @@ await delay(500);
 
 - View order success page.
 - View order history.
-- Verify order tracking timeline.
+- **Advanced Tracking Timeline:** Renders real-time, reverse-chronological transit sub-steps (hub departures, arrival scans) complete with hardware-accelerated breathing pulse animations on active checkpoints.
 - Verify delivery address.
 - Verify payment method.
 - Reorder products.
