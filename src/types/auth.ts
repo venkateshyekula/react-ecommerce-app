@@ -1,3 +1,5 @@
+export type UserRole = "CUSTOMER" | "ADMIN" | "SELLER" | "SUPPORT";
+
 export interface User {
   id: string;
   name: string;
@@ -5,9 +7,17 @@ export interface User {
   password: string;
   mobile: string;
   address: string;
+  role?: UserRole;
 }
 
-export type AuthUser = Omit<User, "password">;
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  mobile: string;
+  address: string;
+  role: UserRole;
+}
 
 export interface RegisterPayload {
   name: string;

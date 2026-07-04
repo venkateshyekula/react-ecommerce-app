@@ -1,4 +1,36 @@
 {
+  "coupons": [
+    {
+      "id": "coupon-001",
+      "code": "WELCOME10",
+      "description": "Get 10% off on your first order",
+      "discountType": "PERCENTAGE",
+      "discountValue": 10,
+      "minimumOrderAmount": 999,
+      "maxDiscountAmount": 500,
+      "isActive": true
+    },
+    {
+      "id": "coupon-002",
+      "code": "SAVE500",
+      "description": "Flat ₹500 off on orders above ₹5,000",
+      "discountType": "FLAT",
+      "discountValue": 500,
+      "minimumOrderAmount": 5000,
+      "maxDiscountAmount": 500,
+      "isActive": true
+    },
+    {
+      "id": "coupon-003",
+      "code": "FREESHIP",
+      "description": "Free shipping coupon on orders above ₹799",
+      "discountType": "FLAT",
+      "discountValue": 99,
+      "minimumOrderAmount": 799,
+      "maxDiscountAmount": 99,
+      "isActive": true
+    }
+  ],
   "products": [
     {
       "id": "prod-001",
@@ -17,7 +49,9 @@
         "RAM": "8GB",
         "Camera": "50MP + 12MP + 10MP",
         "Battery": "4000mAh"
-      }
+      },
+      "sellerId": "seller-001",
+      "sellerName": "Samsung Store"
     },
     {
       "id": "prod-002",
@@ -36,7 +70,9 @@
         "Chip": "A16 Bionic",
         "Camera": "48MP Main Camera",
         "Battery": "All-day battery life"
-      }
+      },
+      "sellerId": "seller-002",
+      "sellerName": "Apple Authorized Store"
     },
     {
       "id": "prod-003",
@@ -55,7 +91,9 @@
         "Battery": "Up to 30 hours",
         "Connectivity": "Bluetooth 5.2",
         "Warranty": "1 Year"
-      }
+      },
+      "sellerId": "seller-003",
+      "sellerName": "Sony Electronics Store"
     },
     {
       "id": "prod-004",
@@ -74,7 +112,9 @@
         "Storage": "512GB SSD",
         "Display": "15.6 inch FHD",
         "OS": "Windows 11"
-      }
+      },
+      "sellerId": "seller-004",
+      "sellerName": "Dell Official Store"
     },
     {
       "id": "prod-005",
@@ -85,7 +125,7 @@
       "price": 69999,
       "rating": 4.4,
       "image": "https://placehold.co/600x400/f3e8fd/9334e6?text=HP+Gaming+Laptop",
-      "stock": 0,
+      "stock": 20,
       "discount": 18,
       "specifications": {
         "Processor": "AMD Ryzen 5",
@@ -93,7 +133,9 @@
         "Storage": "512GB SSD",
         "Graphics": "NVIDIA GTX 1650",
         "Display": "15.6 inch 144Hz"
-      }
+      },
+      "sellerId": "seller-005",
+      "sellerName": "HP Laptop Store"
     },
     {
       "id": "prod-006",
@@ -112,6 +154,61 @@
         "Color": "Blue",
         "Wash Care": "Machine Wash",
         "Ideal For": "Men"
+      },
+      "sellerId": "seller-006",
+      "sellerName": "Levi's Fashion Store",
+      "sizeOptions": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "S",
+            "chest": "91-96",
+            "waist": "76-81",
+            "shoulder": "42",
+            "length": "68"
+          },
+          {
+            "size": "M",
+            "chest": "97-102",
+            "waist": "82-87",
+            "shoulder": "44",
+            "length": "70"
+          },
+          {
+            "size": "L",
+            "chest": "103-108",
+            "waist": "88-93",
+            "shoulder": "46",
+            "length": "72"
+          },
+          {
+            "size": "XL",
+            "chest": "109-114",
+            "waist": "94-99",
+            "shoulder": "48",
+            "length": "74"
+          },
+          {
+            "size": "XXL",
+            "chest": "115-120",
+            "waist": "100-105",
+            "shoulder": "50",
+            "length": "76"
+          }
+        ],
+        "howToMeasure": [
+          "Chest: Measure around the fullest part of your chest while keeping the tape horizontal.",
+          "Waist: Measure around your natural waistline without tightening the tape.",
+          "Shoulder: Measure from one shoulder edge to the other across the back.",
+          "Length: Measure from the highest shoulder point down to the bottom hem."
+        ]
       }
     },
     {
@@ -131,6 +228,61 @@
         "Sleeve": "Half Sleeve",
         "Color": "Black",
         "Ideal For": "Unisex"
+      },
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "sizeOptions": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "S",
+            "chest": "91-96",
+            "waist": "76-81",
+            "shoulder": "42",
+            "length": "68"
+          },
+          {
+            "size": "M",
+            "chest": "97-102",
+            "waist": "82-87",
+            "shoulder": "44",
+            "length": "70"
+          },
+          {
+            "size": "L",
+            "chest": "103-108",
+            "waist": "88-93",
+            "shoulder": "46",
+            "length": "72"
+          },
+          {
+            "size": "XL",
+            "chest": "109-114",
+            "waist": "94-99",
+            "shoulder": "48",
+            "length": "74"
+          },
+          {
+            "size": "XXL",
+            "chest": "115-120",
+            "waist": "100-105",
+            "shoulder": "50",
+            "length": "76"
+          }
+        ],
+        "howToMeasure": [
+          "Chest: Measure around the fullest part of your chest while keeping the tape horizontal.",
+          "Waist: Measure around your natural waistline without tightening the tape.",
+          "Shoulder: Measure from one shoulder edge to the other across the back.",
+          "Length: Measure from the highest shoulder point down to the bottom hem."
+        ]
       }
     },
     {
@@ -150,6 +302,61 @@
         "Closure": "Zip",
         "Pockets": "2 Side Pockets",
         "Ideal For": "Men"
+      },
+      "sellerId": "seller-008",
+      "sellerName": "Adidas Official Store",
+      "sizeOptions": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "S",
+            "chest": "91-96",
+            "waist": "76-81",
+            "shoulder": "42",
+            "length": "68"
+          },
+          {
+            "size": "M",
+            "chest": "97-102",
+            "waist": "82-87",
+            "shoulder": "44",
+            "length": "70"
+          },
+          {
+            "size": "L",
+            "chest": "103-108",
+            "waist": "88-93",
+            "shoulder": "46",
+            "length": "72"
+          },
+          {
+            "size": "XL",
+            "chest": "109-114",
+            "waist": "94-99",
+            "shoulder": "48",
+            "length": "74"
+          },
+          {
+            "size": "XXL",
+            "chest": "115-120",
+            "waist": "100-105",
+            "shoulder": "50",
+            "length": "76"
+          }
+        ],
+        "howToMeasure": [
+          "Chest: Measure around the fullest part of your chest while keeping the tape horizontal.",
+          "Waist: Measure around your natural waistline without tightening the tape.",
+          "Shoulder: Measure from one shoulder edge to the other across the back.",
+          "Length: Measure from the highest shoulder point down to the bottom hem."
+        ]
       }
     },
     {
@@ -169,6 +376,61 @@
         "Sleeve": "Full Sleeve",
         "Closure": "Pullover",
         "Ideal For": "Unisex"
+      },
+      "sellerId": "seller-009",
+      "sellerName": "Puma Sports Store",
+      "sizeOptions": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "S",
+            "chest": "91-96",
+            "waist": "76-81",
+            "shoulder": "42",
+            "length": "68"
+          },
+          {
+            "size": "M",
+            "chest": "97-102",
+            "waist": "82-87",
+            "shoulder": "44",
+            "length": "70"
+          },
+          {
+            "size": "L",
+            "chest": "103-108",
+            "waist": "88-93",
+            "shoulder": "46",
+            "length": "72"
+          },
+          {
+            "size": "XL",
+            "chest": "109-114",
+            "waist": "94-99",
+            "shoulder": "48",
+            "length": "74"
+          },
+          {
+            "size": "XXL",
+            "chest": "115-120",
+            "waist": "100-105",
+            "shoulder": "50",
+            "length": "76"
+          }
+        ],
+        "howToMeasure": [
+          "Chest: Measure around the fullest part of your chest while keeping the tape horizontal.",
+          "Waist: Measure around your natural waistline without tightening the tape.",
+          "Shoulder: Measure from one shoulder edge to the other across the back.",
+          "Length: Measure from the highest shoulder point down to the bottom hem."
+        ]
       }
     },
     {
@@ -188,7 +450,9 @@
         "Binding": "Paperback",
         "Pages": "320",
         "Genre": "Self-help"
-      }
+      },
+      "sellerId": "seller-010",
+      "sellerName": "Penguin Books Store"
     },
     {
       "id": "prod-011",
@@ -207,7 +471,9 @@
         "Binding": "Paperback",
         "Pages": "252",
         "Genre": "Finance"
-      }
+      },
+      "sellerId": "seller-011",
+      "sellerName": "Jaico Books Store"
     },
     {
       "id": "prod-012",
@@ -226,7 +492,9 @@
         "Binding": "Paperback",
         "Pages": "464",
         "Genre": "Programming"
-      }
+      },
+      "sellerId": "seller-012",
+      "sellerName": "Pearson Books Store"
     },
     {
       "id": "prod-013",
@@ -245,7 +513,9 @@
         "Binding": "Hardcover",
         "Pages": "208",
         "Genre": "Self-help"
-      }
+      },
+      "sellerId": "seller-013",
+      "sellerName": "Random House Books Store"
     },
     {
       "id": "prod-014",
@@ -264,6 +534,70 @@
         "Sole": "Rubber",
         "Closure": "Lace-up",
         "Ideal For": "Men"
+      },
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "sizeOptions": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "6",
+            "footLength": "24.5",
+            "ukSize": "6",
+            "usSize": "7",
+            "euSize": "40"
+          },
+          {
+            "size": "7",
+            "footLength": "25.4",
+            "ukSize": "7",
+            "usSize": "8",
+            "euSize": "41"
+          },
+          {
+            "size": "8",
+            "footLength": "26.2",
+            "ukSize": "8",
+            "usSize": "9",
+            "euSize": "42"
+          },
+          {
+            "size": "9",
+            "footLength": "27.1",
+            "ukSize": "9",
+            "usSize": "10",
+            "euSize": "43"
+          },
+          {
+            "size": "10",
+            "footLength": "27.9",
+            "ukSize": "10",
+            "usSize": "11",
+            "euSize": "44"
+          },
+          {
+            "size": "11",
+            "footLength": "28.8",
+            "ukSize": "11",
+            "usSize": "12",
+            "euSize": "45"
+          }
+        ],
+        "howToMeasure": [
+          "Place your foot on a plain sheet of paper.",
+          "Mark the heel and the longest toe point.",
+          "Measure the distance between both marks in centimeters.",
+          "Choose the size closest to your measured foot length.",
+          "If your foot length is between two sizes, choose the larger size."
+        ]
       }
     },
     {
@@ -283,6 +617,70 @@
         "Sole": "Continental Rubber",
         "Closure": "Lace-up",
         "Ideal For": "Unisex"
+      },
+      "sellerId": "seller-008",
+      "sellerName": "Adidas Official Store",
+      "sizeOptions": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "6",
+            "footLength": "24.5",
+            "ukSize": "6",
+            "usSize": "7",
+            "euSize": "40"
+          },
+          {
+            "size": "7",
+            "footLength": "25.4",
+            "ukSize": "7",
+            "usSize": "8",
+            "euSize": "41"
+          },
+          {
+            "size": "8",
+            "footLength": "26.2",
+            "ukSize": "8",
+            "usSize": "9",
+            "euSize": "42"
+          },
+          {
+            "size": "9",
+            "footLength": "27.1",
+            "ukSize": "9",
+            "usSize": "10",
+            "euSize": "43"
+          },
+          {
+            "size": "10",
+            "footLength": "27.9",
+            "ukSize": "10",
+            "usSize": "11",
+            "euSize": "44"
+          },
+          {
+            "size": "11",
+            "footLength": "28.8",
+            "ukSize": "11",
+            "usSize": "12",
+            "euSize": "45"
+          }
+        ],
+        "howToMeasure": [
+          "Place your foot on a plain sheet of paper.",
+          "Mark the heel and the longest toe point.",
+          "Measure the distance between both marks in centimeters.",
+          "Choose the size closest to your measured foot length.",
+          "If your foot length is between two sizes, choose the larger size."
+        ]
       }
     },
     {
@@ -302,6 +700,70 @@
         "Sole": "Rubber",
         "Closure": "Lace-up",
         "Ideal For": "Men"
+      },
+      "sellerId": "seller-009",
+      "sellerName": "Puma Sports Store",
+      "sizeOptions": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "6",
+            "footLength": "24.5",
+            "ukSize": "6",
+            "usSize": "7",
+            "euSize": "40"
+          },
+          {
+            "size": "7",
+            "footLength": "25.4",
+            "ukSize": "7",
+            "usSize": "8",
+            "euSize": "41"
+          },
+          {
+            "size": "8",
+            "footLength": "26.2",
+            "ukSize": "8",
+            "usSize": "9",
+            "euSize": "42"
+          },
+          {
+            "size": "9",
+            "footLength": "27.1",
+            "ukSize": "9",
+            "usSize": "10",
+            "euSize": "43"
+          },
+          {
+            "size": "10",
+            "footLength": "27.9",
+            "ukSize": "10",
+            "usSize": "11",
+            "euSize": "44"
+          },
+          {
+            "size": "11",
+            "footLength": "28.8",
+            "ukSize": "11",
+            "usSize": "12",
+            "euSize": "45"
+          }
+        ],
+        "howToMeasure": [
+          "Place your foot on a plain sheet of paper.",
+          "Mark the heel and the longest toe point.",
+          "Measure the distance between both marks in centimeters.",
+          "Choose the size closest to your measured foot length.",
+          "If your foot length is between two sizes, choose the larger size."
+        ]
       }
     },
     {
@@ -321,6 +783,70 @@
         "Sole": "TPR",
         "Closure": "Slip-on",
         "Ideal For": "Men"
+      },
+      "sellerId": "seller-014",
+      "sellerName": "Bata Footwear Store",
+      "sizeOptions": [
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "6",
+            "footLength": "24.5",
+            "ukSize": "6",
+            "usSize": "7",
+            "euSize": "40"
+          },
+          {
+            "size": "7",
+            "footLength": "25.4",
+            "ukSize": "7",
+            "usSize": "8",
+            "euSize": "41"
+          },
+          {
+            "size": "8",
+            "footLength": "26.2",
+            "ukSize": "8",
+            "usSize": "9",
+            "euSize": "42"
+          },
+          {
+            "size": "9",
+            "footLength": "27.1",
+            "ukSize": "9",
+            "usSize": "10",
+            "euSize": "43"
+          },
+          {
+            "size": "10",
+            "footLength": "27.9",
+            "ukSize": "10",
+            "usSize": "11",
+            "euSize": "44"
+          },
+          {
+            "size": "11",
+            "footLength": "28.8",
+            "ukSize": "11",
+            "usSize": "12",
+            "euSize": "45"
+          }
+        ],
+        "howToMeasure": [
+          "Place your foot on a plain sheet of paper.",
+          "Mark the heel and the longest toe point.",
+          "Measure the distance between both marks in centimeters.",
+          "Choose the size closest to your measured foot length.",
+          "If your foot length is between two sizes, choose the larger size."
+        ]
       }
     },
     {
@@ -340,6 +866,41 @@
         "Water Resistance": "30m",
         "Dial Shape": "Round",
         "Warranty": "1 Year"
+      },
+      "sellerId": "seller-015",
+      "sellerName": "Fastrack Accessories Store",
+      "sizeOptions": [
+        "One Size",
+        "S",
+        "M",
+        "L"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "One Size",
+            "circumference": "Adjustable"
+          },
+          {
+            "size": "S",
+            "circumference": "16-17"
+          },
+          {
+            "size": "M",
+            "circumference": "18-19"
+          },
+          {
+            "size": "L",
+            "circumference": "20-21"
+          }
+        ],
+        "howToMeasure": [
+          "For wrist accessories, wrap a measuring tape around your wrist.",
+          "For belts or strap-based accessories, measure around the area where the accessory will be worn.",
+          "Keep the tape comfortable, not too tight.",
+          "Choose the closest matching size from the chart."
+        ]
       }
     },
     {
@@ -359,6 +920,41 @@
         "Connectivity": "Bluetooth",
         "Water Resistance": "IPX4",
         "Warranty": "1 Year"
+      },
+      "sellerId": "seller-016",
+      "sellerName": "Boat Lifestyle Store",
+      "sizeOptions": [
+        "One Size",
+        "S",
+        "M",
+        "L"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "One Size",
+            "circumference": "Adjustable"
+          },
+          {
+            "size": "S",
+            "circumference": "16-17"
+          },
+          {
+            "size": "M",
+            "circumference": "18-19"
+          },
+          {
+            "size": "L",
+            "circumference": "20-21"
+          }
+        ],
+        "howToMeasure": [
+          "For wrist accessories, wrap a measuring tape around your wrist.",
+          "For belts or strap-based accessories, measure around the area where the accessory will be worn.",
+          "Keep the tape comfortable, not too tight.",
+          "Choose the closest matching size from the chart."
+        ]
       }
     },
     {
@@ -378,6 +974,41 @@
         "Connectivity": "Bluetooth",
         "Water Resistance": "IPX7",
         "Output": "20W"
+      },
+      "sellerId": "seller-017",
+      "sellerName": "JBL Audio Store",
+      "sizeOptions": [
+        "One Size",
+        "S",
+        "M",
+        "L"
+      ],
+      "sizeChart": {
+        "unit": "cm",
+        "rows": [
+          {
+            "size": "One Size",
+            "circumference": "Adjustable"
+          },
+          {
+            "size": "S",
+            "circumference": "16-17"
+          },
+          {
+            "size": "M",
+            "circumference": "18-19"
+          },
+          {
+            "size": "L",
+            "circumference": "20-21"
+          }
+        ],
+        "howToMeasure": [
+          "For wrist accessories, wrap a measuring tape around your wrist.",
+          "For belts or strap-based accessories, measure around the area where the accessory will be worn.",
+          "Keep the tape comfortable, not too tight.",
+          "Choose the closest matching size from the chart."
+        ]
       }
     }
   ],
@@ -388,7 +1019,188 @@
       "email": "test@example.com",
       "password": "password123",
       "mobile": "9876543210",
-      "address": "MG Road, Bengaluru, Karnataka"
+      "address": "MG Road, Bengaluru, Karnataka",
+      "role": "CUSTOMER"
+    },
+    {
+      "id": "admin-001",
+      "name": "Administrator",
+      "email": "admin@shopease.com",
+      "password": "Admin123",
+      "mobile": "9876543211",
+      "address": "ShopEase Admin Office",
+      "role": "ADMIN"
+    },
+    {
+      "id": "seller-001",
+      "name": "Samsung Store",
+      "email": "seller@samsung.com",
+      "password": "Seller123",
+      "mobile": "9876543212",
+      "address": "Samsung Seller Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "support-001",
+      "name": "Support Agent",
+      "email": "support@shopease.com",
+      "password": "Support123",
+      "mobile": "9876543213",
+      "address": "ShopEase Support Center",
+      "role": "SUPPORT"
+    },
+    {
+      "id": "seller-002",
+      "name": "Apple Authorized Store",
+      "email": "seller@apple.com",
+      "password": "Seller123",
+      "mobile": "9876543200",
+      "address": "Apple Authorized Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-003",
+      "name": "Sony Electronics Store",
+      "email": "seller@sony.com",
+      "password": "Seller123",
+      "mobile": "9876543201",
+      "address": "Sony Electronics Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-004",
+      "name": "Dell Official Store",
+      "email": "seller@dell.com",
+      "password": "Seller123",
+      "mobile": "9876543202",
+      "address": "Dell Official Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-005",
+      "name": "HP Laptop Store",
+      "email": "seller@hp.com",
+      "password": "Seller123",
+      "mobile": "9876543203",
+      "address": "HP Laptop Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-006",
+      "name": "Levi's Fashion Store",
+      "email": "seller@levis.com",
+      "password": "Seller123",
+      "mobile": "9876543204",
+      "address": "Levi's Fashion Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-007",
+      "name": "Nike Sports Store",
+      "email": "seller@nike.com",
+      "password": "Seller123",
+      "mobile": "9876543205",
+      "address": "Nike Sports Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-008",
+      "name": "Adidas Official Store",
+      "email": "seller@adidas.com",
+      "password": "Seller123",
+      "mobile": "9876543206",
+      "address": "Adidas Official Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-009",
+      "name": "Puma Sports Store",
+      "email": "seller@puma.com",
+      "password": "Seller123",
+      "mobile": "9876543207",
+      "address": "Puma Sports Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-010",
+      "name": "Penguin Books Store",
+      "email": "seller@penguin.com",
+      "password": "Seller123",
+      "mobile": "9876543208",
+      "address": "Penguin Books Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-011",
+      "name": "Jaico Books Store",
+      "email": "seller@jaico.com",
+      "password": "Seller123",
+      "mobile": "9876543209",
+      "address": "Jaico Books Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-012",
+      "name": "Pearson Books Store",
+      "email": "seller@pearson.com",
+      "password": "Seller123",
+      "mobile": "9876543210",
+      "address": "Pearson Books Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-013",
+      "name": "Random House Books Store",
+      "email": "seller@randomhouse.com",
+      "password": "Seller123",
+      "mobile": "9876543211",
+      "address": "Random House Books Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-014",
+      "name": "Bata Footwear Store",
+      "email": "seller@bata.com",
+      "password": "Seller123",
+      "mobile": "9876543212",
+      "address": "Bata Footwear Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-015",
+      "name": "Fastrack Accessories Store",
+      "email": "seller@fastrack.com",
+      "password": "Seller123",
+      "mobile": "9876543213",
+      "address": "Fastrack Accessories Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-016",
+      "name": "Boat Lifestyle Store",
+      "email": "seller@boat.com",
+      "password": "Seller123",
+      "mobile": "9876543214",
+      "address": "Boat Lifestyle Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-017",
+      "name": "JBL Audio Store",
+      "email": "seller@jbl.com",
+      "password": "Seller123",
+      "mobile": "9876543215",
+      "address": "JBL Audio Store Warehouse",
+      "role": "SELLER"
+    },
+    {
+      "id": "seller-999",
+      "name": "ShopEase Default Seller",
+      "email": "seller@shopease.com",
+      "password": "Seller123",
+      "mobile": "9876543216",
+      "address": "ShopEase Default Seller Warehouse",
+      "role": "SELLER"
     }
   ],
   "orders": [
@@ -418,7 +1230,7 @@
         "state": "Karnataka",
         "pincode": "560001"
       },
-      "orderStatus": "Shipped",
+      "orderStatus": "Delivered",
       "trackingSteps": [
         {
           "label": "Order Placed",
@@ -430,24 +1242,107 @@
         },
         {
           "label": "Shipped",
-          "isCompleted": true,
-          "subSteps": [
-            {
-              "title": "In Transit - Out of Bengaluru Hub Facility",
-              "timestamp": "02 Jul 2026, 03:45 PM",
-              "location": "Bengaluru"
-            },
-            {
-              "title": "Arrived at Regional Sorting Center",
-              "timestamp": "02 Jul 2026, 09:15 AM",
-              "location": "Bengaluru"
-            },
-            {
-              "title": "Dispatched from Warehouse Facility",
-              "timestamp": "01 Jul 2026, 11:30 PM",
-              "location": "Mumbai Hub"
-            }
-          ]
+          "isCompleted": true
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": true
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": true
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1783113933087-001",
+          "status": "Order Placed",
+          "title": "Order Placed completed",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T21:25:33.087Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783113933087-002",
+          "status": "Packed",
+          "title": "Packed completed",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "2026-07-03T21:25:33.087Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783113933087-003",
+          "status": "Shipped",
+          "title": "Shipped completed",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "2026-07-03T21:25:33.087Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783113933087-004",
+          "status": "Out for Delivery",
+          "title": "Out for Delivery completed",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "2026-07-03T21:25:33.087Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783113933087-005",
+          "status": "Delivered",
+          "title": "Delivered completed",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "2026-07-03T21:50:58.128Z",
+          "isCompleted": true
+        }
+      ]
+    },
+    {
+      "id": "order-db-1783075046927",
+      "userId": "user-001",
+      "orderId": "ORD-20260703-9321",
+      "orderDate": "2026-07-03T10:37:26.927Z",
+      "items": [
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999
+        }
+      ],
+      "subtotalAmount": 74999,
+      "discountAmount": 0,
+      "deliveryFee": 0,
+      "totalAmount": 74999,
+      "paymentMethod": "Cash on Delivery",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Bengaluru, Karnataka",
+        "city": "test",
+        "state": "test",
+        "pincode": "123456"
+      },
+      "orderStatus": "Cancelled",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": false
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
         },
         {
           "label": "Out for Delivery",
@@ -458,6 +1353,348 @@
           "isCompleted": false
         }
       ]
+    },
+    {
+      "id": "order-db-1783106501358",
+      "userId": "user-001",
+      "orderId": "ORD-20260703-1301",
+      "orderDate": "2026-07-03T19:21:41.358Z",
+      "items": [
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999
+        }
+      ],
+      "totalAmount": 74999,
+      "paymentMethod": "Cash on Delivery",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Bengaluru, Karnataka",
+        "city": "test",
+        "state": "test",
+        "pincode": "123456"
+      },
+      "orderStatus": "Cancelled",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": false
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1783106501358-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:21:41.358Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783106501358-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106501358-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106501358-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106501358-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106611786-cancelled",
+          "status": "Cancelled",
+          "title": "Order cancelled",
+          "description": "This order has been cancelled.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:23:31.786Z",
+          "isCompleted": true
+        }
+      ],
+      "cancelledAt": "2026-07-03T19:23:31.786Z",
+      "cancellationReason": "Cancelled by customer from order confirmation screen."
+    },
+    {
+      "id": "order-db-1783106676398",
+      "userId": "user-001",
+      "orderId": "ORD-20260703-7418",
+      "orderDate": "2026-07-03T19:24:36.398Z",
+      "items": [
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999
+        }
+      ],
+      "totalAmount": 74499,
+      "paymentMethod": "Cash on Delivery",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Bengaluru, Karnataka",
+        "city": "test",
+        "state": "test",
+        "pincode": "123456"
+      },
+      "orderStatus": "Cancelled",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": false
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1783106676398-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:24:36.398Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783106676398-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106676398-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106676398-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106676398-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783106826502-cancelled",
+          "status": "Cancelled",
+          "title": "Order cancelled",
+          "description": "This order has been cancelled.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:27:06.502Z",
+          "isCompleted": true
+        }
+      ],
+      "cancelledAt": "2026-07-03T19:27:06.502Z",
+      "cancellationReason": "Cancelled by customer from order confirmation screen."
+    },
+    {
+      "id": "order-db-1783107999157",
+      "userId": "user-001",
+      "orderId": "ORD-20260703-8014",
+      "orderDate": "2026-07-03T19:46:39.157Z",
+      "items": [
+        {
+          "productId": "prod-002",
+          "name": "Apple iPhone 15",
+          "brand": "Apple",
+          "price": 79900,
+          "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "quantity": 1,
+          "subtotal": 79900
+        }
+      ],
+      "totalAmount": 79900,
+      "paymentMethod": "Cash on Delivery",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Bengaluru, Karnataka",
+        "city": "test",
+        "state": "test",
+        "pincode": "123456"
+      },
+      "orderStatus": "Cancelled",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": false
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1783107999157-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:46:39.157Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783107999157-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783107999157-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783107999157-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783107999157-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783108032914-cancelled",
+          "status": "Cancelled",
+          "title": "Order cancelled",
+          "description": "This order has been cancelled.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-03T19:47:12.914Z",
+          "isCompleted": true
+        }
+      ],
+      "cancelledAt": "2026-07-03T19:47:12.914Z",
+      "cancellationReason": "Cancelled by customer from order confirmation screen."
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "ticket-001",
+      "ticketNumber": "TKT-20260703-1001",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerEmail": "test@example.com",
+      "orderId": "ORD-20260701-1001",
+      "subject": "Need help with delivery",
+      "message": "I want to know the latest delivery update for my order.",
+      "status": "RESOLVED",
+      "priority": "MEDIUM",
+      "createdAt": "2026-07-03T10:30:00.000Z",
+      "updatedAt": "2026-07-03T21:51:39.668Z",
+      "assignedTo": "support-001",
+      "response": "Item has been delivered."
     }
   ]
 }

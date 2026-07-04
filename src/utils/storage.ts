@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
   CURRENT_USER: "ecommerce_current_user",
-  CART_ITEMS: "ecommerce_cart_items"
+  CART_ITEMS: "ecommerce_cart_items",
+  WISHLIST_ITEMS: "ecommerce_wishlist_items"
 } as const;
 
 export const getFromStorage = <T>(key: string, fallbackValue: T): T => {

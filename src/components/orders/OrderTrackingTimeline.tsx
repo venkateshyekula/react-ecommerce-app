@@ -1,8 +1,9 @@
-import type { OrderStatus, TrackingStep } from "../../types/order";
+import type { OrderStatus, TrackingStep, TrackingEvent } from "../../types/order";
 
 interface OrderTrackingTimelineProps {
   steps: TrackingStep[];
   currentStatus: OrderStatus;
+  events?: TrackingEvent[];
 }
 
 const OrderTrackingTimeline = ({

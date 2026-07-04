@@ -4,7 +4,10 @@ import type {
   Order,
   OrderStatus
 } from "../types/order";
-import { buildTrackingStepsByStatus } from "../utils/orderUtils";
+import {
+  buildTrackingEventsByStatus,
+  buildTrackingStepsByStatus
+} from "../utils/orderUtils";
 
 const ORDERS_ENDPOINT = "/orders";
 
@@ -42,12 +45,80 @@ export const orderService = {
     orderDbId: string,
     status: OrderStatus
   ): Promise<Order> => {
+    const existingOrder = await apiClient.get<Order>(
+      `${ORDERS_ENDPOINT}/${orderDbId}`
+    );
+
     return apiClient.patch<
       Order,
-      Pick<Order, "orderStatus" | "trackingSteps">
+      Pick<Order, "orderStatus" | "trackingSteps" | "trackingEvents">
     >(`${ORDERS_ENDPOINT}/${orderDbId}`, {
       orderStatus: status,
-      trackingSteps: buildTrackingStepsByStatus(status)
+      trackingSteps: buildTrackingStepsByStatus(status),
+      trackingEvents: buildTrackingEventsByStatus(
+        status,
+        existingOrder.trackingEvents
+      )
+    });
+  },
+
+  cancelOrder: async (
+    orderDbId: string,
+    reason: string
+  ): Promise<Order> => {
+    const existingOrder = await apiClient.get<Order>(
+      `${ORDERS_ENDPOINT}/${orderDbId}`
+    );
+
+    return apiClient.patch<
+      Order,
+      Pick<
+        Order,
+        | "orderStatus"
+        | "trackingSteps"
+        | "trackingEvents"
+        | "cancelledAt"
+        | "cancellationReason"
+      >
+    >(`${ORDERS_ENDPOINT}/${orderDbId}`, {
+      orderStatus: "Cancelled",
+      trackingSteps: buildTrackingStepsByStatus("Cancelled"),
+      trackingEvents: buildTrackingEventsByStatus(
+        "Cancelled",
+        existingOrder.trackingEvents
+      ),
+      cancelledAt: new Date().toISOString(),
+      cancellationReason: reason
+    });
+  },
+
+  requestReturn: async (
+    orderDbId: string,
+    reason: string
+  ): Promise<Order> => {
+    const existingOrder = await apiClient.get<Order>(
+      `${ORDERS_ENDPOINT}/${orderDbId}`
+    );
+
+    return apiClient.patch<
+      Order,
+      Pick<
+        Order,
+        | "orderStatus"
+        | "trackingSteps"
+        | "trackingEvents"
+        | "returnRequestedAt"
+        | "returnReason"
+      >
+    >(`${ORDERS_ENDPOINT}/${orderDbId}`, {
+      orderStatus: "Return Requested",
+      trackingSteps: buildTrackingStepsByStatus("Return Requested"),
+      trackingEvents: buildTrackingEventsByStatus(
+        "Return Requested",
+        existingOrder.trackingEvents
+      ),
+      returnRequestedAt: new Date().toISOString(),
+      returnReason: reason
     });
   }
 };

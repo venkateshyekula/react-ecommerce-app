@@ -67,7 +67,7 @@ const CartPage = () => {
 
               {cartItems.map((item) => (
                 <CartItem
-                  key={item.productId}
+                  key={item.cartItemId}
                   item={item}
                   onIncrease={increaseQuantity}
                   onDecrease={decreaseQuantity}

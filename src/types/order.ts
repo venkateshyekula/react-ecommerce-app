@@ -5,7 +5,10 @@ export type OrderStatus =
   | "Packed"
   | "Shipped"
   | "Out for Delivery"
-  | "Delivered";
+  | "Delivered"
+  | "Cancelled"
+  | "Return Requested"
+  | "Returned";
 
 export interface DeliveryAddress {
   fullName: string;
@@ -24,18 +27,29 @@ export interface OrderItem {
   image: string;
   quantity: number;
   subtotal: number;
+  selectedSize?: string;
 }
 
-export interface SubStep {
+export interface TrackingSubStep {
   title: string;
   timestamp: string;
-  location?: string;
+  location: string;
 }
 
 export interface TrackingStep {
   label: OrderStatus;
   isCompleted: boolean;
-  subSteps?: SubStep[];
+  subSteps?: TrackingSubStep[];
+}
+
+export interface TrackingEvent {
+  id: string;
+  status: OrderStatus;
+  title: string;
+  description: string;
+  location: string;
+  timestamp: string;
+  isCompleted: boolean;
 }
 
 export interface Order {
@@ -44,11 +58,20 @@ export interface Order {
   orderId: string;
   orderDate: string;
   items: OrderItem[];
+  subtotalAmount?: number;
+  discountAmount?: number;
+  deliveryFee?: number;
+  couponCode?: string;
   totalAmount: number;
   paymentMethod: PaymentMethod;
   deliveryAddress: DeliveryAddress;
   orderStatus: OrderStatus;
   trackingSteps: TrackingStep[];
+  trackingEvents?: TrackingEvent[];
+  cancelledAt?: string;
+  cancellationReason?: string;
+  returnRequestedAt?: string;
+  returnReason?: string;
 }
 
 export type CreateOrderPayload = Omit<Order, "id">;

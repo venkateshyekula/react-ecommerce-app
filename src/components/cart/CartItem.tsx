@@ -1,12 +1,11 @@
 import type { CartItem as CartItemType } from "../../types/cart";
 import { formatCurrency } from "../../utils/currencyFormatter";
-import Button from "../common/Button";
 
 interface CartItemProps {
   item: CartItemType;
-  onIncrease: (productId: string) => void;
-  onDecrease: (productId: string) => void;
-  onRemove: (productId: string) => void;
+  onIncrease: (cartItemId: string) => void;
+  onDecrease: (cartItemId: string) => void;
+  onRemove: (cartItemId: string) => void;
 }
 
 const CartItem = ({
@@ -15,14 +14,11 @@ const CartItem = ({
   onDecrease,
   onRemove
 }: CartItemProps) => {
-  const subtotal = item.price * item.quantity;
-  const isMaxQuantity = item.quantity >= item.stock;
-
   return (
     <div className="cart-item bg-white rounded-4 shadow-sm p-3 mb-3">
       <div className="row g-3 align-items-center">
-        <div className="col-4 col-md-2">
-          {/* FIXED: Replaced raw evaluation with a structured img tag */}
+        <div className="col-md-2">
+           {/* FIXED: Replaced raw evaluation with a structured img tag */}
           <img 
             src={item.image} 
             alt={item.name} 
@@ -30,58 +26,67 @@ const CartItem = ({
           />
         </div>
 
-        <div className="col-8 col-md-4">
+        <div className="col-md-4">
           <h5 className="fw-bold mb-1">{item.name}</h5>
           <p className="text-muted small mb-1">{item.brand}</p>
-          <p className="mb-0 fw-semibold">{formatCurrency(item.price)}</p>
+
+          {item.selectedSize ? (
+            <span className="cart-size-badge">
+              Size: {item.selectedSize}
+            </span>
+          ) : null}
+
+          <p className="fw-bold text-primary mt-2 mb-0">
+            {formatCurrency(item.price)}
+          </p>
         </div>
 
-        <div className="col-12 col-md-3">
+        <div className="col-md-3">
           <div className="quantity-control d-flex align-items-center">
-            <Button
-              variant="outline-secondary"
-              className="quantity-btn"
+            <button
+              type="button"
+              className="btn btn-outline-secondary quantity-btn"
+              onClick={() => onDecrease(item.cartItemId)}
               disabled={item.quantity <= 1}
-              onClick={() => onDecrease(item.productId)}
             >
               <i className="bi bi-dash" />
-            </Button>
+            </button>
 
-            <span className="quantity-value px-3 fw-bold">
+            <span className="quantity-value fw-bold">
               {item.quantity}
             </span>
 
-            <Button
-              variant="outline-secondary"
-              className="quantity-btn"
-              disabled={isMaxQuantity}
-              onClick={() => onIncrease(item.productId)}
+            <button
+              type="button"
+              className="btn btn-outline-secondary quantity-btn"
+              onClick={() => onIncrease(item.cartItemId)}
+              disabled={item.quantity >= item.stock}
             >
               <i className="bi bi-plus" />
-            </Button>
+            </button>
           </div>
 
-          {isMaxQuantity ? (
-            <small className="text-muted d-block mt-1">
-              Max stock reached
-            </small>
-          ) : null}
+          <p className="small text-muted mb-0 mt-2">
+            Available stock: {item.stock}
+          </p>
         </div>
 
-        <div className="col-6 col-md-2">
-          <p className="text-muted small mb-1">Subtotal</p>
-          <p className="fw-bold mb-0">{formatCurrency(subtotal)}</p>
+        <div className="col-md-2 text-md-end">
+          <p className="small text-muted mb-1">Subtotal</p>
+          <h6 className="fw-bold mb-0">
+            {formatCurrency(item.price * item.quantity)}
+          </h6>
         </div>
 
-        <div className="col-6 col-md-1 text-end">
-          <Button
-            variant="outline-danger"
-            className="btn-sm"
-            onClick={() => onRemove(item.productId)}
+        <div className="col-md-1 text-md-end">
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => onRemove(item.cartItemId)}
             aria-label={`Remove ${item.name}`}
           >
             <i className="bi bi-trash" />
-          </Button>
+          </button>
         </div>
       </div>
     </div>

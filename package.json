@@ -10,7 +10,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "screenshots": "tsx scripts/capture-screenshots.ts"
+    "screenshots": "tsx scripts/capture-screenshots.ts",
+    "db": "node scripts/assign-sellers-to-products.cjs",
+    "user": "node scripts/assign-sellers-and-create-users.cjs",
+    "size": "node scripts/add-size-data-to-products.cjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import FormInput from "../components/common/FormInput";
@@ -16,7 +16,7 @@ interface RouteLocationState {
 
 const initialLoginValues: LoginPayload = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const LoginPage = () => {
@@ -32,26 +32,35 @@ const LoginPage = () => {
   const locationState = location.state as RouteLocationState | null;
   const redirectPath = locationState?.from?.pathname ?? "/products";
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
+    const fieldName = name as keyof LoginPayload;
 
-    // Use [name] to update the specific key in the state object
     setValues((previousValues) => ({
       ...previousValues,
-      [name]: value,
+      [fieldName]: value
     }));
 
-    // Clear error for the specific field being changed
     setErrors((previousErrors) => ({
       ...previousErrors,
-      [name]: undefined,
+      undefined
     }));
 
     setServerError("");
   };
 
+  const handleDemoLogin = (email: string, password: string): void => {
+    setValues({
+      email,
+      password
+    });
+
+    setErrors({});
+    setServerError("");
+  };
+
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
+    event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
 
@@ -69,7 +78,7 @@ const LoginPage = () => {
       await login(values.email, values.password);
 
       navigate(redirectPath, {
-        replace: true,
+        replace: true
       });
     } catch (error) {
       const message =
@@ -86,9 +95,9 @@ const LoginPage = () => {
   return (
     <main className="auth-page bg-light">
       <div className="container py-5">
-        <div className="row justify-content-center">
-          <div className="col-md-8 col-lg-5">
-            <div className="auth-card bg-white rounded-4 shadow-sm p-4 p-md-5">
+        <div className="row justify-content-center align-items-stretch g-4">
+          <div className="col-lg-5 col-xl-4">
+            <div className="auth-card login-card bg-white rounded-4 shadow-sm p-4 p-md-5 h-100">
               <div className="text-center mb-4">
                 <div className="auth-icon mx-auto mb-3">
                   <i className="bi bi-person-check" />
@@ -148,15 +157,100 @@ const LoginPage = () => {
                   </Link>
                 </p>
               </div>
+            </div>
+          </div>
 
-              <div className="demo-credentials bg-light rounded-4 p-3 mt-4">
-                <h6 className="fw-bold mb-2">Demo Login</h6>
-                <p className="small text-muted mb-1">
-                  Email: <strong>test@example.com</strong>
-                </p>
-                <p className="small text-muted mb-0">
-                  Password: <strong>password123</strong>
-                </p>
+          <div className="col-lg-7 col-xl-6">
+            <div className="demo-login-card bg-white rounded-4 shadow-sm p-4 p-md-5 h-100">
+              <div className="d-flex align-items-start justify-content-between gap-3 mb-4">
+                <div>
+                  <h3 className="fw-bold mb-2">Demo Logins</h3>
+                  <p className="text-muted mb-0">
+                    Click any role below to autofill login credentials.
+                  </p>
+                </div>
+
+                <span className="badge bg-primary-subtle text-primary border border-primary-subtle demo-rbac-badge">
+                  RBAC
+                </span>
+              </div>
+
+              <div className="demo-login-list">
+                <button
+                  type="button"
+                  className="demo-login-item"
+                  onClick={() =>
+                    handleDemoLogin("test@example.com", "password123")
+                  }
+                >
+                  <span className="demo-login-icon bg-success-subtle text-success">
+                    <i className="bi bi-person" />
+                  </span>
+
+                  <span className="flex-grow-1">
+                    <strong>Customer</strong>
+                    <small>test@example.com / password123</small>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className="demo-login-item"
+                  onClick={() =>
+                    handleDemoLogin("admin@shopease.com", "Admin123")
+                  }
+                >
+                  <span className="demo-login-icon bg-primary-subtle text-primary">
+                    <i className="bi bi-speedometer2" />
+                  </span>
+
+                  <span className="flex-grow-1">
+                    <strong>Admin</strong>
+                    <small>admin@shopease.com / Admin123</small>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className="demo-login-item"
+                  onClick={() =>
+                    handleDemoLogin("seller@samsung.com", "Seller123")
+                  }
+                >
+                  <span className="demo-login-icon bg-warning-subtle text-warning">
+                    <i className="bi bi-shop" />
+                  </span>
+
+                  <span className="flex-grow-1">
+                    <strong>Seller</strong>
+                    <small>seller@samsung.com / Seller123</small>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className="demo-login-item"
+                  onClick={() =>
+                    handleDemoLogin("support@shopease.com", "Support123")
+                  }
+                >
+                  <span className="demo-login-icon bg-info-subtle text-info">
+                    <i className="bi bi-headset" />
+                  </span>
+
+                  <span className="flex-grow-1">
+                    <strong>Support</strong>
+                    <small>support@shopease.com / Support123</small>
+                  </span>
+                </button>
+              </div>
+
+              <div className="demo-login-note mt-4">
+                <i className="bi bi-info-circle me-2 text-primary" />
+                <span>
+                  Make sure these users exist in <strong>db.json</strong> and
+                  JSON Server is running.
+                </span>
               </div>
             </div>
           </div>

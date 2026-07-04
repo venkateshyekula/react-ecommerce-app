@@ -3,7 +3,8 @@ import { authService } from "../services/authService";
 import type {
   AuthContextValue,
   AuthUser,
-  RegisterPayload
+  RegisterPayload,
+  UserRole
 } from "../types/auth";
 import {
   getFromStorage,
@@ -11,15 +12,39 @@ import {
   setToStorage,
   STORAGE_KEYS
 } from "../utils/storage";
-import { AuthContext } from "./authContext";
+import { AuthContext } from "./AuthContextObject";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+type StoredAuthUser = Partial<AuthUser> | null;
+
+const DEFAULT_CUSTOMER_ROLE: UserRole = "CUSTOMER";
+
+const normalizeStoredUser = (user: StoredAuthUser): AuthUser | null => {
+  if (!user || !user.id || !user.name || !user.email) {
+    return null;
+  }
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    mobile: user.mobile ?? "",
+    address: user.address ?? "",
+    role: user.role ?? DEFAULT_CUSTOMER_ROLE
+  };
+};
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
-    return getFromStorage<AuthUser | null>(STORAGE_KEYS.CURRENT_USER, null);
+    const storedUser = getFromStorage<StoredAuthUser>(
+      STORAGE_KEYS.CURRENT_USER,
+      null
+    );
+
+    return normalizeStoredUser(storedUser);
   });
 
   const login = async (

@@ -1,6 +1,7 @@
 import type { Product } from "./product";
 
 export interface CartItem {
+  cartItemId: string;
   productId: string;
   name: string;
   brand: string;
@@ -8,6 +9,7 @@ export interface CartItem {
   image: string;
   stock: number;
   quantity: number;
+  selectedSize?: string;
 }
 
 export interface CartState {
@@ -17,19 +19,28 @@ export interface CartState {
 export type CartAction =
   | {
       type: "ADD_TO_CART";
-      payload: Product;
+      payload: {
+        product: Product;
+        selectedSize?: string;
+      };
     }
   | {
       type: "REMOVE_FROM_CART";
-      payload: string;
+      payload: {
+        cartItemId: string;
+      };
     }
   | {
       type: "INCREASE_QUANTITY";
-      payload: string;
+      payload: {
+        cartItemId: string;
+      };
     }
   | {
       type: "DECREASE_QUANTITY";
-      payload: string;
+      payload: {
+        cartItemId: string;
+      };
     }
   | {
       type: "CLEAR_CART";
@@ -43,9 +54,9 @@ export interface CartContextValue {
   cartItems: CartItem[];
   cartCount: number;
   cartTotal: number;
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
-  increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void;
+  addToCart: (product: Product, selectedSize?: string) => void;
+  removeFromCart: (cartItemId: string) => void;
+  increaseQuantity: (cartItemId: string) => void;
+  decreaseQuantity: (cartItemId: string) => void;
   clearCart: () => void;
 }

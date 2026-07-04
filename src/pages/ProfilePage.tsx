@@ -51,6 +51,12 @@ const ProfilePage = () => {
                     <h6 className="fw-bold mb-0">{currentUser.name}</h6>
                   </div>
                 </div>
+                <div className="col-md-6">
+                  <div className="profile-info-box bg-light rounded-4 p-3">
+                    <p className="small text-muted mb-1">Role</p>
+                    <h6 className="fw-bold mb-0">{currentUser.role}</h6>
+                  </div>
+                </div>
 
                 <div className="col-md-6">
                   <div className="profile-info-box bg-light rounded-4 p-3">

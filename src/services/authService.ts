@@ -1,7 +1,18 @@
 import { apiClient } from "./apiClient";
-import type { AuthUser, RegisterPayload, User } from "../types/auth";
+import type {
+  AuthUser,
+  RegisterPayload,
+  User,
+  UserRole
+} from "../types/auth";
 
 const USERS_ENDPOINT = "/users";
+
+const DEFAULT_CUSTOMER_ROLE: UserRole = "CUSTOMER";
+
+const normalizeRole = (role?: UserRole): UserRole => {
+  return role ?? DEFAULT_CUSTOMER_ROLE;
+};
 
 const removePassword = (user: User): AuthUser => {
   return {
@@ -9,7 +20,8 @@ const removePassword = (user: User): AuthUser => {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
-    address: user.address
+    address: user.address,
+    role: normalizeRole(user.role)
   };
 };
 
@@ -20,7 +32,9 @@ export const authService = {
 
   getUserByEmail: async (email: string): Promise<User | null> => {
     const users = await apiClient.get<User[]>(
-      `${USERS_ENDPOINT}?email=${encodeURIComponent(email.trim().toLowerCase())}`
+      `${USERS_ENDPOINT}?email=${encodeURIComponent(
+        email.trim().toLowerCase()
+      )}`
     );
 
     return users.length > 0 ? users[0] : null;
@@ -41,7 +55,8 @@ export const authService = {
       email: normalizedEmail,
       password: payload.password,
       mobile: payload.mobile.trim(),
-      address: payload.address.trim()
+      address: payload.address.trim(),
+      role: "CUSTOMER"
     };
 
     const createdUser = await apiClient.post<User, User>(
@@ -52,7 +67,10 @@ export const authService = {
     return removePassword(createdUser);
   },
 
-  loginUser: async (email: string, password: string): Promise<AuthUser> => {
+  loginUser: async (
+    email: string,
+    password: string
+  ): Promise<AuthUser> => {
     const user = await authService.getUserByEmail(email);
 
     if (!user || user.password !== password) {

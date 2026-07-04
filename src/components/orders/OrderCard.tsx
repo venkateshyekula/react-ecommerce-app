@@ -1,23 +1,54 @@
+import { useState } from "react";
 import type { Order } from "../../types/order";
 import { formatCurrency } from "../../utils/currencyFormatter";
+import {
+  canCancelOrder,
+  canReturnOrder,
+  getOrderStatusBadgeClass
+} from "../../utils/orderUtils";
 import Button from "../common/Button";
 import OrderTrackingTimeline from "./OrderTrackingTimeline";
 
 interface OrderCardProps {
   order: Order;
   onReorder: (order: Order) => void;
+  onCancelOrder: (order: Order, reason: string) => Promise<void>;
+  onReturnOrder: (order: Order, reason: string) => Promise<void>;
   isReordering?: boolean;
+  isUpdating?: boolean;
 }
 
 const OrderCard = ({
   order,
   onReorder,
+  onCancelOrder,
+  onReturnOrder,
   isReordering = false,
+  isUpdating = false
 }: OrderCardProps) => {
+  const [cancelReason, setCancelReason] = useState<string>("");
+  const [returnReason, setReturnReason] = useState<string>("");
+  const [showCancelBox, setShowCancelBox] = useState<boolean>(false);
+  const [showReturnBox, setShowReturnBox] = useState<boolean>(false);
+
   const formattedDate = new Intl.DateTimeFormat("en-IN", {
     dateStyle: "medium",
-    timeStyle: "short",
+    timeStyle: "short"
   }).format(new Date(order.orderDate));
+
+  const handleCancelSubmit = async (): Promise<void> => {
+    const reason = cancelReason.trim() || "Customer requested cancellation";
+    await onCancelOrder(order, reason);
+    setShowCancelBox(false);
+    setCancelReason("");
+  };
+
+  const handleReturnSubmit = async (): Promise<void> => {
+    const reason = returnReason.trim() || "Customer requested return";
+    await onReturnOrder(order, reason);
+    setShowReturnBox(false);
+    setReturnReason("");
+  };
 
   return (
     <div className="order-card bg-white rounded-4 shadow-sm p-4 mb-4">
@@ -31,11 +62,17 @@ const OrderCard = ({
         </div>
 
         <div className="text-lg-end">
-          <span className="badge bg-primary-subtle text-primary border border-primary-subtle mb-2">
+          <span
+            className={`badge mb-2 ${getOrderStatusBadgeClass(
+              order.orderStatus
+            )}`}
+          >
             {order.orderStatus}
           </span>
 
-          <h5 className="fw-bold mb-0">{formatCurrency(order.totalAmount)}</h5>
+          <h5 className="fw-bold mb-0">
+            {formatCurrency(order.totalAmount)}
+          </h5>
         </div>
       </div>
 
@@ -46,25 +83,34 @@ const OrderCard = ({
           <div className="order-items-list">
             {order.items.map((item) => (
               <div
-                key={`${order.orderId}-${item.productId}`}
+                key={`${order.orderId}-${item.productId}-${item.selectedSize ?? "no-size"}`}
                 className="order-item-row d-flex align-items-center gap-3 mb-3"
               >
                 <img
-                  src={item.image}
-                  alt={item.name}
-                  className="img-fluid rounded"
-                  style={{ width: "65px", height: "65px", objectFit: "cover" }}
+                src={item.image}
+                alt={item.image}
+                className="rounded-3 border object-fit-cover"
+                style={{ width: "100px", height: "100px" }}
                 />
 
                 <div className="flex-grow-1">
                   <h6 className="mb-1 fw-semibold">{item.name}</h6>
                   <p className="text-muted small mb-1">{item.brand}</p>
-                  <p className="small mb-0">
+
+                  {item.selectedSize ? (
+                    <span className="order-size-badge">
+                      Size: {item.selectedSize}
+                    </span>
+                  ) : null}
+
+                  <p className="small mb-0 mt-1">
                     {formatCurrency(item.price)} × {item.quantity}
                   </p>
                 </div>
 
-                <div className="fw-bold">{formatCurrency(item.subtotal)}</div>
+                <div className="fw-bold">
+                  {formatCurrency(item.subtotal)}
+                </div>
               </div>
             ))}
           </div>
@@ -72,12 +118,28 @@ const OrderCard = ({
           <div className="mt-3">
             <h6 className="fw-bold mb-2">Delivery Address</h6>
             <p className="text-muted mb-0">
-              {order.deliveryAddress.fullName}, {order.deliveryAddress.mobile}
+              {order.deliveryAddress.fullName},{" "}
+              {order.deliveryAddress.mobile}
               <br />
-              {order.deliveryAddress.addressLine}, {order.deliveryAddress.city},{" "}
-              {order.deliveryAddress.state} - {order.deliveryAddress.pincode}
+              {order.deliveryAddress.addressLine},{" "}
+              {order.deliveryAddress.city},{" "}
+              {order.deliveryAddress.state} -{" "}
+              {order.deliveryAddress.pincode}
             </p>
           </div>
+
+          {order.cancellationReason ? (
+            <div className="alert alert-danger mt-3 mb-0" role="alert">
+              <strong>Cancellation Reason:</strong>{" "}
+              {order.cancellationReason}
+            </div>
+          ) : null}
+
+          {order.returnReason ? (
+            <div className="alert alert-warning mt-3 mb-0" role="alert">
+              <strong>Return Reason:</strong> {order.returnReason}
+            </div>
+          ) : null}
         </div>
 
         <div className="col-lg-5">
@@ -86,6 +148,7 @@ const OrderCard = ({
           <OrderTrackingTimeline
             steps={order.trackingSteps}
             currentStatus={order.orderStatus}
+            events={order.trackingEvents}
           />
 
           <div className="payment-summary bg-light rounded-4 p-3 mt-4">
@@ -93,6 +156,32 @@ const OrderCard = ({
               <span className="text-muted">Payment Method</span>
               <span className="fw-semibold">{order.paymentMethod}</span>
             </div>
+
+            {order.subtotalAmount !== undefined ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span className="text-muted">Subtotal</span>
+                <span className="fw-semibold">
+                  {formatCurrency(order.subtotalAmount)}
+                </span>
+              </div>
+            ) : null}
+
+            {order.discountAmount !== undefined &&
+            order.discountAmount > 0 ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span className="text-muted">Discount</span>
+                <span className="fw-semibold text-success">
+                  - {formatCurrency(order.discountAmount)}
+                </span>
+              </div>
+            ) : null}
+
+            {order.couponCode ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span className="text-muted">Coupon</span>
+                <span className="fw-semibold">{order.couponCode}</span>
+              </div>
+            ) : null}
 
             <div className="d-flex justify-content-between">
               <span className="text-muted">Total Amount</span>
@@ -102,16 +191,86 @@ const OrderCard = ({
             </div>
           </div>
 
-          <Button
-            variant="outline-primary"
-            fullWidth
-            className="mt-3"
-            isLoading={isReordering}
-            onClick={() => onReorder(order)}
-          >
-            <i className="bi bi-arrow-repeat me-2" />
-            Reorder
-          </Button>
+          <div className="d-grid gap-2 mt-3">
+            <Button
+              variant="outline-primary"
+              fullWidth
+              isLoading={isReordering}
+              disabled={order.orderStatus === "Cancelled"}
+              onClick={() => onReorder(order)}
+            >
+              <i className="bi bi-arrow-repeat me-2" />
+              Reorder
+            </Button>
+
+            {canCancelOrder(order.orderStatus) ? (
+              <Button
+                variant="outline-danger"
+                fullWidth
+                disabled={isUpdating}
+                onClick={() => setShowCancelBox((previous) => !previous)}
+              >
+                <i className="bi bi-x-circle me-2" />
+                Cancel Order
+              </Button>
+            ) : null}
+
+            {canReturnOrder(order.orderStatus) ? (
+              <Button
+                variant="warning"
+                fullWidth
+                disabled={isUpdating}
+                onClick={() => setShowReturnBox((previous) => !previous)}
+              >
+                <i className="bi bi-arrow-counterclockwise me-2" />
+                Return Order
+              </Button>
+            ) : null}
+          </div>
+
+          {showCancelBox ? (
+            <div className="order-action-box mt-3">
+              <label className="form-label fw-semibold">
+                Cancellation Reason
+              </label>
+              <textarea
+                className="form-control mb-2"
+                rows={3}
+                value={cancelReason}
+                placeholder="Enter cancellation reason"
+                onChange={(event) => setCancelReason(event.target.value)}
+              />
+              <Button
+                variant="danger"
+                fullWidth
+                isLoading={isUpdating}
+                onClick={handleCancelSubmit}
+              >
+                Confirm Cancellation
+              </Button>
+            </div>
+          ) : null}
+
+          {showReturnBox ? (
+            <div className="order-action-box mt-3">
+              <label className="form-label fw-semibold">Return Reason</label>
+              <textarea
+                className="form-control mb-2"
+                rows={3}
+                value={returnReason}
+                placeholder="Enter return reason"
+                onChange={(event) => setReturnReason(event.target.value)}
+              />
+              <Button
+                variant="warning"
+                fullWidth
+                isLoading={isUpdating}
+                onClick={handleReturnSubmit}
+              >
+                Confirm Return Request
+              </Button>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
