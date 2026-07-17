@@ -21,7 +21,10 @@ const removePassword = (user: User): AuthUser => {
     email: user.email,
     mobile: user.mobile,
     address: user.address,
-    role: normalizeRole(user.role)
+    role: normalizeRole(user.role),
+    supportTeamCode: user.supportTeamCode,
+    supportTeamRole: user.supportTeamRole,
+    isActive: user.isActive
   };
 };
 
@@ -56,7 +59,8 @@ export const authService = {
       password: payload.password,
       mobile: payload.mobile.trim(),
       address: payload.address.trim(),
-      role: "CUSTOMER"
+      role: "CUSTOMER",
+      isActive: true
     };
 
     const createdUser = await apiClient.post<User, User>(
@@ -75,6 +79,10 @@ export const authService = {
 
     if (!user || user.password !== password) {
       throw new Error("Invalid email or password.");
+    }
+
+    if (user.isActive === false) {
+      throw new Error("This account is inactive. Please contact support.");
     }
 
     return removePassword(user);

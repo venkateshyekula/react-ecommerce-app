@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { ProductSizeChart as ProductSizeChartType } from "../../types/product";
 
 interface ProductSizeChartProps {
@@ -61,20 +61,29 @@ const ProductSizeChart = ({ sizeChart, onClose }: ProductSizeChartProps) => {
   const [measurementUnit, setMeasurementUnit] =
     useState<MeasurementUnit>("cm");
 
-  const hasClothingColumns = sizeChart.rows.some(
-    (row) => row.chest || row.waist || row.shoulder || row.length
-  );
-
-  const hasFootwearColumns = sizeChart.rows.some(
-    (row) => row.footLength || row.ukSize || row.usSize || row.euSize
-  );
-
-  const hasAccessoryColumns = sizeChart.rows.some(
-    (row) => row.circumference
-  );
+  // OPTIMIZATION: Memoize column checks to protect performance during unit switching toggles
+  const { hasClothingColumns, hasFootwearColumns, hasAccessoryColumns } = useMemo(() => {
+    return {
+      hasClothingColumns: sizeChart.rows.some(
+        (row) => row.chest || row.waist || row.shoulder || row.length
+      ),
+      hasFootwearColumns: sizeChart.rows.some(
+        (row) => row.footLength || row.ukSize || row.usSize || row.euSize
+      ),
+      hasAccessoryColumns: sizeChart.rows.some(
+        (row) => row.circumference
+      )
+    };
+  }, [sizeChart.rows]);
 
   const measurementLabel =
     measurementUnit === "cm" ? "centimeters" : "inches";
+
+  const handleUnitSwitch = (): void => {
+    setMeasurementUnit((previousUnit) =>
+      previousUnit === "cm" ? "inch" : "cm"
+    );
+  };
 
   return (
     <div className="size-chart-overlay" role="dialog" aria-modal="true">
@@ -98,32 +107,51 @@ const ProductSizeChart = ({ sizeChart, onClose }: ProductSizeChartProps) => {
         </div>
 
         <div className="p-4">
-          <ul className="nav nav-pills size-chart-tabs mb-4">
-            <li className="nav-item">
-              <button
-                type="button"
-                className={`nav-link ${activeTab === "chart" ? "active" : ""}`}
-                onClick={() => setActiveTab("chart")}
+          {/* A11Y: Added explicit role attribute for modern navigation tabs accessibility standards */}
+          <ul className="nav nav-tabs size-chart-bootstrap-tabs mb-4" role="tablist">
+            <li className="nav-item" role="presentation">
+              {/* FIXED: Reconstructed valid opening anchor element tag with proper dynamic styling */}
+              <a
+                className={`nav-link d-flex align-items-center ${activeTab === "chart" ? "active" : ""}`}
+                href="#size-chart"
+                role="tab"
+                aria-selected={activeTab === "chart"}
+                aria-controls="size-chart"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setActiveTab("chart");
+                }}
               >
+                <i className="bi bi-table me-2" />
                 Size Chart
-              </button>
+              </a>
             </li>
 
-            <li className="nav-item">
-              <button
-                type="button"
-                className={`nav-link ${
-                  activeTab === "measure" ? "active" : ""
-                }`}
-                onClick={() => setActiveTab("measure")}
+            <li className="nav-item" role="presentation">
+              {/* FIXED: Reconstructed valid opening anchor element tag with proper dynamic styling */}
+              <a
+                className={`nav-link d-flex align-items-center ${activeTab === "measure" ? "active" : ""}`}
+                href="#how-to-measure"
+                role="tab"
+                aria-selected={activeTab === "measure"}
+                aria-controls="how-to-measure"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setActiveTab("measure");
+                }}
               >
+                <i className="bi bi-rulers me-2" />
                 How to Measure
-              </button>
+              </a>
             </li>
           </ul>
 
           {activeTab === "chart" ? (
-            <>
+            <div
+              id="size-chart"
+              role="tabpanel"
+              aria-label="Size chart measurements"
+            >
               <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-3">
                 <div>
                   <h6 className="fw-bold mb-1">
@@ -134,34 +162,39 @@ const ProductSizeChart = ({ sizeChart, onClose }: ProductSizeChartProps) => {
                   </p>
                 </div>
 
-                <div
-                  className="btn-group size-unit-toggle"
-                  role="group"
-                  aria-label="Measurement unit switch"
-                >
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${
-                      measurementUnit === "cm"
-                        ? "btn-primary"
-                        : "btn-outline-primary"
+                <div className="size-unit-switch-wrapper">
+                  <span
+                    className={`size-unit-label ${
+                      measurementUnit === "cm" ? "active" : ""
                     }`}
-                    onClick={() => setMeasurementUnit("cm")}
                   >
                     CM
-                  </button>
+                  </span>
 
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${
-                      measurementUnit === "inch"
-                        ? "btn-primary"
-                        : "btn-outline-primary"
+                  <div className="form-check form-switch size-unit-switch mb-0">
+                    <input
+                      id="sizeUnitSwitch"
+                      className="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      checked={measurementUnit === "inch"}
+                      onChange={handleUnitSwitch}
+                    />
+                    <label
+                      htmlFor="sizeUnitSwitch"
+                      className="form-check-label visually-hidden"
+                    >
+                      Toggle measurement unit
+                    </label>
+                  </div>
+
+                  <span
+                    className={`size-unit-label ${
+                      measurementUnit === "inch" ? "active" : ""
                     }`}
-                    onClick={() => setMeasurementUnit("inch")}
                   >
                     Inch
-                  </button>
+                  </span>
                 </div>
               </div>
 
@@ -259,11 +292,16 @@ const ProductSizeChart = ({ sizeChart, onClose }: ProductSizeChartProps) => {
                 Note: Inch values are converted from centimeter measurements and
                 rounded to one decimal place.
               </p>
-            </>
+            </div>
           ) : null}
 
           {activeTab === "measure" ? (
-            <div className="how-to-measure-list">
+            <div
+              id="how-to-measure"
+              role="tabpanel"
+              aria-label="How to measure instructions"
+              className="how-to-measure-list"
+            >
               {sizeChart.howToMeasure.map((instruction, index) => (
                 <div
                   key={instruction}

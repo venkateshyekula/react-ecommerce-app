@@ -207,5 +207,6 @@ export const validateCheckoutForm = (
 export const paymentMethods: PaymentMethod[] = [
   "Credit Card",
   "UPI",
-  "Cash on Delivery"
+  "Cash on Delivery",
+  "Wallet"
 ];

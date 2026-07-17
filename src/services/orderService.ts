@@ -41,6 +41,16 @@ export const orderService = {
     return apiClient.post<Order, Order>(ORDERS_ENDPOINT, order);
   },
 
+  updateOrder: async (
+    orderDbId: string,
+    data: Partial<Order>
+  ): Promise<Order> => {
+    return apiClient.patch<Order, Partial<Order>>(
+      `${ORDERS_ENDPOINT}/${orderDbId}`,
+      data
+    );
+  },
+
   updateOrderStatus: async (
     orderDbId: string,
     status: OrderStatus
@@ -63,34 +73,36 @@ export const orderService = {
   },
 
   cancelOrder: async (
-    orderDbId: string,
-    reason: string
-  ): Promise<Order> => {
-    const existingOrder = await apiClient.get<Order>(
-      `${ORDERS_ENDPOINT}/${orderDbId}`
-    );
+  orderDbId: string,
+  reason: string
+): Promise<Order> => {
+  const existingOrder = await apiClient.get<Order>(
+    `${ORDERS_ENDPOINT}/${orderDbId}`
+  );
 
-    return apiClient.patch<
+  return apiClient.patch<
+    Order,
+    Pick<
       Order,
-      Pick<
-        Order,
-        | "orderStatus"
-        | "trackingSteps"
-        | "trackingEvents"
-        | "cancelledAt"
-        | "cancellationReason"
-      >
-    >(`${ORDERS_ENDPOINT}/${orderDbId}`, {
-      orderStatus: "Cancelled",
-      trackingSteps: buildTrackingStepsByStatus("Cancelled"),
-      trackingEvents: buildTrackingEventsByStatus(
-        "Cancelled",
-        existingOrder.trackingEvents
-      ),
-      cancelledAt: new Date().toISOString(),
-      cancellationReason: reason
-    });
-  },
+      | "orderStatus"
+      | "fulfillmentStatus"
+      | "trackingSteps"
+      | "trackingEvents"
+      | "cancelledAt"
+      | "cancellationReason"
+    >
+  >(`${ORDERS_ENDPOINT}/${orderDbId}`, {
+    orderStatus: "Cancelled",
+    fulfillmentStatus: "FAILED",
+    trackingSteps: buildTrackingStepsByStatus("Cancelled"),
+    trackingEvents: buildTrackingEventsByStatus(
+      "Cancelled",
+      existingOrder.trackingEvents
+    ),
+    cancelledAt: new Date().toISOString(),
+    cancellationReason: reason
+  });
+},
 
   requestReturn: async (
     orderDbId: string,

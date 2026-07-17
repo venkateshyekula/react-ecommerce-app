@@ -9,6 +9,9 @@ import ProductImageGallery from "../components/products/ProductImageGallery";
 import ProductReviews from "../components/products/ProductReviews";
 import ProductSizeChart from "../components/products/ProductSizeChart";
 import ProductSizeSelector from "../components/products/ProductSizeSelector";
+import ProductOffersPanel from "../components/products/ProductOffersPanel";
+import ProductSellerSummary from "../components/products/ProductSellerSummary";
+import ProductTrustHighlights from "../components/products/ProductTrustHighlights";
 import { useAuth } from "../context/useAuth";
 import { useCart } from "../context/useCart";
 import { useWishlist } from "../context/useWishlist";
@@ -18,8 +21,12 @@ import { formatCurrency, getDiscountedPrice } from "../utils/currencyFormatter";
 import RecentlyViewedProductsSection from "../components/products/RecentlyViewedProductsSection";
 import RecommendedProductsSection from "../components/products/RecommendedProductsSection";
 import { saveRecentlyViewedProduct } from "../utils/recentlyViewedStorage";
-
-type ProductDetailsTab = "description" | "specifications" | "reviews";
+import ProductComparisonDetails from "../components/products/ProductComparisonDetails";
+import ProductQuestions from "../components/products/ProductQuestions";
+import ProductDetailsTabs, {
+  type ProductDetailsTab,
+} from "../components/products/ProductDetailsTabs";
+import ProductSizeRecommendationCard from "../components/products/ProductSizeRecommendationCard";
 
 const ProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -80,14 +87,14 @@ const ProductDetailsPage = () => {
           .filter(
             (item) =>
               item.category === productDetails.category &&
-              item.id !== productDetails.id
+              item.id !== productDetails.id,
           )
           .slice(0, 4);
 
         setSimilarProducts(relatedProducts);
       } catch {
         setErrorMessage(
-          "Unable to load product details. Please make sure JSON Server is running."
+          "Unable to load product details. Please make sure JSON Server is running.",
         );
       } finally {
         setIsLoading(false);
@@ -105,7 +112,7 @@ const ProductDetailsPage = () => {
   if (isLoading) {
     return (
       <main className="product-details-page bg-light">
-        <div className="container py-5">
+        <div className="container-fluid py-5">
           <Loader message="Loading product details..." />
         </div>
       </main>
@@ -116,8 +123,11 @@ const ProductDetailsPage = () => {
   if (errorMessage || !product) {
     return (
       <main className="product-details-page bg-light">
-        <div className="container py-5 text-center">
-          <div className="alert alert-warning max-w-md mx-auto mb-4" role="alert">
+        <div className="container-fluid py-5 text-center">
+          <div
+            className="alert alert-warning max-w-md mx-auto mb-4"
+            role="alert"
+          >
             <i className="bi bi-exclamation-triangle-fill me-2" />
             {errorMessage || "Product data is unavailable."}
           </div>
@@ -134,7 +144,9 @@ const ProductDetailsPage = () => {
   const isWishlisted = isInWishlist(product.id);
 
   // OPTIMIZED: Drop hardcoded string categories in favor of checking dynamic array presence
-  const isSizeRequired = Boolean(product.sizeOptions && product.sizeOptions.length > 0);
+  const isSizeRequired = Boolean(
+    product.sizeOptions && product.sizeOptions.length > 0,
+  );
 
   const validateSelectedSize = (): boolean => {
     if (isSizeRequired && !selectedSize) {
@@ -176,7 +188,7 @@ const ProductDetailsPage = () => {
   return (
     <main className="product-details-page bg-light">
       <section className="page-header bg-white border-bottom">
-        <div className="container py-4">
+        <div className="container-fluid py-4">
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb mb-2">
               <li className="breadcrumb-item">
@@ -195,11 +207,10 @@ const ProductDetailsPage = () => {
               </li>
             </ol>
           </nav>
-          <h1 className="fw-bold mb-0">{product.name}</h1>
         </div>
       </section>
 
-      <section className="container py-4 py-md-5">
+      <section className="container-fluid py-4 ">
         <div className="row g-4">
           <div className="col-lg-5">
             <div className="product-details-gallery-sticky">
@@ -208,7 +219,7 @@ const ProductDetailsPage = () => {
           </div>
 
           <div className="col-lg-7">
-            <div className="bg-white rounded-4 shadow-sm p-4 p-md-5 product-details-info-card">
+            <div className="bg-white p-4 p-md-5 product-details-info-card">
               <div className="d-flex flex-wrap gap-2 mb-3">
                 <span className="badge bg-light text-primary border">
                   {product.category}
@@ -221,7 +232,9 @@ const ProductDetailsPage = () => {
                     Sold by {product.sellerName}
                   </span>
                 )}
-                <span className={`badge ${isOutOfStock ? "bg-secondary" : "bg-success"}`}>
+                <span
+                  className={`badge ${isOutOfStock ? "bg-secondary" : "bg-success"}`}
+                >
                   {isOutOfStock ? "Out of Stock" : "In Stock"}
                 </span>
                 {product.discount > 0 && (
@@ -279,6 +292,14 @@ const ProductDetailsPage = () => {
                 onOpenSizeChart={() => setIsSizeChartOpen(true)}
               />
 
+              <ProductSizeRecommendationCard
+                product={product}
+                onSelectSize={(size) => {
+                  setSelectedSize(size);
+                  setSizeError("");
+                }}
+              />
+
               {canUseShoppingFeatures ? (
                 <div className="d-flex flex-column flex-sm-row gap-3 mb-4">
                   <Button
@@ -307,7 +328,9 @@ const ProductDetailsPage = () => {
                       onClick={handleWishlistClick}
                       className="px-4"
                     >
-                      <i className={`bi ${isWishlisted ? "bi-heart-fill" : "bi-heart"} me-2`} />
+                      <i
+                        className={`bi ${isWishlisted ? "bi-heart-fill" : "bi-heart"} me-2`}
+                      />
                       {isWishlisted ? "Wishlisted" : "Wishlist"}
                     </Button>
                   )}
@@ -315,14 +338,29 @@ const ProductDetailsPage = () => {
               ) : (
                 <div className="alert alert-info mb-4" role="alert">
                   <i className="bi bi-info-circle me-2" />
-                  Shopping actions are available only for customer and admin accounts.
+                  Shopping actions are available only for customer and admin
+                  accounts.
                 </div>
               )}
 
               <ProductHighlights product={product} />
 
-              <div className="mt-4">
-                <ProductDeliveryChecker />
+              <div className="product-details-marketplace-panels mt-4">
+                <div className="product-offers-panel">
+                  <ProductOffersPanel product={product} />
+                </div>
+
+                <div>
+                  <ProductDeliveryChecker product={product} />
+                </div>
+
+                <div className="product-seller-panel">
+                  <ProductSellerSummary product={product} />
+                </div>
+
+                <div className="product-trust-panel">
+                  <ProductTrustHighlights />
+                </div>
               </div>
 
               {productHighlights.length > 0 && (
@@ -344,46 +382,29 @@ const ProductDetailsPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-4 shadow-sm p-4 p-md-5 mt-4 product-details-tabs-card">
-          <ul className="nav nav-pills product-details-tabs mb-4">
-            <li className="nav-item">
-              <button
-                type="button"
-                className={`nav-link ${activeTab === "description" ? "active" : ""}`}
-                onClick={() => setActiveTab("description")}
-              >
-                Description
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                type="button"
-                className={`nav-link ${activeTab === "specifications" ? "active" : ""}`}
-                onClick={() => setActiveTab("specifications")}
-              >
-                Specifications
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                type="button"
-                className={`nav-link ${activeTab === "reviews" ? "active" : ""}`}
-                onClick={() => setActiveTab("reviews")}
-              >
-                Reviews
-              </button>
-            </li>
-          </ul>
+        <div className="bg-white p-4 p-md-5 mt-4 product-details-tabs-card">
+          <ProductDetailsTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
 
           {activeTab === "description" && (
-            <div>
+            <div
+              id="product-description-panel"
+              role="tabpanel"
+              aria-labelledby="product-description-tab"
+            >
               <h4 className="fw-bold mb-3">Product Description</h4>
               <p className="text-muted mb-0">{product.description}</p>
             </div>
           )}
 
           {activeTab === "specifications" && (
-            <div>
+            <div
+              id="product-specifications-panel"
+              role="tabpanel"
+              aria-labelledby="product-specifications-tab"
+            >
               <h4 className="fw-bold mb-3">Specifications</h4>
               <div className="specification-list">
                 {Object.entries(product.specifications).map(([key, value]) => (
@@ -400,12 +421,28 @@ const ProductDetailsPage = () => {
           )}
 
           {activeTab === "reviews" && (
-            <div>
+            <div
+              id="product-reviews-panel"
+              role="tabpanel"
+              aria-labelledby="product-reviews-tab"
+            >
               <h4 className="fw-bold mb-4">Ratings and Reviews</h4>
               <ProductReviews product={product} />
             </div>
           )}
+          {activeTab === "questions" ? (
+            <div
+              id="product-questions-panel"
+              role="tabpanel"
+              aria-labelledby="product-questions-tab"
+            >
+              <h4 className="fw-bold mb-4">Product Questions & Answers</h4>
+              <ProductQuestions product={product} />
+            </div>
+          ) : null}
         </div>
+
+        <ProductComparisonDetails product={product} />
 
         {similarProducts.length > 0 && (
           <div className="similar-products-section mt-5">

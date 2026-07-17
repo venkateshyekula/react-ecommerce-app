@@ -1,59 +1,78 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
+
+interface SellerNavItem {
+  label: string;
+  path: string;
+  icon: string;
+}
+
+const sellerNavItems: SellerNavItem[] = [
+  {
+    label: "Dashboard",
+    path: "/seller/dashboard",
+    icon: "bi bi-speedometer2"
+  },
+  {
+    label: "Products",
+    path: "/seller/products",
+    icon: "bi bi-box-seam"
+  },
+  {
+    label: "Orders",
+    path: "/seller/orders",
+    icon: "bi bi-receipt"
+  },
+  {
+    label: "Questions",
+    path: "/seller/questions",
+    icon: "bi bi-question-circle"
+  }
+];
 
 const SellerLayout = () => {
-  const { currentUser } = useAuth();
-
   return (
-    <main className="seller-layout bg-light">
+    <main className="seller-layout dashboard-layout bg-light">
       <div className="container-fluid">
         <div className="row">
-          <aside className="col-lg-2 seller-sidebar">
-            <div className="seller-sidebar-inner">
-              <h4 className="fw-bold mb-1">
-                <i className="bi bi-shop me-2 text-primary" />
-                Seller
-              </h4>
+          <aside className="col-lg-2 dashboard-sidebar seller-sidebar">
+            <div className="dashboard-sidebar-inner seller-sidebar-inner">
+              <div className="dashboard-sidebar-header mb-4">
+                <h4 className="fw-bold mb-1">
+                  <i className="bi bi-shop me-2 text-primary" />
+                  Seller
+                </h4>
 
-              <p className="small text-muted mb-4">
-                {currentUser?.name}
-              </p>
+                <p className="small text-muted mb-0">
+                  Manage catalog and orders
+                </p>
+              </div>
 
-              <nav className="nav flex-column gap-2">
-                <NavLink
-                  to="/seller/dashboard"
-                  className={({ isActive }) =>
-                    `seller-nav-link ${isActive ? "active" : ""}`
-                  }
-                >
-                  <i className="bi bi-grid-1x2 me-2" />
-                  Dashboard
-                </NavLink>
+              <nav
+                className="nav nav-underline flex-column dashboard-vertical-tabs seller-vertical-tabs"
+                aria-label="Seller navigation"
+              >
+                {sellerNavItems.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `nav-link dashboard-vertical-tab seller-vertical-tab ${
+                        isActive ? "active" : ""
+                      }`
+                    }
+                  >
+                    <span className="dashboard-tab-icon">
+                      <i className={item.icon} />
+                    </span>
 
-                <NavLink
-                  to="/seller/products"
-                  className={({ isActive }) =>
-                    `seller-nav-link ${isActive ? "active" : ""}`
-                  }
-                >
-                  <i className="bi bi-box-seam me-2" />
-                  My Products
-                </NavLink>
-
-                <NavLink
-                  to="/seller/orders"
-                  className={({ isActive }) =>
-                    `seller-nav-link ${isActive ? "active" : ""}`
-                  }
-                >
-                  <i className="bi bi-receipt me-2" />
-                  My Orders
-                </NavLink>
+                    <span className="dashboard-tab-label">{item.label}</span>
+                  </NavLink>
+                ))}
               </nav>
             </div>
           </aside>
 
-          <section className="col-lg-10 seller-content">
+          <section className="col-lg-10 dashboard-content seller-content">
             <Outlet />
           </section>
         </div>

@@ -22,7 +22,7 @@ const CartPage = () => {
   return (
     <main className="cart-page bg-light">
       <section className="page-header bg-white border-bottom">
-        <div className="container py-4">
+        <div className="container-fluid py-4">
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
               <h1 className="fw-bold mb-1">Shopping Cart</h1>
@@ -39,7 +39,7 @@ const CartPage = () => {
         </div>
       </section>
 
-      <section className="container py-4 py-md-5">
+      <section className="container-fluid py-4">
         {cartItems.length === 0 ? (
           <EmptyState
             title="Your cart is empty"

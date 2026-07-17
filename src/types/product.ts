@@ -3,8 +3,105 @@ export type ProductCategory =
   | "Clothing"
   | "Books"
   | "Footwear"
-  | "Accessories";
+  | "Accessories"
+  | "Men"
+  | "Women"
+  | "Kids"
+  | "Home"
+  | "Beauty";
 
+  export type ProductGenderFilter = "" | "Men" | "Women" | "Boys" | "Girls";
+
+export type ProductColorFilter =
+  | ""
+  | "Gold"
+  | "Pink"
+  | "Green"
+  | "Blue"
+  | "Black"
+  | "Red"
+  | "Purple"
+  | "Silver"
+  | "Yellow"
+  | "White"
+  | "Maroon"
+  | "Multi"
+  | "Navy Blue"
+  | "Off White"
+  | "Teal"
+  | "Grey"
+  | "Peach"
+  | "Orange"
+  | "Beige"
+  | "Brown"
+  | "Cream"
+  | "Mustard"
+  | "Turquoise Blue"
+  | "Olive"
+  | "Lime Green"
+  | "Sea Green"
+  | "Lavender"
+  | "Magenta"
+  | "Rose Gold"
+  | "Rust"
+  | "Burgundy"
+  | "Mauve"
+  | "Violet"
+  | "Rose"
+  | "Coral"
+  | "Coffee Brown"
+  | "Copper"
+  | "Charcoal"
+  | "Tan"
+  | "Fluorescent Green"
+  | "Taupe"
+  | "Bronze"
+  | "Khaki"
+  | "Metallic"
+  | "Nude"
+  | "Champagne"
+  | "Camel Brown"
+  | "Grey Melange"
+  | "Assorted"
+  | "Transparent"
+  | "Steel"
+  | "Skin";
+
+export interface ProductFilters {
+  searchText: string;
+  gender: ProductGenderFilter;
+  category: ProductCategory | "";
+  brand: string;
+  color: ProductColorFilter;
+  priceRange:
+    | ""
+    | "BELOW_1000"
+    | "BETWEEN_1000_10000"
+    | "BETWEEN_10000_50000"
+    | "ABOVE_50000";
+  priceMin: number;
+  priceMax: number;  
+  rating: "" | "ABOVE_5" | "ABOVE_4" | "ABOVE_3" | "ABOVE_2";
+  discount:
+    | ""
+    | "ABOVE_10"
+    | "ABOVE_20"
+    | "ABOVE_30"
+    | "ABOVE_40"
+    | "ABOVE_50"
+    | "ABOVE_60"
+    | "ABOVE_70"
+    | "ABOVE_80"
+    | "ABOVE_90";
+  availability: "" | "IN_STOCK" | "OUT_OF_STOCK";
+  sortBy:
+    | "RELEVANCE"
+    | "PRICE_LOW_TO_HIGH"
+    | "PRICE_HIGH_TO_LOW"
+    | "RATING_HIGH_TO_LOW"
+    | "DISCOUNT_HIGH_TO_LOW"
+    | "STOCK_HIGH_TO_LOW";
+}
 export interface ProductSizeChartRow {
   size: string;
   chest?: string;
@@ -28,7 +125,8 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  category: ProductCategory;
+  category: string;
+  subcategory?: string;
   brand: string;
   price: number;
   rating: number;
@@ -36,8 +134,20 @@ export interface Product {
   stock: number;
   discount: number;
   specifications: Record<string, string>;
-  sellerId?: string;
-  sellerName?: string;
+  sellerId: string;
+  sellerName: string;
+
+  hsnCode?: string;
+  gstRate?: number;
+  cessRate?: number;
+  unit?: string;
+  isTaxInclusive?: boolean;
+  taxCategory?: string;
+
+  sellerGstin?: string;
+  sellerPan?: string;
+  sellerAddress?: string;
+
   sizeOptions?: string[];
   sizeChart?: ProductSizeChart;
 }
@@ -64,14 +174,3 @@ export type ProductSortOption =
   | "STOCK_HIGH_TO_LOW";
 
 export type ProductViewMode = "grid" | "list";
-
-export interface ProductFilters {
-  searchText: string;
-  category: ProductCategory | "";
-  brand: string;
-  priceRange: PriceRange;
-  rating: RatingFilter;
-  discount: DiscountFilter;
-  availability: AvailabilityFilter;
-  sortBy: ProductSortOption;
-}

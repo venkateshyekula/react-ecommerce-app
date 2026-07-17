@@ -42,7 +42,10 @@ const mapProductToCartItem = (
     image: product.image,
     stock: product.stock,
     quantity: 1,
-    selectedSize
+    selectedSize,
+    category: product.category,
+    sellerId: product.sellerId,
+    sellerName: product.sellerName
   };
 };
 

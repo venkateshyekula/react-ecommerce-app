@@ -7,9 +7,15 @@ type ButtonVariant =
   | "danger"
   | "warning"
   | "outline-primary"
+  | "outline-success"
+  | "outline-warning"
   | "outline-secondary"
   | "outline-danger"
+  | "outline-dark"
+  | "outline-info"
+  | "outline-light"
   | "light"
+  | "Info"
   | "dark";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

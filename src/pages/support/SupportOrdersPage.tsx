@@ -228,9 +228,6 @@ const SupportOrdersPage = () => {
                           )
                         }
                       >
-                        <option value={order.orderStatus}>
-                          {order.orderStatus}
-                        </option>
 
                         {supportEditableStatuses.map((status) => (
                           <option key={status} value={status}>

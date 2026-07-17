@@ -34,6 +34,22 @@ export const getRecentlyViewedProducts = (): RecentlyViewedProduct[] => {
   }
 };
 
+export const getRecentlyViewedProductIds = (): string[] => {
+  try {
+    const rawValue = localStorage.getItem("shopease_recently_viewed");
+
+    if (!rawValue) {
+      return [];
+    }
+
+    const products = JSON.parse(rawValue) as Array<{ id: string }>;
+
+    return products.map((product) => product.id);
+  } catch {
+    return [];
+  }
+};
+
 export const saveRecentlyViewedProduct = (product: Product): void => {
   const existingProducts = getRecentlyViewedProducts();
 

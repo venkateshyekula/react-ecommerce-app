@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import FormInput from "../components/common/FormInput";
 import { useAuth } from "../context/useAuth";
+import { useToast } from "../context/useToast";
 import type { LoginPayload } from "../types/auth";
 import { validateLoginForm, type ValidationErrors } from "../utils/validation";
 
@@ -19,8 +20,22 @@ const initialLoginValues: LoginPayload = {
   password: ""
 };
 
+const getSafeRedirectPath = (pathname?: string): string => {
+  if (
+    !pathname ||
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/products"
+  ) {
+    return "/home";
+  }
+
+  return pathname;
+};
+
 const LoginPage = () => {
   const { login } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,7 +45,7 @@ const LoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const locationState = location.state as RouteLocationState | null;
-  const redirectPath = locationState?.from?.pathname ?? "/products";
+  const redirectPath = getSafeRedirectPath(locationState?.from?.pathname);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -41,10 +56,11 @@ const LoginPage = () => {
       [fieldName]: value
     }));
 
-    setErrors((previousErrors) => ({
-      ...previousErrors,
-      undefined
-    }));
+    setErrors((previousErrors) => {
+      const nextErrors = { ...previousErrors };
+      delete nextErrors[fieldName];
+      return nextErrors;
+    });
 
     setServerError("");
   };
@@ -57,40 +73,68 @@ const LoginPage = () => {
 
     setErrors({});
     setServerError("");
+
+    showToast(
+      "Demo credentials filled",
+      "Click Login to continue.",
+      "info"
+    );
   };
 
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event.preventDefault();
+  event: FormEvent<HTMLFormElement>
+): Promise<void> => {
+  event.preventDefault();
 
-    const validationErrors = validateLoginForm(values);
-    setErrors(validationErrors);
+  const validationErrors = validateLoginForm(values);
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length > 0) {
+  if (Object.keys(validationErrors).length > 0) {
+    showToast(
+      "Please fix the highlighted fields",
+      "Please fix the highlighted fields before logging in.",
+      "warning"
+    );
+    return;
+  }
+
+  try {
+    setIsSubmitting(true);
+    setServerError("");
+
+    const loggedInUser = await login(values.email, values.password);
+
+    showToast(
+      "Login successful",
+      "Welcome back to ShopEase!",
+      "success"
+    );
+
+    if (
+      loggedInUser?.role === "SUPPORT" &&
+      loggedInUser?.supportTeamCode
+    ) {
+      navigate("/support/escalations", {
+        replace: true
+      });
       return;
     }
 
-    try {
-      setIsSubmitting(true);
-      setServerError("");
+    navigate(redirectPath, {
+      replace: true
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unable to login. Please try again.";
 
-      await login(values.email, values.password);
-
-      navigate(redirectPath, {
-        replace: true
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Unable to login. Please try again.";
-
-      setServerError(message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    setServerError(message);
+    showToast("Login failed", message, "danger");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <main className="auth-page bg-light">
@@ -104,6 +148,7 @@ const LoginPage = () => {
                 </div>
 
                 <h2 className="fw-bold mb-1">Welcome back</h2>
+
                 <p className="text-muted mb-0">
                   Login to continue shopping with ShopEase.
                 </p>
@@ -149,11 +194,32 @@ const LoginPage = () => {
                 </Button>
               </form>
 
+              <div className="auth-legal-note mt-4">
+                <p className="text-muted small mb-0">
+                  By logging in, you agree to the{" "}
+                  <Link to="/terms-and-conditions" target="_blank" className="fw-bold auth-policy-link">
+                    Terms of Use
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy-policy" target="_blank" className="fw-bold auth-policy-link">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
+              </div>
+
               <div className="text-center mt-4">
-                <p className="text-muted mb-0">
+                <p className="text-muted mb-2">
                   Don&apos;t have an account?{" "}
-                  <Link to="/register" className="fw-semibold">
+                  <Link to="/register" className="fw-semibold auth-policy-link">
                     Register
+                  </Link>
+                </p>
+
+                <p className="text-muted mb-0">
+                  Have trouble logging in?{" "}
+                  <Link to="/help-center" className="fw-bold auth-policy-link">
+                    Get help
                   </Link>
                 </p>
               </div>
@@ -165,6 +231,7 @@ const LoginPage = () => {
               <div className="d-flex align-items-start justify-content-between gap-3 mb-4">
                 <div>
                   <h3 className="fw-bold mb-2">Demo Logins</h3>
+
                   <p className="text-muted mb-0">
                     Click any role below to autofill login credentials.
                   </p>
@@ -247,6 +314,7 @@ const LoginPage = () => {
 
               <div className="demo-login-note mt-4">
                 <i className="bi bi-info-circle me-2 text-primary" />
+
                 <span>
                   Make sure these users exist in <strong>db.json</strong> and
                   JSON Server is running.

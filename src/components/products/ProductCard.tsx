@@ -1,26 +1,51 @@
-import type { MouseEvent } from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
+import Button from "../common/Button";
+import QuickViewModal from "./QuickViewModal";
 import { useAuth } from "../../context/useAuth";
 import { useCart } from "../../context/useCart";
+import { useComparison } from "../../context/useComparison";
 import { useWishlist } from "../../context/useWishlist";
 import type { Product, ProductViewMode } from "../../types/product";
 import {
   formatCurrency,
-  getDiscountedPrice
+  getDiscountedPrice,
 } from "../../utils/currencyFormatter";
-import Button from "../common/Button";
+import ViewSimilarModal from "./ViewSimilarModal";
 
 interface ProductCardProps {
   product: Product;
   viewMode?: ProductViewMode;
 }
 
-const sizeRequiredCategories = ["Clothing", "Footwear", "Accessories"];
+const MAX_VISIBLE_SIZES = 4;
+
+const getRatingCount = (rating: number): string => {
+  const count = Math.max(120, Math.round(rating * 485));
+
+  if (count >= 1000) {
+    return `${(count / 1000).toFixed(1)}k`;
+  }
+
+  return String(count);
+};
+
+const isImageUrl = (image: string): boolean => {
+  return (
+    image.startsWith("http://") ||
+    image.startsWith("https://") ||
+    image.startsWith("data:image/")
+  );
+};
 
 const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
   const { currentUser } = useAuth();
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const { isInCompare, toggleCompare, compareCount } = useComparison();
+
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState<boolean>(false);
+  const [isViewSimilarOpen, setIsViewSimilarOpen] = useState<boolean>(false);
 
   const userRole = currentUser?.role;
 
@@ -30,22 +55,34 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
   const canUseWishlist =
     Boolean(currentUser) && (userRole === "CUSTOMER" || userRole === "ADMIN");
 
-  const isSizeRequired = sizeRequiredCategories.includes(product.category);
-
   const discountedPrice = getDiscountedPrice(product.price, product.discount);
   const isOutOfStock = product.stock <= 0;
   const isWishlisted = isInWishlist(product.id);
-  const mockRatingCount = Math.max(120, Math.round(product.rating * 485));
+  const isCompared = isInCompare(product.id);
+  const isCompareDisabled = !isCompared && compareCount >= 4;
 
-  const handleAddToCart = (): void => {
-    if (!isOutOfStock && canUseShoppingFeatures && !isSizeRequired) {
-      addToCart(product);
-    }
-  };
+  const hasSizeOptions = Boolean(product.sizeOptions?.length);
+  const visibleSizes = product.sizeOptions?.slice(0, MAX_VISIBLE_SIZES) ?? [];
+  const hiddenSizeCount =
+    (product.sizeOptions?.length ?? 0) - visibleSizes.length;
 
-  const handleWishlistClick = (
-    event: MouseEvent<HTMLButtonElement>
-  ): void => {
+  const ratingCount = useMemo(() => {
+    return getRatingCount(product.rating);
+  }, [product.rating]);
+
+  const stockLabel = useMemo(() => {
+    if (isOutOfStock) return "Out of Stock";
+    if (product.stock <= 5) return "Only Few Left";
+    return "In Stock";
+  }, [isOutOfStock, product.stock]);
+
+  const stockClass = useMemo(() => {
+    if (isOutOfStock) return "out-of-stock";
+    if (product.stock <= 5) return "few-left";
+    return "in-stock";
+  }, [isOutOfStock, product.stock]);
+
+  const handleWishlistClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -54,125 +91,177 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
     }
   };
 
+  const handleCompareClick = (): void => {
+    if (!isCompareDisabled) {
+      toggleCompare(product);
+    }
+  };
+
+  const handleAddToCart = (): void => {
+    if (!canUseShoppingFeatures || isOutOfStock || hasSizeOptions) {
+      return;
+    }
+
+    addToCart(product);
+  };
+
   return (
-    <div
-      className={`card product-card advanced-product-card border-0 shadow-sm ${
-        viewMode === "list" ? "product-card-list" : "h-100"
-      }`}
-    >
-      <div className="product-image-wrapper position-relative">
-        {/* FIX: Use an img tag instead of just rendering the string */}
-        <img
-          src={product.image}
-          alt={product.name}
-          className="img-fluid"
-          onError={(e) => {
-            e.currentTarget.src = "/placeholder-image.png";
-          }}
-        />
-
-        {product.discount > 0 ? (
-          <span className="badge bg-danger product-discount-badge">
-            {product.discount}% OFF
-          </span>
-        ) : null}
-
-        <span
-          className={`badge product-stock-badge ${
-            isOutOfStock ? "bg-secondary" : "bg-success"
-          }`}
-        >
-          {isOutOfStock ? "Out of Stock" : "In Stock"}
-        </span>
-
-        {canUseWishlist ? (
-          <button
-            type="button"
-            className={`wishlist-floating-btn ${
-              isWishlisted ? "active" : ""
-            }`}
-            aria-label={
-              isWishlisted
-                ? `Remove ${product.name} from wishlist`
-                : `Add ${product.name} to wishlist`
-            }
-            aria-pressed={isWishlisted}
-            onClick={handleWishlistClick}
+    <>
+      <article
+        className={`fashion-product-card bg-white ${
+          viewMode === "list" ? "fashion-product-card-list" : ""
+        }`}
+      >
+        <div className="fashion-product-media">
+          <Link
+            to={`/products/${product.id}`}
+            className="fashion-product-image-link"
+            aria-label={`View details for ${product.name}`}
           >
-            <i
-              className={isWishlisted ? "bi bi-heart-fill" : "bi bi-heart"}
-            />
-          </button>
-        ) : null}
-      </div>
+            {isImageUrl(product.image) ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                className="fashion-product-image"
+                loading="lazy"
+              />
+            ) : (
+              <div className="fashion-product-image-placeholder">
+                <span>{product.image}</span>
+                <strong>{product.name}</strong>
+              </div>
+            )}
+          </Link>
 
-      <div className="card-body d-flex flex-column">
-        <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
-          <span className="badge bg-light text-primary border">
-            {product.category}
+          {product.discount > 0 ? (
+            <span className="fashion-discount-badge">
+              {product.discount}% OFF
+            </span>
+          ) : null}
+
+          <span className={`fashion-stock-badge ${stockClass}`}>
+            {stockLabel}
           </span>
 
-          <span className="rating-badge">
-            <i className="bi bi-star-fill text-warning me-1" />
-            {product.rating}
-          </span>
+          <div className="fashion-rating-overlay">
+            <i className="bi bi-star-fill" />
+            <span>{product.rating}</span>
+            <span className="fashion-rating-divider">|</span>
+            <span>{ratingCount}</span>
+          </div>
+
+          {canUseWishlist ? (
+            <button
+              type="button"
+              className={`fashion-wishlist-btn ${isWishlisted ? "active" : ""}`}
+              aria-label={
+                isWishlisted
+                  ? `Remove ${product.name} from wishlist`
+                  : `Add ${product.name} to wishlist`
+              }
+              aria-pressed={isWishlisted}
+              onClick={handleWishlistClick}
+            >
+              <i
+                className={isWishlisted ? "bi bi-heart-fill" : "bi bi-heart"}
+              />
+            </button>
+          ) : null}
         </div>
 
-        <h5 className="card-title product-title mb-1">{product.name}</h5>
-        {/*
-        <p className="text-muted small mb-2">{product.brand}</p>
-         
-        {product.sellerName ? (
-          <p className="small text-muted mb-2">
-            Sold by <strong>{product.sellerName}</strong>
-          </p>
-        ) : null}
+        <div className="fashion-product-body">
+          <div className="d-flex justify-content-between align-items-start gap-2 mb-1">
+            <Link
+              to={`/products/${product.id}`}
+              className="fashion-product-brand"
+            >
+              {product.brand}
+            </Link>
 
-        <p className="product-description text-muted small mb-3">
-          {product.description}
-        </p> */}
+            {product.sellerName ? (
+              <span className="fashion-seller-chip">
+                <i className="bi bi-shop me-1" />
+                {product.sellerName}
+              </span>
+            ) : null}
+          </div>
 
-        <div className="product-meta-list mb-3">
-          <span>
-            <i className="bi bi-people me-1" />
-            {mockRatingCount} ratings
-          </span>
+          <p className="fashion-product-title">{product.name}</p>
 
-          <span>
-            <i className="bi bi-truck me-1" />
-            Free delivery
-          </span>
-        </div>
+          {hasSizeOptions ? (
+            <div className="fashion-sizes-row">
+              <span className="fashion-sizes-label">Sizes:</span>
 
-        <div className="mt-auto">
-          <div className="d-flex align-items-center flex-wrap gap-2 mb-3">
-            <span className="fw-bold fs-5 text-dark">
+              {visibleSizes.map((size) => (
+                <span className="fashion-size-chip" key={size}>
+                  {size}
+                </span>
+              ))}
+
+              {hiddenSizeCount > 0 ? (
+                <span className="fashion-size-chip muted">
+                  +{hiddenSizeCount}
+                </span>
+              ) : null}
+            </div>
+          ) : null}
+
+          <div className="fashion-price-row">
+            <span className="fashion-current-price">
               {formatCurrency(discountedPrice)}
             </span>
 
             {product.discount > 0 ? (
               <>
-                <span className="text-muted text-decoration-line-through small">
+                <span className="fashion-original-price">
                   {formatCurrency(product.price)}
                 </span>
 
-                <span className="text-success small fw-bold">
+                <span className="fashion-saving-text">
                   Save {product.discount}%
                 </span>
               </>
             ) : null}
           </div>
 
-          <div
-            className={`d-grid gap-2 ${
-              viewMode === "list" ? "product-list-actions" : ""
-            }`}
-          >
+          <div className="fashion-utility-row">
+            <button
+              type="button"
+              className={`fashion-utility-btn ${isCompared ? "active" : ""}`}
+              disabled={isCompareDisabled}
+              onClick={handleCompareClick}
+            >
+              <i
+                className={isCompared ? "bi bi-check2-square" : "bi bi-square"}
+              />
+              {isCompared ? "Compared" : "Compare"}
+            </button>
+
+            <button
+              type="button"
+              className="fashion-utility-btn"
+              onClick={() => setIsQuickViewOpen(true)}
+            >
+              <i className="bi bi-eye" />
+              Quick View
+            </button>
+
+            <button
+              type="button"
+              className="fashion-utility-btn"
+              onClick={() => setIsViewSimilarOpen(true)}
+            >
+              <i className="bi bi-grid" />
+              View Similar
+            </button>
+          </div>
+
+          <div className="fashion-action-row">
             {canUseShoppingFeatures ? (
-              isSizeRequired ? (
+              hasSizeOptions ? (
                 <Link
                   to={`/products/${product.id}`}
-                  className="btn btn-primary"
+                  className="btn btn-primary fashion-primary-action"
                 >
                   <i className="bi bi-rulers me-2" />
                   Select Size
@@ -182,6 +271,7 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
                   variant="primary"
                   disabled={isOutOfStock}
                   onClick={handleAddToCart}
+                  className="fashion-primary-action"
                 >
                   <i className="bi bi-cart-plus me-2" />
                   {isOutOfStock ? "Out of Stock" : "Add to Cart"}
@@ -191,14 +281,27 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
 
             <Link
               to={`/products/${product.id}`}
-              className="btn btn-outline-primary"
+              className="btn btn-outline-primary fashion-secondary-action"
             >
               View Details
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      </article>
+
+      {isQuickViewOpen ? (
+        <QuickViewModal
+          product={product}
+          onClose={() => setIsQuickViewOpen(false)}
+        />
+      ) : null}
+      {isViewSimilarOpen ? (
+        <ViewSimilarModal
+          product={product}
+          onClose={() => setIsViewSimilarOpen(false)}
+        />
+      ) : null}
+    </>
   );
 };
 

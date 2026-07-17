@@ -10,7 +10,7 @@ const NotFoundPage = () => {
           message="The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
           action={
             <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
-              <Link to="/" className="btn btn-primary">
+              <Link to="/home" className="btn btn-primary">
                 <i className="bi bi-house me-2" />
                 Go Home
               </Link>

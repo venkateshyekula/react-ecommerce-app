@@ -3,6 +3,7 @@ import type {
   Product,
   ProductCategory
 } from "../types/product";
+import { assertValidDeleteId } from "../utils/deleteSafetyUtils";
 
 const PRODUCTS_ENDPOINT = "/products";
 
@@ -25,5 +26,16 @@ export const productService = {
     return apiClient.get<Product[]>(
       `${PRODUCTS_ENDPOINT}?category=${encodeURIComponent(category)}`
     );
-  }
+  },
+
+  deleteProduct: async (productId: string): Promise<void> => {
+  assertValidDeleteId({
+    entityType: "product",
+    id: productId
+  });
+
+  await apiClient.delete<void>(
+    `${PRODUCTS_ENDPOINT}/${encodeURIComponent(productId)}`
+  );
+},
 };

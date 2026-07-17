@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import type { Order } from "../../types/order";
+import type { ReturnPolicyRule } from "../../types/returnPolicy";
+import type { ReturnRequest } from "../../types/returnRequest";
+import { returnPolicyService } from "../../services/returnPolicyService";
+import { returnRequestService } from "../../services/returnRequestService";
+import {
+  getFallbackFulfillmentStatus,
+  getFulfillmentStatusClass,
+  getFulfillmentStatusLabel,
+} from "../../utils/fulfillmentUtils";
 import { formatCurrency } from "../../utils/currencyFormatter";
 import {
   canCancelOrder,
   canReturnOrder,
-  getOrderStatusBadgeClass
+  getOrderStatusBadgeClass,
 } from "../../utils/orderUtils";
 import Button from "../common/Button";
-import OrderTrackingTimeline from "./OrderTrackingTimeline";
+import OrderDeliveryPromiseCard from "./OrderDeliveryPromiseCard";
+import OrderFulfillmentTimeline from "./OrderFulfillmentTimeline";
+import OrderReturnEligibilityCard from "./OrderReturnEligibilityCard";
+import OrderRewardRedemptionCard from "./OrderRewardRedemptionCard";
+import OrderWalletPaymentCard from "./OrderWalletPaymentCard";
+import ReturnRequestModal from "./ReturnRequestModal";
 
 interface OrderCardProps {
   order: Order;
@@ -24,37 +39,96 @@ const OrderCard = ({
   onCancelOrder,
   onReturnOrder,
   isReordering = false,
-  isUpdating = false
+  isUpdating = false,
 }: OrderCardProps) => {
   const [cancelReason, setCancelReason] = useState<string>("");
   const [returnReason, setReturnReason] = useState<string>("");
   const [showCancelBox, setShowCancelBox] = useState<boolean>(false);
   const [showReturnBox, setShowReturnBox] = useState<boolean>(false);
 
+  const [returnRules, setReturnRules] = useState<ReturnPolicyRule[]>([]);
+  const [returnRequests, setReturnRequests] = useState<ReturnRequest[]>([]);
+  const [isReturnModalOpen, setIsReturnModalOpen] = useState<boolean>(false);
+  const [isSubmittingReturn, setIsSubmittingReturn] = useState<boolean>(false);
+
   const formattedDate = new Intl.DateTimeFormat("en-IN", {
     dateStyle: "medium",
-    timeStyle: "short"
+    timeStyle: "short",
   }).format(new Date(order.orderDate));
+
+  useEffect(() => {
+    const loadReturnData = async (): Promise<void> => {
+      try {
+        const [rules, requests] = await Promise.all([
+          returnPolicyService.getRules(),
+          returnRequestService.getRequestsByOrderId(order.orderId),
+        ]);
+
+        setReturnRules(rules);
+        setReturnRequests(requests);
+      } catch {
+        setReturnRules([]);
+        setReturnRequests([]);
+      }
+    };
+
+    void loadReturnData();
+  }, [order.orderId]);
 
   const handleCancelSubmit = async (): Promise<void> => {
     const reason = cancelReason.trim() || "Customer requested cancellation";
+
     await onCancelOrder(order, reason);
+
     setShowCancelBox(false);
     setCancelReason("");
   };
 
   const handleReturnSubmit = async (): Promise<void> => {
     const reason = returnReason.trim() || "Customer requested return";
+
     await onReturnOrder(order, reason);
+
     setShowReturnBox(false);
     setReturnReason("");
   };
 
+  const handleSubmitReturnRequest = async (
+    reason: string,
+    comments: string,
+  ): Promise<void> => {
+    try {
+      setIsSubmittingReturn(true);
+
+      const createdRequest = await returnRequestService.createRequest({
+        requestId: `RET-${Date.now()}`,
+        orderId: order.orderId,
+        orderDbId: order.id,
+        userId: order.userId,
+        requestedAt: new Date().toISOString(),
+        reason,
+        comments,
+        status: "REQUESTED",
+        items: order.items,
+      });
+
+      setReturnRequests((previousRequests) => [
+        createdRequest,
+        ...previousRequests,
+      ]);
+
+      setIsReturnModalOpen(false);
+    } finally {
+      setIsSubmittingReturn(false);
+    }
+  };
+
   return (
-    <div className="order-card bg-white rounded-4 shadow-sm p-4 mb-4">
+    <div className="order-card bg-white p-4 mb-4 shopease-brand-card">
       <div className="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
         <div>
           <h5 className="fw-bold mb-1">Order #{order.orderId}</h5>
+
           <p className="text-muted mb-0">
             <i className="bi bi-calendar3 me-2" />
             {formattedDate}
@@ -64,33 +138,44 @@ const OrderCard = ({
         <div className="text-lg-end">
           <span
             className={`badge mb-2 ${getOrderStatusBadgeClass(
-              order.orderStatus
+              order.orderStatus,
             )}`}
           >
             {order.orderStatus}
           </span>
 
-          <h5 className="fw-bold mb-0">
-            {formatCurrency(order.totalAmount)}
-          </h5>
+          <span
+            className={`fulfillment-status-pill ${getFulfillmentStatusClass(
+              order.fulfillmentStatus,
+            )}`}
+          >
+            {getFulfillmentStatusLabel(
+              order.fulfillmentStatus,
+              order.orderStatus,
+            )}
+          </span>
+
+          <h5 className="fw-bold mb-0">{formatCurrency(order.totalAmount)}</h5>
         </div>
       </div>
 
       <div className="row g-4">
-        <div className="col-lg-7">
+        <div className="col-lg">
           <h6 className="fw-bold mb-3">Items</h6>
 
           <div className="order-items-list">
             {order.items.map((item) => (
               <div
-                key={`${order.orderId}-${item.productId}-${item.selectedSize ?? "no-size"}`}
+                key={`${order.orderId}-${item.productId}-${
+                  item.selectedSize ?? "no-size"
+                }`}
                 className="order-item-row d-flex align-items-center gap-3 mb-3"
               >
                 <img
-                src={item.image}
-                alt={item.image}
-                className="rounded-3 border object-fit-cover"
-                style={{ width: "100px", height: "100px" }}
+                  src={item.image}
+                  alt={item.image}
+                  className="rounded-3 border object-fit-cover"
+                  style={{ width: "100px", height: "100px" }}
                 />
 
                 <div className="flex-grow-1">
@@ -108,30 +193,55 @@ const OrderCard = ({
                   </p>
                 </div>
 
-                <div className="fw-bold">
-                  {formatCurrency(item.subtotal)}
-                </div>
+                <div className="fw-bold">{formatCurrency(item.subtotal)}</div>
               </div>
             ))}
           </div>
 
+          <div className="mb-4">
+            <OrderDeliveryPromiseCard deliveryPromise={order.deliveryPromise} />
+          </div>
+
+          <div className="mb-4">
+            <OrderRewardRedemptionCard
+              rewardRedemption={order.rewardRedemption}
+            />
+          </div>
+
+          <div className="mb-4">
+            <OrderWalletPaymentCard walletRedemption={order.walletRedemption} />
+          </div>
+
+          <OrderReturnEligibilityCard
+            order={order}
+            rules={returnRules}
+            hasExistingReturnRequest={returnRequests.length > 0}
+            onRequestReturn={() => setIsReturnModalOpen(true)}
+          />
+
+          {isReturnModalOpen ? (
+            <ReturnRequestModal
+              order={order}
+              isSubmitting={isSubmittingReturn}
+              onClose={() => setIsReturnModalOpen(false)}
+              onSubmit={handleSubmitReturnRequest}
+            />
+          ) : null}
+
           <div className="mt-3">
             <h6 className="fw-bold mb-2">Delivery Address</h6>
+
             <p className="text-muted mb-0">
-              {order.deliveryAddress.fullName},{" "}
-              {order.deliveryAddress.mobile}
+              {order.deliveryAddress.fullName}, {order.deliveryAddress.mobile}
               <br />
-              {order.deliveryAddress.addressLine},{" "}
-              {order.deliveryAddress.city},{" "}
-              {order.deliveryAddress.state} -{" "}
-              {order.deliveryAddress.pincode}
+              {order.deliveryAddress.addressLine}, {order.deliveryAddress.city},{" "}
+              {order.deliveryAddress.state} - {order.deliveryAddress.pincode}
             </p>
           </div>
 
           {order.cancellationReason ? (
             <div className="alert alert-danger mt-3 mb-0" role="alert">
-              <strong>Cancellation Reason:</strong>{" "}
-              {order.cancellationReason}
+              <strong>Cancellation Reason:</strong> {order.cancellationReason}
             </div>
           ) : null}
 
@@ -142,12 +252,13 @@ const OrderCard = ({
           ) : null}
         </div>
 
-        <div className="col-lg-5">
-          <h6 className="fw-bold mb-3">Tracking</h6>
-
-          <OrderTrackingTimeline
-            steps={order.trackingSteps}
-            currentStatus={order.orderStatus}
+        <div className="col-lg">
+          <OrderFulfillmentTimeline
+            fulfillmentStatus={getFallbackFulfillmentStatus(
+              order.orderStatus,
+              order.fulfillmentStatus,
+            )}
+            orderStatus={order.orderStatus}
             events={order.trackingEvents}
           />
 
@@ -166,8 +277,7 @@ const OrderCard = ({
               </div>
             ) : null}
 
-            {order.discountAmount !== undefined &&
-            order.discountAmount > 0 ? (
+            {order.discountAmount !== undefined && order.discountAmount > 0 ? (
               <div className="d-flex justify-content-between mb-2">
                 <span className="text-muted">Discount</span>
                 <span className="fw-semibold text-success">
@@ -180,6 +290,25 @@ const OrderCard = ({
               <div className="d-flex justify-content-between mb-2">
                 <span className="text-muted">Coupon</span>
                 <span className="fw-semibold">{order.couponCode}</span>
+              </div>
+            ) : null}
+
+            {order.rewardRedemption?.rewardsApplied ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span className="text-muted">Reward Discount</span>
+                <span className="fw-semibold text-success">
+                  -{" "}
+                  {formatCurrency(order.rewardRedemption.rewardDiscountAmount)}
+                </span>
+              </div>
+            ) : null}
+
+            {order.walletRedemption?.walletApplied ? (
+              <div className="d-flex justify-content-between mb-2">
+                <span className="text-muted">Wallet Used</span>
+                <span className="fw-semibold text-success">
+                  - {formatCurrency(order.walletRedemption.walletAmountUsed)}
+                </span>
               </div>
             ) : null}
 
@@ -202,6 +331,13 @@ const OrderCard = ({
               <i className="bi bi-arrow-repeat me-2" />
               Reorder
             </Button>
+            <Link
+              to={`/invoice/${order.orderId}`}
+              className="btn btn-outline-primary"
+            >
+              <i className="bi bi-receipt me-2" />
+              Invoice
+            </Link>
 
             {canCancelOrder(order.orderStatus) ? (
               <Button
@@ -233,6 +369,7 @@ const OrderCard = ({
               <label className="form-label fw-semibold">
                 Cancellation Reason
               </label>
+
               <textarea
                 className="form-control mb-2"
                 rows={3}
@@ -240,6 +377,7 @@ const OrderCard = ({
                 placeholder="Enter cancellation reason"
                 onChange={(event) => setCancelReason(event.target.value)}
               />
+
               <Button
                 variant="danger"
                 fullWidth
@@ -254,6 +392,7 @@ const OrderCard = ({
           {showReturnBox ? (
             <div className="order-action-box mt-3">
               <label className="form-label fw-semibold">Return Reason</label>
+
               <textarea
                 className="form-control mb-2"
                 rows={3}
@@ -261,6 +400,7 @@ const OrderCard = ({
                 placeholder="Enter return reason"
                 onChange={(event) => setReturnReason(event.target.value)}
               />
+
               <Button
                 variant="warning"
                 fullWidth

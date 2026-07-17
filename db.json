@@ -1,34 +1,612 @@
 {
+  "supportTeams": [
+    {
+      "id": "team-payment-finance",
+      "teamCode": "PAYMENT_FINANCE",
+      "teamName": "Payment / Finance Team",
+      "description": "Handles payment capture, gateway mismatch, duplicate debit, and order-not-created payment issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-refund",
+      "teamCode": "REFUND_TEAM",
+      "teamName": "Refund Team",
+      "description": "Handles refund approval, bank refund, wallet refund, and refund settlement issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-delivery",
+      "teamCode": "DELIVERY_TEAM",
+      "teamName": "Delivery Team",
+      "description": "Handles courier, delivery attempt, delivered-not-received, and shipment delay issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-seller-fulfillment",
+      "teamCode": "SELLER_FULFILLMENT",
+      "teamName": "Seller Fulfillment Team",
+      "description": "Handles seller packing, shipment handoff, fulfillment pending, and order movement issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-wallet-rewards",
+      "teamCode": "WALLET_REWARDS",
+      "teamName": "Wallet / Rewards Team",
+      "description": "Handles wallet debit, wallet credit, reward redemption, reward credit, and cashback issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-coupon-promotions",
+      "teamCode": "COUPON_PROMOTIONS",
+      "teamName": "Coupon / Promotions Team",
+      "description": "Handles coupon eligibility, coupon redemption, promo code, and discount mismatch issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-tech-support",
+      "teamCode": "TECH_SUPPORT",
+      "teamName": "Tech Support Team",
+      "description": "Handles system, account, technical, and backend workflow issues.",
+      "isActive": true
+    },
+    {
+      "id": "team-customer-operations",
+      "teamCode": "CUSTOMER_OPERATIONS",
+      "teamName": "Customer Operations Team",
+      "description": "Handles general support, account issues, unclear issues, and triage.",
+      "isActive": true
+    }
+  ],
+  "supportTeamMembers": [
+    {
+      "id": "team-member-payment-001",
+      "userId": "support-payment-001",
+      "name": "Payment Analyst",
+      "email": "payment.analyst@shopease.local",
+      "role": "PAYMENT_ANALYST",
+      "teamCode": "PAYMENT_FINANCE",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-refund-001",
+      "userId": "support-refund-001",
+      "name": "Refund Specialist",
+      "email": "refund.specialist@shopease.local",
+      "role": "REFUND_SPECIALIST",
+      "teamCode": "REFUND_TEAM",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-delivery-001",
+      "userId": "support-delivery-001",
+      "name": "Delivery Coordinator",
+      "email": "delivery.coordinator@shopease.local",
+      "role": "DELIVERY_COORDINATOR",
+      "teamCode": "DELIVERY_TEAM",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-fulfillment-001",
+      "userId": "support-fulfillment-001",
+      "name": "Fulfillment Coordinator",
+      "email": "fulfillment.coordinator@shopease.local",
+      "role": "FULFILLMENT_COORDINATOR",
+      "teamCode": "SELLER_FULFILLMENT",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-wallet-001",
+      "userId": "support-wallet-001",
+      "name": "Wallet Rewards Analyst",
+      "email": "wallet.rewards@shopease.local",
+      "role": "WALLET_REWARDS_ANALYST",
+      "teamCode": "WALLET_REWARDS",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-coupon-001",
+      "userId": "support-coupon-001",
+      "name": "Promotion Analyst",
+      "email": "promotion.analyst@shopease.local",
+      "role": "PROMOTION_ANALYST",
+      "teamCode": "COUPON_PROMOTIONS",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-tech-001",
+      "userId": "support-tech-001",
+      "name": "Tech Support Analyst",
+      "email": "tech.support@shopease.local",
+      "role": "TECH_SUPPORT_ANALYST",
+      "teamCode": "TECH_SUPPORT",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "team-member-operations-001",
+      "userId": "support-operations-001",
+      "name": "Customer Operations Analyst",
+      "email": "customer.operations@shopease.local",
+      "role": "CUSTOMER_OPERATIONS_ANALYST",
+      "teamCode": "CUSTOMER_OPERATIONS",
+      "isActive": true,
+      "availabilityStatus": "AVAILABLE",
+      "activeEscalationCount": 0,
+      "maxEscalationCapacity": 5,
+      "lastActiveAt": "2026-07-15T10:00:00.000Z"
+    }
+  ],
+  "supportEscalations": [
+    {
+      "id": "support-escalation-db-001",
+      "escalationId": "ESC-20260715-001",
+      "ticketDbId": "support-ticket-db-001",
+      "ticketNumber": "SUP-20260714-001",
+      "orderId": "ORD-20260713-7542",
+      "userId": "user-001",
+      "userName": "Test User",
+      "team": "PAYMENT_FINANCE",
+      "status": "IN_PROGRESS",
+      "priority": "HIGH",
+      "reason": "Successful payment found without linked order.",
+      "assignedToUserId": "support-payment-001",
+      "assignedToName": "Payment Analyst",
+      "createdByUserId": "support-001",
+      "createdByName": "Support Agent",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T14:57:19.609Z",
+      "resolvedAt": null,
+      "resolutionNote": null,
+      "activities": [
+        {
+          "id": "escalation-activity-db-001",
+          "label": "Escalation Created",
+          "description": "Ticket escalated to Payment / Finance team.",
+          "createdByName": "Support Agent",
+          "createdAt": "2026-07-15T10:00:00.000Z"
+        },
+        {
+          "id": "escalation-activity-1784127326394-hvc729",
+          "label": "Escalation Assigned",
+          "description": "Escalation assigned to Payment Analyst.",
+          "createdByName": "Payment Analyst",
+          "createdAt": "2026-07-15T14:55:26.394Z"
+        },
+        {
+          "id": "escalation-activity-1784127439609-ajbugs",
+          "label": "Escalation Status Updated",
+          "description": "Escalation status changed from ASSIGNED to IN_PROGRESS.",
+          "createdByName": "Payment Analyst",
+          "createdAt": "2026-07-15T14:57:19.609Z"
+        }
+      ]
+    }
+  ],
+  "paymentTransactions": [
+    {
+      "id": "payment-db-001",
+      "paymentId": "PAY-20260714-001",
+      "userId": "user-001",
+      "orderId": null,
+      "amount": 1899,
+      "paymentMethod": "UPI",
+      "status": "SUCCESS",
+      "gatewayReferenceId": "UPI-REF-99887766",
+      "gatewayStatus": "CAPTURED",
+      "issueFlag": "ORDER_NOT_CREATED",
+      "createdAt": "2026-07-14T08:00:00.000Z",
+      "updatedAt": "2026-07-14T08:00:00.000Z"
+    },
+    {
+      "id": "payment-db-002",
+      "paymentId": "PAY-20260714-002",
+      "userId": "user-001",
+      "orderId": "ORD-20260713-1006",
+      "amount": 2299,
+      "paymentMethod": "UPI",
+      "status": "SUCCESS",
+      "gatewayReferenceId": "UPI-REF-12345678",
+      "gatewayStatus": "CAPTURED",
+      "issueFlag": null,
+      "createdAt": "2026-07-13T12:01:00.000Z",
+      "updatedAt": "2026-07-13T12:01:00.000Z"
+    },
+    {
+      "id": "payment-db-003",
+      "paymentId": "PAY-20260714-003",
+      "userId": "user-001",
+      "orderId": "ORD-20260712-1001",
+      "amount": 1899,
+      "paymentMethod": "Credit Card",
+      "status": "REFUNDED",
+      "gatewayReferenceId": "CARD-REF-44556677",
+      "gatewayStatus": "REFUND_PROCESSED",
+      "issueFlag": "REFUND_PENDING",
+      "createdAt": "2026-07-12T09:00:00.000Z",
+      "updatedAt": "2026-07-14T12:30:00.000Z"
+    },
+    {
+      "id": "payment-db-1784208804632-gr4328",
+      "paymentId": "PAY-20260716-1784208804632",
+      "userId": "user-001",
+      "orderId": "ORD-20260716-1883",
+      "checkoutReferenceId": "checkout-20260716-1784208804632",
+      "amount": 58999,
+      "paymentMethod": "Credit Card",
+      "status": "SUCCESS",
+      "gatewayStatus": "CAPTURED",
+      "gatewayReferenceId": "CREDIT-CARD-REF-1784208804632",
+      "issueFlag": null,
+      "refundStatus": "NOT_REQUIRED",
+      "refundId": null,
+      "failureReason": null,
+      "createdAt": "2026-07-16T13:33:24.632Z",
+      "updatedAt": "2026-07-16T13:39:42.234Z"
+    },
+    {
+      "id": "payment-db-1784231237347-jyq0u1",
+      "paymentId": "PAY-20260717-1784231237347",
+      "userId": "user-001",
+      "orderId": "ORD-20260716-5454",
+      "checkoutReferenceId": "checkout-20260717-1784231237347",
+      "amount": 1499,
+      "paymentMethod": "Credit Card",
+      "status": "SUCCESS",
+      "gatewayStatus": "CAPTURED",
+      "gatewayReferenceId": "CREDIT-CARD-REF-1784231237347",
+      "issueFlag": null,
+      "refundStatus": "NOT_REQUIRED",
+      "refundId": null,
+      "failureReason": null,
+      "createdAt": "2026-07-16T19:47:17.347Z",
+      "updatedAt": "2026-07-16T19:47:28.988Z"
+    }
+  ],
+  "addresses": [
+    {
+      "id": "address-001",
+      "userId": "user-001",
+      "fullName": "Test User",
+      "mobile": "9876543210",
+      "addressLine": "MG Road, Near Metro Station",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560001",
+      "addressType": "HOME",
+      "isDefault": true,
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
+    }
+  ],
+  "productQuestions": [
+    {
+      "id": "question-001",
+      "productId": "prod-001",
+      "productName": "Samsung Galaxy S24",
+      "sellerId": "seller-001",
+      "sellerName": "Samsung Store",
+      "userId": "user-001",
+      "userName": "Test User",
+      "question": "Does this phone support wireless charging?",
+      "imageUrls": [],
+      "answer": "Yes, Samsung Galaxy S24 supports wireless charging.",
+      "answeredByUserId": "seller-001",
+      "answeredByName": "Samsung Store",
+      "status": "ANSWERED",
+      "createdAt": "2026-07-04T12:00:00.000Z",
+      "answeredAt": "2026-07-04T12:30:00.000Z",
+      "updatedAt": "2026-07-04T12:30:00.000Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notification-002",
+      "userId": "admin-001",
+      "title": "Low stock alert",
+      "message": "Some products are running low on stock.",
+      "type": "INVENTORY",
+      "severity": "WARNING",
+      "isRead": true,
+      "createdAt": "2026-07-04T10:00:00.000Z",
+      "link": "/admin/products"
+    },
+    {
+      "id": "notification-003",
+      "userId": "seller-001",
+      "title": "New seller order",
+      "message": "A customer placed an order containing your product.",
+      "type": "ORDER",
+      "severity": "INFO",
+      "isRead": false,
+      "createdAt": "2026-07-04T10:30:00.000Z",
+      "link": "/seller/orders"
+    },
+    {
+      "id": "notification-004",
+      "userId": "support-001",
+      "title": "Support ticket assigned",
+      "message": "A new support ticket has been assigned to you.",
+      "type": "SUPPORT",
+      "severity": "INFO",
+      "isRead": true,
+      "createdAt": "2026-07-04T11:00:00.000Z",
+      "link": "/support/tickets"
+    },
+    {
+      "audienceRole": "SUPPORT",
+      "title": "Customer replied to a support ticket",
+      "message": "Test User replied to ticket SUP-20260711-004.",
+      "type": "INFO",
+      "category": "SUPPORT",
+      "link": "/support/tickets",
+      "route": "/support/tickets",
+      "referenceId": "support-ticket-db-004",
+      "entityId": "support-ticket-db-004",
+      "entityType": "SUPPORT_TICKET",
+      "metadata": {
+        "ticketId": "SUP-20260711-004",
+        "customerName": "Test User",
+        "priority": "LOW",
+        "status": "OPEN"
+      },
+      "id": "notification-1783968476647-u6ythc",
+      "isRead": true,
+      "createdAt": "2026-07-13T18:47:56.646Z"
+    },
+    {
+      "userId": "user-001",
+      "title": "Support ticket status updated",
+      "message": "Ticket SUP-20260712-001 is now In Progress.",
+      "type": "INFO",
+      "category": "SUPPORT",
+      "link": "/support-tickets",
+      "route": "/support-tickets",
+      "referenceId": "support-ticket-db-001",
+      "entityId": "support-ticket-db-001",
+      "entityType": "SUPPORT_TICKET",
+      "metadata": {
+        "ticketId": "SUP-20260712-001",
+        "status": "IN_PROGRESS"
+      },
+      "id": "notification-1784127431948-azr2ed",
+      "isRead": true,
+      "createdAt": "2026-07-15T14:57:11.948Z"
+    },
+    {
+      "userId": "user-001",
+      "title": "Reward points expiring soon",
+      "message": "750 reward points expire today.",
+      "type": "WARNING",
+      "referenceId": "reward-expiry-alert-reward-db-expiring-001",
+      "id": "notification-1784210607420-8s2vii",
+      "isRead": false,
+      "createdAt": "2026-07-16T14:03:27.420Z",
+      "route": "",
+      "link": ""
+    },
+    {
+      "userId": "user-001",
+      "title": "Reward points expiring soon",
+      "message": "750 reward points expire today.",
+      "type": "WARNING",
+      "referenceId": "reward-expiry-alert-reward-db-expiring-001",
+      "id": "notification-1784210607425-mn67ot",
+      "isRead": false,
+      "createdAt": "2026-07-16T14:03:27.425Z",
+      "route": "",
+      "link": ""
+    }
+  ],
+  "reviews": [
+    {
+      "id": "review-001",
+      "productId": "prod-001",
+      "userId": "user-001",
+      "userName": "Test User",
+      "rating": 4,
+      "title": "Excellent smartphone",
+      "comment": "Display quality and camera performance are very good.",
+      "status": "PUBLISHED",
+      "createdAt": "2026-07-04T10:00:00.000Z",
+      "updatedAt": "2026-07-17T11:17:54.337Z"
+    },
+    {
+      "id": "review-1783261619343",
+      "createdAt": "2026-07-05T14:26:59.343Z",
+      "updatedAt": "2026-07-05T14:26:59.343Z",
+      "productId": "prod-001",
+      "userId": "admin-001",
+      "userName": "Administrator",
+      "rating": 4,
+      "title": "Excellent Phone",
+      "comment": "Overall all good",
+      "status": "PUBLISHED"
+    },
+    {
+      "id": "review-501",
+      "productId": "prod-104",
+      "userId": "user-01",
+      "userName": "Arjun Sharma",
+      "rating": 5,
+      "title": "Premium quality belt",
+      "comment": "Genuine leather material feels premium. The buckle has an elegant dark matte sheen. Fits beautifully into formal trousers.",
+      "status": "PUBLISHED",
+      "createdAt": "2026-05-14T10:30:00.000Z",
+      "updatedAt": "2026-05-14T10:30:00.000Z"
+    },
+    {
+      "id": "review-502",
+      "productId": "prod-503",
+      "userId": "user-02",
+      "userName": "Priya Nair",
+      "rating": 4,
+      "comment": "Dries incredibly fast and gives a strict matte finish. The fine tip brush makes it very simple to draft thin lines.",
+      "status": "PUBLISHED",
+      "createdAt": "2026-05-14T10:30:00.000Z",
+      "updatedAt": "2026-05-14T10:30:00.000Z"
+    },
+    {
+      "id": "review-503",
+      "productId": "prod-403",
+      "userId": "user-02",
+      "userName": "Priya Nair",
+      "rating": 5,
+      "comment": "The lavender candle fills up a large bedroom within 15 minutes. Exceptional clean sootless burning structure.",
+      "status": "PUBLISHED",
+      "createdAt": "2026-05-14T10:30:00.000Z",
+      "updatedAt": "2026-05-14T10:30:00.000Z"
+    }
+  ],
   "coupons": [
     {
       "id": "coupon-001",
       "code": "WELCOME10",
-      "description": "Get 10% off on your first order",
+      "title": "Welcome Offer",
+      "description": "Get 10% off on your first order.",
       "discountType": "PERCENTAGE",
       "discountValue": 10,
-      "minimumOrderAmount": 999,
+      "minCartValue": 999,
       "maxDiscountAmount": 500,
-      "isActive": true
+      "usageLimit": 100,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
     },
     {
       "id": "coupon-002",
       "code": "SAVE500",
-      "description": "Flat ₹500 off on orders above ₹5,000",
+      "title": "Flat ₹500 Off",
+      "description": "Flat ₹500 off on orders above ₹5,000.",
       "discountType": "FLAT",
       "discountValue": 500,
-      "minimumOrderAmount": 5000,
+      "minCartValue": 5000,
       "maxDiscountAmount": 500,
-      "isActive": true
+      "usageLimit": 50,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
     },
     {
       "id": "coupon-003",
       "code": "FREESHIP",
-      "description": "Free shipping coupon on orders above ₹799",
-      "discountType": "FLAT",
-      "discountValue": 99,
-      "minimumOrderAmount": 799,
+      "title": "Free Shipping",
+      "description": "Free shipping benefit on orders above ₹799.",
+      "discountType": "FREE_SHIPPING",
+      "discountValue": 0,
+      "minCartValue": 799,
       "maxDiscountAmount": 99,
-      "isActive": true
+      "usageLimit": 100,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
+    },
+    {
+      "id": "coupon-004",
+      "code": "FIRSTBUY",
+      "title": "First Purchase Offer",
+      "description": "Save 10% on your first purchase up to ₹300.",
+      "discountType": "PERCENTAGE",
+      "discountValue": 10,
+      "minCartValue": 999,
+      "maxDiscountAmount": 300,
+      "usageLimit": 100,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
+    },
+    {
+      "id": "coupon-005",
+      "code": "FESTIVE20",
+      "title": "Festive Sale Offer",
+      "description": "Celebrate with 20% off on premium catalogs on orders above ₹2,499.",
+      "discountType": "PERCENTAGE",
+      "discountValue": 20,
+      "minCartValue": 2499,
+      "maxDiscountAmount": 1000,
+      "usageLimit": 100,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
+    },
+    {
+      "id": "coupon-006",
+      "code": "BEAUTYFREE",
+      "title": "Beauty Flash Offer",
+      "description": "Get 15% off on beauty and cosmetics collections.",
+      "discountType": "PERCENTAGE",
+      "discountValue": 15,
+      "minCartValue": 799,
+      "maxDiscountAmount": 200,
+      "usageLimit": 100,
+      "usedCount": 0,
+      "perUserLimit": 1,
+      "isActive": true,
+      "validFrom": "2026-01-01T00:00:00.000Z",
+      "validUntil": "2026-12-31T23:59:59.000Z",
+      "createdAt": "2026-07-06T10:00:00.000Z",
+      "updatedAt": "2026-07-06T10:00:00.000Z"
+    }
+  ],
+  "couponRedemptions": [
+    {
+      "id": "coupon-redemption-db-1783929762356",
+      "redemptionId": "CPN-RED-1783929762355",
+      "couponId": "coupon-002",
+      "couponCode": "SAVE500",
+      "userId": "user-001",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "cartTotal": 79900,
+      "discountAmount": 500,
+      "finalOrderAmount": 79400,
+      "redeemedAt": "2026-07-13T08:02:42.355Z"
     }
   ],
   "products": [
@@ -51,7 +629,16 @@
         "Battery": "4000mAh"
       },
       "sellerId": "seller-001",
-      "sellerName": "Samsung Store"
+      "sellerName": "Samsung Store",
+      "hsnCode": "85171300",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Mobile Phones",
+      "sellerGstin": "29SAMS1234A1Z5",
+      "sellerPan": "SAMS1234A",
+      "sellerAddress": "Samsung Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-002",
@@ -72,7 +659,16 @@
         "Battery": "All-day battery life"
       },
       "sellerId": "seller-002",
-      "sellerName": "Apple Authorized Store"
+      "sellerName": "Apple Authorized Store",
+      "hsnCode": "85171300",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Mobile Phones",
+      "sellerGstin": "29APPL1234A1Z5",
+      "sellerPan": "APPL1234A",
+      "sellerAddress": "Apple Authorized Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-003",
@@ -93,7 +689,16 @@
         "Warranty": "1 Year"
       },
       "sellerId": "seller-003",
-      "sellerName": "Sony Electronics Store"
+      "sellerName": "Sony Electronics Store",
+      "hsnCode": "85183000",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Audio Electronics",
+      "sellerGstin": "29SONY1234A1Z5",
+      "sellerPan": "SONY1234A",
+      "sellerAddress": "Sony Electronics Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-004",
@@ -114,7 +719,16 @@
         "OS": "Windows 11"
       },
       "sellerId": "seller-004",
-      "sellerName": "Dell Official Store"
+      "sellerName": "Dell Official Store",
+      "hsnCode": "84713010",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Laptops",
+      "sellerGstin": "29DELL1234A1Z5",
+      "sellerPan": "DELL1234A",
+      "sellerAddress": "Dell Official Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-005",
@@ -135,7 +749,16 @@
         "Display": "15.6 inch 144Hz"
       },
       "sellerId": "seller-005",
-      "sellerName": "HP Laptop Store"
+      "sellerName": "HP Laptop Store",
+      "hsnCode": "84713010",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Laptops",
+      "sellerGstin": "29HPLP1234A1Z5",
+      "sellerPan": "HPLP1234A",
+      "sellerAddress": "HP Laptop Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-006",
@@ -209,7 +832,16 @@
           "Shoulder: Measure from one shoulder edge to the other across the back.",
           "Length: Measure from the highest shoulder point down to the bottom hem."
         ]
-      }
+      },
+      "hsnCode": "62034200",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Apparel",
+      "sellerGstin": "29LEVI1234A1Z5",
+      "sellerPan": "LEVI1234A",
+      "sellerAddress": "Levi's Fashion Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-007",
@@ -283,7 +915,16 @@
           "Shoulder: Measure from one shoulder edge to the other across the back.",
           "Length: Measure from the highest shoulder point down to the bottom hem."
         ]
-      }
+      },
+      "hsnCode": "61091000",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Apparel",
+      "sellerGstin": "29NIKE1234A1Z5",
+      "sellerPan": "NIKE1234A",
+      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-008",
@@ -357,7 +998,16 @@
           "Shoulder: Measure from one shoulder edge to the other across the back.",
           "Length: Measure from the highest shoulder point down to the bottom hem."
         ]
-      }
+      },
+      "hsnCode": "62019300",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Apparel",
+      "sellerGstin": "29ADID1234A1Z5",
+      "sellerPan": "ADID1234A",
+      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-009",
@@ -431,7 +1081,16 @@
           "Shoulder: Measure from one shoulder edge to the other across the back.",
           "Length: Measure from the highest shoulder point down to the bottom hem."
         ]
-      }
+      },
+      "hsnCode": "61102000",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Apparel",
+      "sellerGstin": "29PUMA1234A1Z5",
+      "sellerPan": "PUMA1234A",
+      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-010",
@@ -452,7 +1111,16 @@
         "Genre": "Self-help"
       },
       "sellerId": "seller-010",
-      "sellerName": "Penguin Books Store"
+      "sellerName": "Penguin Books Store",
+      "hsnCode": "49011010",
+      "gstRate": 0,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Printed Books",
+      "sellerGstin": "29PENG1234A1Z5",
+      "sellerPan": "PENG1234A",
+      "sellerAddress": "Penguin Books Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-011",
@@ -473,7 +1141,16 @@
         "Genre": "Finance"
       },
       "sellerId": "seller-011",
-      "sellerName": "Jaico Books Store"
+      "sellerName": "Jaico Books Store",
+      "hsnCode": "49011010",
+      "gstRate": 0,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Printed Books",
+      "sellerGstin": "29JAIC1234A1Z5",
+      "sellerPan": "JAIC1234A",
+      "sellerAddress": "Jaico Books Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-012",
@@ -494,7 +1171,16 @@
         "Genre": "Programming"
       },
       "sellerId": "seller-012",
-      "sellerName": "Pearson Books Store"
+      "sellerName": "Pearson Books Store",
+      "hsnCode": "49011010",
+      "gstRate": 0,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Printed Books",
+      "sellerGstin": "29PEAR1234A1Z5",
+      "sellerPan": "PEAR1234A",
+      "sellerAddress": "Pearson Books Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-013",
@@ -515,7 +1201,16 @@
         "Genre": "Self-help"
       },
       "sellerId": "seller-013",
-      "sellerName": "Random House Books Store"
+      "sellerName": "Random House Books Store",
+      "hsnCode": "49011010",
+      "gstRate": 0,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Printed Books",
+      "sellerGstin": "29RAND1234A1Z5",
+      "sellerPan": "RAND1234A",
+      "sellerAddress": "Random House Books Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-014",
@@ -598,7 +1293,16 @@
           "Choose the size closest to your measured foot length.",
           "If your foot length is between two sizes, choose the larger size."
         ]
-      }
+      },
+      "hsnCode": "64041190",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Footwear",
+      "sellerGstin": "29NIKE1234A1Z5",
+      "sellerPan": "NIKE1234A",
+      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-015",
@@ -681,7 +1385,16 @@
           "Choose the size closest to your measured foot length.",
           "If your foot length is between two sizes, choose the larger size."
         ]
-      }
+      },
+      "hsnCode": "64041190",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Footwear",
+      "sellerGstin": "29ADID1234A1Z5",
+      "sellerPan": "ADID1234A",
+      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-016",
@@ -764,7 +1477,16 @@
           "Choose the size closest to your measured foot length.",
           "If your foot length is between two sizes, choose the larger size."
         ]
-      }
+      },
+      "hsnCode": "64041990",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Footwear",
+      "sellerGstin": "29PUMA1234A1Z5",
+      "sellerPan": "PUMA1234A",
+      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-017",
@@ -847,7 +1569,16 @@
           "Choose the size closest to your measured foot length.",
           "If your foot length is between two sizes, choose the larger size."
         ]
-      }
+      },
+      "hsnCode": "64039990",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Footwear",
+      "sellerGstin": "29BATA1234A1Z5",
+      "sellerPan": "BATA1234A",
+      "sellerAddress": "Bata Footwear Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-018",
@@ -901,7 +1632,16 @@
           "Keep the tape comfortable, not too tight.",
           "Choose the closest matching size from the chart."
         ]
-      }
+      },
+      "hsnCode": "91021100",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Watches",
+      "sellerGstin": "29FAST1234A1Z5",
+      "sellerPan": "FAST1234A",
+      "sellerAddress": "Fastrack Accessories Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-019",
@@ -955,7 +1695,16 @@
           "Keep the tape comfortable, not too tight.",
           "Choose the closest matching size from the chart."
         ]
-      }
+      },
+      "hsnCode": "85183000",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Audio Electronics",
+      "sellerGstin": "29BOAT1234A1Z5",
+      "sellerPan": "BOAT1234A",
+      "sellerAddress": "Boat Lifestyle Store, Bengaluru, Karnataka - 560001"
     },
     {
       "id": "prod-020",
@@ -1009,7 +1758,471 @@
           "Keep the tape comfortable, not too tight.",
           "Choose the closest matching size from the chart."
         ]
-      }
+      },
+      "hsnCode": "85182100",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Audio Electronics",
+      "sellerGstin": "29JBLA1234A1Z5",
+      "sellerPan": "JBLA1234A",
+      "sellerAddress": "JBL Audio Store, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-104",
+      "name": "Men's Premium Textured Leather Belt",
+      "description": "Crafted from 100% genuine top-grain leather with a durable brushed gunmetal buckle, perfect for formal and casual wear.",
+      "category": "Men",
+      "subcategory": "Fashion Accessories > Belts",
+      "brand": "Levis",
+      "price": 1499,
+      "rating": 4.5,
+      "image": "https://placehold.co/600x400/f1f5f9/334155?text=Mens+Leather+Belt",
+      "stock": 35,
+      "discount": 10,
+      "specifications": {
+        "Material": "100% Genuine Leather",
+        "Buckle Type": "Tang Buckle",
+        "Width": "35 mm",
+        "Color": "Classic Black"
+      },
+      "sellerId": "seller-101",
+      "sellerName": "Apparel Trendz",
+      "sizeOptions": [
+        "32",
+        "34",
+        "36",
+        "38"
+      ],
+      "hsnCode": "42033000",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Leather Accessories",
+      "sellerGstin": "29APPA1234A1Z5",
+      "sellerPan": "APPA1234A",
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-105",
+      "name": "Classic Tan Leather Bi-Fold Wallet",
+      "description": "Slim silhouette wallet featuring 6 card slots, a secure coin pocket, and RFID-blocking technology.",
+      "category": "Men",
+      "subcategory": "Fashion Accessories > Wallets",
+      "brand": "Wildhorn",
+      "price": 899,
+      "rating": 4.3,
+      "image": "https://placehold.co/600x400/faf7f2/b45309?text=Mens+Leather+Wallet",
+      "stock": 60,
+      "discount": 15,
+      "specifications": {
+        "Material": "Genuine Leather",
+        "Style": "Bi-Fold",
+        "Features": "RFID Protection, Coin Pocket"
+      },
+      "sellerId": "seller-101",
+      "sellerName": "Apparel Trendz",
+      "hsnCode": "42023120",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Leather Wallets",
+      "sellerGstin": "29APPA1234A1Z5",
+      "sellerPan": "APPA1234A",
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-204",
+      "name": "925 Sterling Silver Hoop Earrings",
+      "description": "Hypoallergenic lightweight high-polish silver hoop earrings ideal for sensitive skin and daily luxury wear.",
+      "category": "Women",
+      "subcategory": "Jewellery > Earrings",
+      "brand": "Giva",
+      "price": 1299,
+      "rating": 4.7,
+      "image": "https://placehold.co/600x400/fdf2f8/be185d?text=Silver+Hoop+Earrings",
+      "stock": 14,
+      "discount": 5,
+      "specifications": {
+        "Metal Type": "925 Sterling Silver",
+        "Plating": "Rhodium Plated",
+        "Diameter": "20 mm",
+        "Weight": "2.4 grams"
+      },
+      "sellerId": "seller-501",
+      "sellerName": "Bling & Bloom Luxe",
+      "hsnCode": "71131130",
+      "gstRate": 3,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Silver Jewellery",
+      "sellerGstin": "29BLIN1234A1Z5",
+      "sellerPan": "BLIN1234A",
+      "sellerAddress": "Bling & Bloom Luxe, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-205",
+      "name": "Printed Silk Luxury Neck Scarf",
+      "description": "Ultra-soft premium silk scarf displaying vibrant bohemian layouts, adding effortless flair to western or formal outfits.",
+      "category": "Women",
+      "subcategory": "Belts, Scarves & More",
+      "brand": "Satya Paul",
+      "price": 2499,
+      "rating": 4.6,
+      "image": "https://placehold.co/600x400/fff1f2/f43f5e?text=Womens+Silk+Scarf",
+      "stock": 8,
+      "discount": 20,
+      "specifications": {
+        "Fabric": "100% Pure Mulberry Silk",
+        "Dimensions": "50 cm x 50 cm",
+        "Weave": "Satin Weave"
+      },
+      "sellerId": "seller-101",
+      "sellerName": "Apparel Trendz",
+      "hsnCode": "62141090",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Scarves",
+      "sellerGstin": "29APPA1234A1Z5",
+      "sellerPan": "APPA1234A",
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-304",
+      "name": "Kids Ergonomic Superhero School Backpack",
+      "description": "Water-resistant junior school bag engineered with padded mesh shoulder supports, reflective safety strips, and dual side bottle sleeves.",
+      "category": "Kids",
+      "subcategory": "Kids Accessories > Bags & Backpacks",
+      "brand": "Wildcraft",
+      "price": 1899,
+      "rating": 4.4,
+      "image": "https://placehold.co/600x400/eff6ff/2563eb?text=Kids+Superhero+Bag",
+      "stock": 25,
+      "discount": 12,
+      "specifications": {
+        "Material": "450D Water-Resistant Polyester",
+        "Capacity": "22 Liters",
+        "Compartments": "3 Main, 1 Front Pocket",
+        "Age Suitability": "6-10 Years"
+      },
+      "sellerId": "seller-201",
+      "sellerName": "TinyTots Retail",
+      "hsnCode": "42021290",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Bags and Backpacks",
+      "sellerGstin": "29TINY1234A1Z5",
+      "sellerPan": "TINY1234A",
+      "sellerAddress": "TinyTots Retail, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-403",
+      "name": "Luxury Soy Wax Scented Candle Set",
+      "description": "Three pack of organic clean-burning soy candles packaged neatly in amber glass jars. Fragrances: French Lavender, English Rose, Vanilla Bean.",
+      "category": "Home",
+      "subcategory": "Home Décor > Aromas & Candles",
+      "brand": "Bath & Body Works",
+      "price": 1199,
+      "rating": 4.8,
+      "image": "https://placehold.co/600x400/fdfaf2/ca8a04?text=Scented+Candles+Set",
+      "stock": 40,
+      "discount": 10,
+      "specifications": {
+        "Wax Base": "100% Natural Soy Wax",
+        "Burn Time": "25 Hours per candle",
+        "Wick": "Lead-free Organic Cotton"
+      },
+      "sellerId": "seller-301",
+      "sellerName": "Luxe Home Furnishings",
+      "hsnCode": "34060010",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "SET",
+      "isTaxInclusive": true,
+      "taxCategory": "Candles",
+      "sellerGstin": "29LUXE1234A1Z5",
+      "sellerPan": "LUXE1234A",
+      "sellerAddress": "Luxe Home Furnishings, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-503",
+      "name": "Waterproof Ultra-Black Matte Liquid Eyeliner",
+      "description": "Precision flex-tip applicator delivers sharp winged finishes. Smudge-proof and sweat-resistant up to 24 hours.",
+      "category": "Beauty",
+      "subcategory": "Makeup > Eyeliner",
+      "brand": "Lakme",
+      "price": 425,
+      "rating": 4.3,
+      "image": "https://placehold.co/600x400/fafafa/18181b?text=Matte+Liquid+Eyeliner",
+      "stock": 90,
+      "discount": 0,
+      "specifications": {
+        "Color": "Absolute Carbon Black",
+        "Finish": "Ultra Matte",
+        "Volume": "4.5 ml",
+        "Waterproof": "Yes"
+      },
+      "sellerId": "seller-401",
+      "sellerName": "GlamGloss Cosmetics",
+      "hsnCode": "33042000",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Cosmetics",
+      "sellerGstin": "29GLAM1234A1Z5",
+      "sellerPan": "GLAM1234A",
+      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-601",
+      "name": "LG 1.5 Ton Split Air Conditioner",
+      "description": "Energy efficient split AC with inverter compressor and copper condenser.",
+      "category": "Electronics",
+      "subcategory": "Home Appliances > Air Conditioners",
+      "brand": "LG",
+      "price": 42999,
+      "rating": 4.5,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=LG+Split+AC",
+      "stock": 9,
+      "discount": 8,
+      "specifications": {
+        "Capacity": "1.5 Ton",
+        "Compressor": "Inverter",
+        "Star Rating": "5 Star",
+        "Condenser": "Copper",
+        "Warranty": "1 Year Comprehensive"
+      },
+      "sellerId": "seller-601",
+      "sellerName": "LG Home Appliances",
+      "hsnCode": "84151010",
+      "gstRate": 28,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Air Conditioner",
+      "sellerGstin": "29LGHA1234A1Z5",
+      "sellerPan": "LGHA1234A",
+      "sellerAddress": "LG Home Appliances, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-602",
+      "name": "Prestige Electric Kettle 1.5L",
+      "description": "Fast boiling electric kettle with auto cut-off and stainless steel body.",
+      "category": "Home",
+      "subcategory": "Kitchen Appliances > Electric Kettles",
+      "brand": "Prestige",
+      "price": 1299,
+      "rating": 4.2,
+      "image": "https://placehold.co/600x400/fef7e0/f29900?text=Electric+Kettle",
+      "stock": 32,
+      "discount": 10,
+      "specifications": {
+        "Capacity": "1.5 Litres",
+        "Material": "Stainless Steel",
+        "Power": "1500W",
+        "Auto Cut Off": "Yes",
+        "Warranty": "1 Year"
+      },
+      "sellerId": "seller-602",
+      "sellerName": "Prestige Kitchen Store",
+      "hsnCode": "85167990",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Kitchen Appliance",
+      "sellerGstin": "29PRES1234A1Z5",
+      "sellerPan": "PRES1234A",
+      "sellerAddress": "Prestige Kitchen Store, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-603",
+      "name": "Aashirvaad Whole Wheat Atta 5kg",
+      "description": "Premium quality whole wheat flour suitable for soft rotis and daily cooking.",
+      "category": "Grocery",
+      "subcategory": "Staples > Flour",
+      "brand": "Aashirvaad",
+      "price": 310,
+      "rating": 4.6,
+      "image": "https://placehold.co/600x400/e6f4ea/137333?text=Wheat+Atta",
+      "stock": 80,
+      "discount": 5,
+      "specifications": {
+        "Weight": "5kg",
+        "Type": "Whole Wheat",
+        "Shelf Life": "3 Months",
+        "Diet Type": "Vegetarian"
+      },
+      "sellerId": "seller-603",
+      "sellerName": "Daily Grocery Mart",
+      "hsnCode": "11010000",
+      "gstRate": 5,
+      "cessRate": 0,
+      "unit": "BAG",
+      "isTaxInclusive": true,
+      "taxCategory": "Packaged Food",
+      "sellerGstin": "29GROC1234A1Z5",
+      "sellerPan": "GROC1234A",
+      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-604",
+      "name": "Cadbury Dairy Milk Silk Chocolate",
+      "description": "Smooth and creamy milk chocolate bar for gifting and snacking.",
+      "category": "Grocery",
+      "subcategory": "Snacks > Chocolates",
+      "brand": "Cadbury",
+      "price": 185,
+      "rating": 4.7,
+      "image": "https://placehold.co/600x400/f3e8fd/9334e6?text=Chocolate",
+      "stock": 100,
+      "discount": 0,
+      "specifications": {
+        "Weight": "150g",
+        "Flavor": "Milk Chocolate",
+        "Diet Type": "Vegetarian",
+        "Shelf Life": "9 Months"
+      },
+      "sellerId": "seller-603",
+      "sellerName": "Daily Grocery Mart",
+      "hsnCode": "18069010",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Chocolate",
+      "sellerGstin": "29GROC1234A1Z5",
+      "sellerPan": "GROC1234A",
+      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-605",
+      "name": "Tanishq 22K Gold Ring",
+      "description": "Elegant 22K gold ring suitable for everyday wear and gifting.",
+      "category": "Women",
+      "subcategory": "Jewellery > Gold Rings",
+      "brand": "Tanishq",
+      "price": 28999,
+      "rating": 4.8,
+      "image": "https://placehold.co/600x400/fff7ed/c2410c?text=Gold+Ring",
+      "stock": 5,
+      "discount": 0,
+      "specifications": {
+        "Metal": "22K Gold",
+        "Weight": "3.5 grams",
+        "Purity": "916",
+        "Certification": "BIS Hallmarked"
+      },
+      "sellerId": "seller-605",
+      "sellerName": "Tanishq Jewellery Store",
+      "hsnCode": "71131910",
+      "gstRate": 3,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Gold Jewellery",
+      "sellerGstin": "29GOLD1234A1Z5",
+      "sellerPan": "GOLD1234A",
+      "sellerAddress": "Tanishq Jewellery Store, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-606",
+      "name": "Urban Ladder Wooden Coffee Table",
+      "description": "Engineered wood coffee table with modern finish and lower storage shelf.",
+      "category": "Home",
+      "subcategory": "Furniture > Tables",
+      "brand": "Urban Ladder",
+      "price": 6499,
+      "rating": 4.3,
+      "image": "https://placehold.co/600x400/fdfaf2/92400e?text=Coffee+Table",
+      "stock": 11,
+      "discount": 15,
+      "specifications": {
+        "Material": "Engineered Wood",
+        "Color": "Walnut",
+        "Assembly": "Self Assembly",
+        "Warranty": "1 Year"
+      },
+      "sellerId": "seller-606",
+      "sellerName": "Urban Home Store",
+      "hsnCode": "94036000",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Furniture",
+      "sellerGstin": "29URBN1234A1Z5",
+      "sellerPan": "URBN1234A",
+      "sellerAddress": "Urban Home Store, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-607",
+      "name": "Himalaya Neem Face Wash",
+      "description": "Herbal face wash with neem and turmeric for daily skincare.",
+      "category": "Beauty",
+      "subcategory": "Skin Care > Face Wash",
+      "brand": "Himalaya",
+      "price": 185,
+      "rating": 4.4,
+      "image": "https://placehold.co/600x400/e6f4ea/188038?text=Face+Wash",
+      "stock": 120,
+      "discount": 10,
+      "specifications": {
+        "Volume": "150ml",
+        "Skin Type": "All Skin Types",
+        "Key Ingredients": "Neem, Turmeric",
+        "Paraben Free": "Yes"
+      },
+      "sellerId": "seller-401",
+      "sellerName": "GlamGloss Cosmetics",
+      "hsnCode": "33049990",
+      "gstRate": 18,
+      "cessRate": 0,
+      "unit": "PCS",
+      "isTaxInclusive": true,
+      "taxCategory": "Cosmetics",
+      "sellerGstin": "29GLAM1234A1Z5",
+      "sellerPan": "GLAM1234A",
+      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001"
+    },
+    {
+      "id": "prod-608",
+      "name": "Classmate Spiral Notebook Pack of 6",
+      "description": "Ruled notebooks for school, office, and personal writing.",
+      "category": "Books",
+      "subcategory": "Stationery > Notebooks",
+      "brand": "Classmate",
+      "price": 360,
+      "rating": 4.5,
+      "image": "https://placehold.co/600x400/e8f0fe/1967d2?text=Notebook+Pack",
+      "stock": 75,
+      "discount": 5,
+      "specifications": {
+        "Pages": "172 Pages Each",
+        "Type": "Ruled",
+        "Pack": "6 Notebooks",
+        "Paper Size": "A4"
+      },
+      "sellerId": "seller-608",
+      "sellerName": "Classmate Stationery Store",
+      "hsnCode": "48201090",
+      "gstRate": 12,
+      "cessRate": 0,
+      "unit": "PACK",
+      "isTaxInclusive": true,
+      "taxCategory": "Stationery",
+      "sellerGstin": "29CLAS1234A1Z5",
+      "sellerPan": "CLAS1234A",
+      "sellerAddress": "Classmate Stationery Store, Bengaluru, Karnataka - 560001"
     }
   ],
   "users": [
@@ -1030,6 +2243,40 @@
       "mobile": "9876543211",
       "address": "ShopEase Admin Office",
       "role": "ADMIN"
+    },
+    {
+      "id": "user-01",
+      "name": "Arjun Sharma",
+      "email": "arjun.sharma@mail.com",
+      "password": "password123",
+      "role": "CUSTOMER",
+      "phoneNumber": "+919876543210",
+      "addresses": [
+        {
+          "type": "Home",
+          "street": "12, Green Glen Layout",
+          "city": "Bengaluru",
+          "state": "Karnataka",
+          "zipCode": "560103"
+        }
+      ]
+    },
+    {
+      "id": "user-02",
+      "name": "Priya Nair",
+      "email": "priya.nair@mail.com",
+      "password": "password123",
+      "role": "CUSTOMER",
+      "phoneNumber": "+918765432109",
+      "addresses": [
+        {
+          "type": "Office",
+          "street": "Tech Park Phase II, Sector 62",
+          "city": "Noida",
+          "state": "Uttar Pradesh",
+          "zipCode": "201301"
+        }
+      ]
     },
     {
       "id": "seller-001",
@@ -1201,380 +2448,110 @@
       "mobile": "9876543216",
       "address": "ShopEase Default Seller Warehouse",
       "role": "SELLER"
+    },
+    {
+      "id": "support-payment-001",
+      "name": "Payment Analyst",
+      "email": "payment.analyst@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "PAYMENT_FINANCE",
+      "supportTeamRole": "PAYMENT_ANALYST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-refund-001",
+      "name": "Refund Specialist",
+      "email": "refund.specialist@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "REFUND_TEAM",
+      "supportTeamRole": "REFUND_SPECIALIST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-delivery-001",
+      "name": "Delivery Coordinator",
+      "email": "delivery.coordinator@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "DELIVERY_TEAM",
+      "supportTeamRole": "DELIVERY_COORDINATOR",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-fulfillment-001",
+      "name": "Fulfillment Coordinator",
+      "email": "fulfillment.coordinator@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "SELLER_FULFILLMENT",
+      "supportTeamRole": "FULFILLMENT_COORDINATOR",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-wallet-001",
+      "name": "Wallet Rewards Analyst",
+      "email": "wallet.rewards@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "WALLET_REWARDS",
+      "supportTeamRole": "WALLET_REWARDS_ANALYST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-coupon-001",
+      "name": "Promotion Analyst",
+      "email": "promotion.analyst@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "COUPON_PROMOTIONS",
+      "supportTeamRole": "PROMOTION_ANALYST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-tech-001",
+      "name": "Tech Support Analyst",
+      "email": "tech.support@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "TECH_SUPPORT",
+      "supportTeamRole": "TECH_SUPPORT_ANALYST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "support-operations-001",
+      "name": "Customer Operations Analyst",
+      "email": "customer.operations@shopease.local",
+      "password": "Support@123",
+      "role": "SUPPORT",
+      "isActive": true,
+      "supportTeamCode": "CUSTOMER_OPERATIONS",
+      "supportTeamRole": "CUSTOMER_OPERATIONS_ANALYST",
+      "createdAt": "2026-07-15T10:00:00.000Z",
+      "updatedAt": "2026-07-15T10:00:00.000Z"
     }
   ],
   "orders": [
     {
-      "id": "order-db-001",
+      "id": "order-db-1783929762269",
       "userId": "user-001",
-      "orderId": "ORD-20260701-1001",
-      "orderDate": "2026-07-01T10:30:00.000Z",
-      "items": [
-        {
-          "productId": "prod-003",
-          "name": "Sony WH-1000XM5 Headphones",
-          "brand": "Sony",
-          "price": 29990,
-          "image": "https://placehold.co/600x400/e6f4ea/188038?text=Sony+Headphones",
-          "quantity": 1,
-          "subtotal": 29990
-        }
-      ],
-      "totalAmount": 29990,
-      "paymentMethod": "UPI",
-      "deliveryAddress": {
-        "fullName": "Test User",
-        "mobile": "9876543210",
-        "addressLine": "MG Road",
-        "city": "Bengaluru",
-        "state": "Karnataka",
-        "pincode": "560001"
-      },
-      "orderStatus": "Delivered",
-      "trackingSteps": [
-        {
-          "label": "Order Placed",
-          "isCompleted": true
-        },
-        {
-          "label": "Packed",
-          "isCompleted": true
-        },
-        {
-          "label": "Shipped",
-          "isCompleted": true
-        },
-        {
-          "label": "Out for Delivery",
-          "isCompleted": true
-        },
-        {
-          "label": "Delivered",
-          "isCompleted": true
-        }
-      ],
-      "trackingEvents": [
-        {
-          "id": "track-1783113933087-001",
-          "status": "Order Placed",
-          "title": "Order Placed completed",
-          "description": "Your order has been received and payment details have been confirmed.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T21:25:33.087Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783113933087-002",
-          "status": "Packed",
-          "title": "Packed completed",
-          "description": "Your order will be packed at the seller warehouse.",
-          "location": "Seller Warehouse",
-          "timestamp": "2026-07-03T21:25:33.087Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783113933087-003",
-          "status": "Shipped",
-          "title": "Shipped completed",
-          "description": "Your package will be handed over to the logistics partner.",
-          "location": "Logistics Hub",
-          "timestamp": "2026-07-03T21:25:33.087Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783113933087-004",
-          "status": "Out for Delivery",
-          "title": "Out for Delivery completed",
-          "description": "Your package will be assigned to a delivery partner.",
-          "location": "Nearest Delivery Hub",
-          "timestamp": "2026-07-03T21:25:33.087Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783113933087-005",
-          "status": "Delivered",
-          "title": "Delivered completed",
-          "description": "Your package will be delivered to the selected address.",
-          "location": "Customer Address",
-          "timestamp": "2026-07-03T21:50:58.128Z",
-          "isCompleted": true
-        }
-      ]
-    },
-    {
-      "id": "order-db-1783075046927",
-      "userId": "user-001",
-      "orderId": "ORD-20260703-9321",
-      "orderDate": "2026-07-03T10:37:26.927Z",
-      "items": [
-        {
-          "productId": "prod-001",
-          "name": "Samsung Galaxy S24",
-          "brand": "Samsung",
-          "price": 74999,
-          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
-          "quantity": 1,
-          "subtotal": 74999
-        }
-      ],
-      "subtotalAmount": 74999,
-      "discountAmount": 0,
-      "deliveryFee": 0,
-      "totalAmount": 74999,
-      "paymentMethod": "Cash on Delivery",
-      "deliveryAddress": {
-        "fullName": "Test User",
-        "mobile": "9876543210",
-        "addressLine": "MG Road, Bengaluru, Karnataka",
-        "city": "test",
-        "state": "test",
-        "pincode": "123456"
-      },
-      "orderStatus": "Cancelled",
-      "trackingSteps": [
-        {
-          "label": "Order Placed",
-          "isCompleted": false
-        },
-        {
-          "label": "Packed",
-          "isCompleted": false
-        },
-        {
-          "label": "Shipped",
-          "isCompleted": false
-        },
-        {
-          "label": "Out for Delivery",
-          "isCompleted": false
-        },
-        {
-          "label": "Delivered",
-          "isCompleted": false
-        }
-      ]
-    },
-    {
-      "id": "order-db-1783106501358",
-      "userId": "user-001",
-      "orderId": "ORD-20260703-1301",
-      "orderDate": "2026-07-03T19:21:41.358Z",
-      "items": [
-        {
-          "productId": "prod-001",
-          "name": "Samsung Galaxy S24",
-          "brand": "Samsung",
-          "price": 74999,
-          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
-          "quantity": 1,
-          "subtotal": 74999
-        }
-      ],
-      "totalAmount": 74999,
-      "paymentMethod": "Cash on Delivery",
-      "deliveryAddress": {
-        "fullName": "Test User",
-        "mobile": "9876543210",
-        "addressLine": "MG Road, Bengaluru, Karnataka",
-        "city": "test",
-        "state": "test",
-        "pincode": "123456"
-      },
-      "orderStatus": "Cancelled",
-      "trackingSteps": [
-        {
-          "label": "Order Placed",
-          "isCompleted": false
-        },
-        {
-          "label": "Packed",
-          "isCompleted": false
-        },
-        {
-          "label": "Shipped",
-          "isCompleted": false
-        },
-        {
-          "label": "Out for Delivery",
-          "isCompleted": false
-        },
-        {
-          "label": "Delivered",
-          "isCompleted": false
-        }
-      ],
-      "trackingEvents": [
-        {
-          "id": "track-1783106501358-001",
-          "status": "Order Placed",
-          "title": "Order placed successfully",
-          "description": "Your order has been received and payment details have been confirmed.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:21:41.358Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783106501358-002",
-          "status": "Packed",
-          "title": "Packing pending",
-          "description": "Your order will be packed at the seller warehouse.",
-          "location": "Seller Warehouse",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106501358-003",
-          "status": "Shipped",
-          "title": "Shipment pending",
-          "description": "Your package will be handed over to the logistics partner.",
-          "location": "Logistics Hub",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106501358-004",
-          "status": "Out for Delivery",
-          "title": "Out for delivery pending",
-          "description": "Your package will be assigned to a delivery partner.",
-          "location": "Nearest Delivery Hub",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106501358-005",
-          "status": "Delivered",
-          "title": "Delivery pending",
-          "description": "Your package will be delivered to the selected address.",
-          "location": "Customer Address",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106611786-cancelled",
-          "status": "Cancelled",
-          "title": "Order cancelled",
-          "description": "This order has been cancelled.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:23:31.786Z",
-          "isCompleted": true
-        }
-      ],
-      "cancelledAt": "2026-07-03T19:23:31.786Z",
-      "cancellationReason": "Cancelled by customer from order confirmation screen."
-    },
-    {
-      "id": "order-db-1783106676398",
-      "userId": "user-001",
-      "orderId": "ORD-20260703-7418",
-      "orderDate": "2026-07-03T19:24:36.398Z",
-      "items": [
-        {
-          "productId": "prod-001",
-          "name": "Samsung Galaxy S24",
-          "brand": "Samsung",
-          "price": 74999,
-          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
-          "quantity": 1,
-          "subtotal": 74999
-        }
-      ],
-      "totalAmount": 74499,
-      "paymentMethod": "Cash on Delivery",
-      "deliveryAddress": {
-        "fullName": "Test User",
-        "mobile": "9876543210",
-        "addressLine": "MG Road, Bengaluru, Karnataka",
-        "city": "test",
-        "state": "test",
-        "pincode": "123456"
-      },
-      "orderStatus": "Cancelled",
-      "trackingSteps": [
-        {
-          "label": "Order Placed",
-          "isCompleted": false
-        },
-        {
-          "label": "Packed",
-          "isCompleted": false
-        },
-        {
-          "label": "Shipped",
-          "isCompleted": false
-        },
-        {
-          "label": "Out for Delivery",
-          "isCompleted": false
-        },
-        {
-          "label": "Delivered",
-          "isCompleted": false
-        }
-      ],
-      "trackingEvents": [
-        {
-          "id": "track-1783106676398-001",
-          "status": "Order Placed",
-          "title": "Order placed successfully",
-          "description": "Your order has been received and payment details have been confirmed.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:24:36.398Z",
-          "isCompleted": true
-        },
-        {
-          "id": "track-1783106676398-002",
-          "status": "Packed",
-          "title": "Packing pending",
-          "description": "Your order will be packed at the seller warehouse.",
-          "location": "Seller Warehouse",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106676398-003",
-          "status": "Shipped",
-          "title": "Shipment pending",
-          "description": "Your package will be handed over to the logistics partner.",
-          "location": "Logistics Hub",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106676398-004",
-          "status": "Out for Delivery",
-          "title": "Out for delivery pending",
-          "description": "Your package will be assigned to a delivery partner.",
-          "location": "Nearest Delivery Hub",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106676398-005",
-          "status": "Delivered",
-          "title": "Delivery pending",
-          "description": "Your package will be delivered to the selected address.",
-          "location": "Customer Address",
-          "timestamp": "",
-          "isCompleted": false
-        },
-        {
-          "id": "track-1783106826502-cancelled",
-          "status": "Cancelled",
-          "title": "Order cancelled",
-          "description": "This order has been cancelled.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:27:06.502Z",
-          "isCompleted": true
-        }
-      ],
-      "cancelledAt": "2026-07-03T19:27:06.502Z",
-      "cancellationReason": "Cancelled by customer from order confirmation screen."
-    },
-    {
-      "id": "order-db-1783107999157",
-      "userId": "user-001",
-      "orderId": "ORD-20260703-8014",
-      "orderDate": "2026-07-03T19:46:39.157Z",
+      "orderId": "ORD-20260713-7927",
+      "orderDate": "2026-07-13T08:02:42.269Z",
       "items": [
         {
           "productId": "prod-002",
@@ -1583,24 +2560,49 @@
           "price": 79900,
           "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
           "quantity": 1,
-          "subtotal": 79900
+          "subtotal": 79900,
+          "category": "Electronics",
+          "sellerId": "seller-002",
+          "sellerName": "Apple Authorized Store"
         }
       ],
-      "totalAmount": 79900,
+      "totalAmount": 79400,
       "paymentMethod": "Cash on Delivery",
       "deliveryAddress": {
         "fullName": "Test User",
         "mobile": "9876543210",
-        "addressLine": "MG Road, Bengaluru, Karnataka",
-        "city": "test",
-        "state": "test",
-        "pincode": "123456"
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
       },
-      "orderStatus": "Cancelled",
+      "deliveryPromise": {
+        "pincode": "560001",
+        "zoneId": 3,
+        "zoneName": "Karnataka",
+        "warehouseId": 3,
+        "warehouseName": "Bengaluru Fulfillment Center",
+        "sellerId": "seller-002",
+        "sellerName": "Apple Authorized Store",
+        "estimatedDeliveryDate": "2026-07-17T08:01:44.256Z",
+        "finalDeliveryDays": 4,
+        "cashOnDelivery": true,
+        "freeDelivery": true,
+        "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+        "categorySlaApplied": {
+          "category": "Electronics",
+          "handlingDays": 1,
+          "additionalDays": 0
+        }
+      },
+      "rewardRedemption": null,
+      "walletRedemption": null,
+      "orderStatus": "Order Placed",
+      "fulfillmentStatus": "PENDING",
       "trackingSteps": [
         {
           "label": "Order Placed",
-          "isCompleted": false
+          "isCompleted": true
         },
         {
           "label": "Packed",
@@ -1621,16 +2623,16 @@
       ],
       "trackingEvents": [
         {
-          "id": "track-1783107999157-001",
+          "id": "track-1783929762269-001",
           "status": "Order Placed",
           "title": "Order placed successfully",
           "description": "Your order has been received and payment details have been confirmed.",
           "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:46:39.157Z",
+          "timestamp": "2026-07-13T08:02:42.269Z",
           "isCompleted": true
         },
         {
-          "id": "track-1783107999157-002",
+          "id": "track-1783929762269-002",
           "status": "Packed",
           "title": "Packing pending",
           "description": "Your order will be packed at the seller warehouse.",
@@ -1639,7 +2641,7 @@
           "isCompleted": false
         },
         {
-          "id": "track-1783107999157-003",
+          "id": "track-1783929762269-003",
           "status": "Shipped",
           "title": "Shipment pending",
           "description": "Your package will be handed over to the logistics partner.",
@@ -1648,7 +2650,7 @@
           "isCompleted": false
         },
         {
-          "id": "track-1783107999157-004",
+          "id": "track-1783929762269-004",
           "status": "Out for Delivery",
           "title": "Out for delivery pending",
           "description": "Your package will be assigned to a delivery partner.",
@@ -1657,44 +2659,3057 @@
           "isCompleted": false
         },
         {
-          "id": "track-1783107999157-005",
+          "id": "track-1783929762269-005",
           "status": "Delivered",
           "title": "Delivery pending",
           "description": "Your package will be delivered to the selected address.",
           "location": "Customer Address",
           "timestamp": "",
           "isCompleted": false
-        },
-        {
-          "id": "track-1783108032914-cancelled",
-          "status": "Cancelled",
-          "title": "Order cancelled",
-          "description": "This order has been cancelled.",
-          "location": "ShopEase Order System",
-          "timestamp": "2026-07-03T19:47:12.914Z",
-          "isCompleted": true
         }
       ],
-      "cancelledAt": "2026-07-03T19:47:12.914Z",
-      "cancellationReason": "Cancelled by customer from order confirmation screen."
+      "subtotalAmount": 79900,
+      "discountAmount": 500,
+      "deliveryFee": 0,
+      "couponCode": "SAVE500",
+      "couponId": "coupon-002"
+    },
+    {
+      "id": "order-db-1783970261132",
+      "userId": "user-001",
+      "orderId": "ORD-20260713-7542",
+      "orderDate": "2026-07-13T19:17:41.131Z",
+      "items": [
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999,
+          "category": "Electronics",
+          "sellerId": "seller-001",
+          "sellerName": "Samsung Store"
+        }
+      ],
+      "totalAmount": 74999,
+      "paymentMethod": "Credit Card",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "deliveryPromise": {
+        "pincode": "560001",
+        "zoneId": 3,
+        "zoneName": "Karnataka",
+        "warehouseId": 3,
+        "warehouseName": "Bengaluru Fulfillment Center",
+        "sellerId": "seller-001",
+        "sellerName": "Samsung Store",
+        "estimatedDeliveryDate": "2026-07-17T19:14:30.732Z",
+        "finalDeliveryDays": 4,
+        "cashOnDelivery": true,
+        "freeDelivery": true,
+        "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+        "categorySlaApplied": {
+          "category": "Electronics",
+          "handlingDays": 1,
+          "additionalDays": 0
+        }
+      },
+      "rewardRedemption": null,
+      "walletRedemption": null,
+      "orderStatus": "Order Placed",
+      "fulfillmentStatus": "PENDING",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": true
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1783970261132-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-13T19:17:41.132Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1783970261132-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783970261132-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783970261132-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1783970261132-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        }
+      ],
+      "subtotalAmount": 74999,
+      "discountAmount": 0,
+      "deliveryFee": 0
+    },
+    {
+      "id": "order-db-1784045498557",
+      "userId": "user-001",
+      "orderId": "ORD-20260714-9446",
+      "orderDate": "2026-07-14T16:11:38.556Z",
+      "items": [
+        {
+          "productId": "prod-002",
+          "name": "Apple iPhone 15",
+          "brand": "Apple",
+          "price": 79900,
+          "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "quantity": 1,
+          "subtotal": 79900,
+          "category": "Electronics",
+          "sellerId": "seller-002",
+          "sellerName": "Apple Authorized Store"
+        },
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999,
+          "category": "Electronics",
+          "sellerId": "seller-001",
+          "sellerName": "Samsung Store"
+        }
+      ],
+      "totalAmount": 154899,
+      "paymentMethod": "Credit Card",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "deliveryPromise": {
+        "pincode": "560001",
+        "zoneId": 3,
+        "zoneName": "Karnataka",
+        "warehouseId": 3,
+        "warehouseName": "Bengaluru Fulfillment Center",
+        "sellerId": "seller-002",
+        "sellerName": "Apple Authorized Store",
+        "estimatedDeliveryDate": "2026-07-18T16:09:46.863Z",
+        "finalDeliveryDays": 4,
+        "cashOnDelivery": true,
+        "freeDelivery": true,
+        "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+        "categorySlaApplied": {
+          "category": "Electronics",
+          "handlingDays": 1,
+          "additionalDays": 0
+        }
+      },
+      "rewardRedemption": {
+        "rewardsApplied": true,
+        "pointsUsed": 5000,
+        "rewardDiscountAmount": 1250,
+        "payableAmountAfterRewards": 153649,
+        "rewardTransactionId": "RWD-1784045498556"
+      },
+      "walletRedemption": null,
+      "orderStatus": "Order Placed",
+      "fulfillmentStatus": "PENDING",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": true
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1784045498557-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-14T16:11:38.557Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1784045498557-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784045498557-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784045498557-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784045498557-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        }
+      ],
+      "subtotalAmount": 154899,
+      "discountAmount": 0,
+      "deliveryFee": 0
+    },
+    {
+      "id": "order-db-1784209182140",
+      "userId": "user-001",
+      "orderId": "ORD-20260716-1883",
+      "orderDate": "2026-07-16T13:33:24.631Z",
+      "items": [
+        {
+          "productId": "prod-004",
+          "name": "Dell Inspiron 15 Laptop",
+          "brand": "Dell",
+          "price": 58999,
+          "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "quantity": 1,
+          "subtotal": 58999,
+          "category": "Electronics",
+          "sellerId": "seller-004",
+          "sellerName": "Dell Official Store"
+        }
+      ],
+      "totalAmount": 58999,
+      "paymentMethod": "Credit Card",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "deliveryPromise": {
+        "pincode": "560001",
+        "zoneId": 3,
+        "zoneName": "Karnataka",
+        "warehouseId": 3,
+        "warehouseName": "Bengaluru Fulfillment Center",
+        "sellerId": "seller-004",
+        "sellerName": "Dell Official Store",
+        "estimatedDeliveryDate": "2026-07-20T13:33:06.195Z",
+        "finalDeliveryDays": 4,
+        "cashOnDelivery": true,
+        "freeDelivery": true,
+        "fulfillmentMessage": "Fulfilled through zone warehouse routing.",
+        "categorySlaApplied": {
+          "category": "Electronics",
+          "handlingDays": 1,
+          "additionalDays": 0
+        }
+      },
+      "rewardRedemption": null,
+      "walletRedemption": null,
+      "orderStatus": "Order Placed",
+      "fulfillmentStatus": "PENDING",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": true
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1784208804631-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-16T13:33:24.631Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1784208804631-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784208804631-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784208804631-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784208804631-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        }
+      ],
+      "subtotalAmount": 58999,
+      "discountAmount": 0,
+      "deliveryFee": 0
+    },
+    {
+      "id": "order-db-1784231248884",
+      "userId": "user-001",
+      "orderId": "ORD-20260716-5454",
+      "orderDate": "2026-07-16T19:47:17.347Z",
+      "items": [
+        {
+          "productId": "prod-007",
+          "name": "Nike Sports T-Shirt",
+          "brand": "Nike",
+          "price": 1499,
+          "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+          "quantity": 1,
+          "subtotal": 1499,
+          "selectedSize": "M",
+          "category": "Clothing",
+          "sellerId": "seller-007",
+          "sellerName": "Nike Sports Store"
+        }
+      ],
+      "totalAmount": 1499,
+      "paymentMethod": "Credit Card",
+      "deliveryAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "deliveryPromise": {
+        "pincode": "560001",
+        "zoneId": 3,
+        "zoneName": "Karnataka",
+        "warehouseId": 3,
+        "warehouseName": "Bengaluru Fulfillment Center",
+        "sellerId": "seller-007",
+        "sellerName": "Nike Sports Store",
+        "estimatedDeliveryDate": "2026-07-21T19:46:24.423Z",
+        "finalDeliveryDays": 5,
+        "cashOnDelivery": true,
+        "freeDelivery": true,
+        "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+        "categorySlaApplied": {
+          "category": "Clothing",
+          "handlingDays": 1,
+          "additionalDays": 1
+        }
+      },
+      "rewardRedemption": null,
+      "walletRedemption": null,
+      "orderStatus": "Order Placed",
+      "fulfillmentStatus": "PENDING",
+      "trackingSteps": [
+        {
+          "label": "Order Placed",
+          "isCompleted": true
+        },
+        {
+          "label": "Packed",
+          "isCompleted": false
+        },
+        {
+          "label": "Shipped",
+          "isCompleted": false
+        },
+        {
+          "label": "Out for Delivery",
+          "isCompleted": false
+        },
+        {
+          "label": "Delivered",
+          "isCompleted": false
+        }
+      ],
+      "trackingEvents": [
+        {
+          "id": "track-1784231237347-001",
+          "status": "Order Placed",
+          "title": "Order placed successfully",
+          "description": "Your order has been received and payment details have been confirmed.",
+          "location": "ShopEase Order System",
+          "timestamp": "2026-07-16T19:47:17.347Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-1784231237347-002",
+          "status": "Packed",
+          "title": "Packing pending",
+          "description": "Your order will be packed at the seller warehouse.",
+          "location": "Seller Warehouse",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784231237347-003",
+          "status": "Shipped",
+          "title": "Shipment pending",
+          "description": "Your package will be handed over to the logistics partner.",
+          "location": "Logistics Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784231237347-004",
+          "status": "Out for Delivery",
+          "title": "Out for delivery pending",
+          "description": "Your package will be assigned to a delivery partner.",
+          "location": "Nearest Delivery Hub",
+          "timestamp": "",
+          "isCompleted": false
+        },
+        {
+          "id": "track-1784231237347-005",
+          "status": "Delivered",
+          "title": "Delivery pending",
+          "description": "Your package will be delivered to the selected address.",
+          "location": "Customer Address",
+          "timestamp": "",
+          "isCompleted": false
+        }
+      ],
+      "subtotalAmount": 1499,
+      "discountAmount": 0,
+      "deliveryFee": 0
+    }
+  ],
+  "invoices": [
+    {
+      "id": "invoice-db-001",
+      "invoiceNumber": "INV-20260713-1001",
+      "orderId": "ORD-20260713-7542",
+      "orderDbId": "order-db-001",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "invoiceDate": "2026-07-13T10:00:00.000Z",
+      "billingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "shippingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "items": [
+        {
+          "productId": "product-001",
+          "name": "Sample Product",
+          "brand": "ShopEase",
+          "image": "https://via.placeholder.com/100",
+          "price": 1999,
+          "quantity": 1,
+          "subtotal": 1999
+        }
+      ],
+      "paymentMethod": "UPI",
+      "couponCode": "WELCOME10",
+      "couponId": "coupon-001",
+      "paymentBreakup": {
+        "subtotalAmount": 1999,
+        "couponDiscountAmount": 100,
+        "deliveryFee": 0,
+        "rewardDiscountAmount": 0,
+        "walletAmountUsed": 0,
+        "totalAmount": 1899,
+        "payableAmount": 1899
+      },
+      "createdAt": "2026-07-13T10:00:00.000Z",
+      "updatedAt": "2026-07-13T10:00:00.000Z"
+    },
+    {
+      "id": "invoice-db-002",
+      "invoiceNumber": "INV-20260713-1002",
+      "orderId": "ORD-20260713-1001",
+      "orderDbId": "order-db-002",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "invoiceDate": "2026-07-13T10:05:00.000Z",
+      "billingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "shippingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "items": [
+        {
+          "productId": "product-002",
+          "name": "Sample Product 2",
+          "brand": "ShopEase",
+          "image": "https://via.placeholder.com/100",
+          "price": 1999,
+          "quantity": 1,
+          "subtotal": 1999
+        }
+      ],
+      "paymentMethod": "UPI",
+      "couponCode": "WELCOME10",
+      "couponId": "coupon-001",
+      "paymentBreakup": {
+        "subtotalAmount": 1999,
+        "couponDiscountAmount": 100,
+        "deliveryFee": 0,
+        "rewardDiscountAmount": 0,
+        "walletAmountUsed": 0,
+        "totalAmount": 1899,
+        "payableAmount": 1899
+      },
+      "createdAt": "2026-07-13T10:05:00.000Z",
+      "updatedAt": "2026-07-13T10:05:00.000Z"
+    },
+    {
+      "invoiceNumber": "INV-20260714-1784045498649",
+      "orderId": "ORD-20260714-9446",
+      "orderDbId": "order-db-1784045498557",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "invoiceDate": "2026-07-14T16:11:38.649Z",
+      "billingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "shippingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "items": [
+        {
+          "productId": "prod-002",
+          "name": "Apple iPhone 15",
+          "brand": "Apple",
+          "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "price": 79900,
+          "quantity": 1,
+          "subtotal": 79900,
+          "category": "Electronics",
+          "sellerId": "seller-002",
+          "sellerName": "Apple Authorized Store"
+        },
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "price": 74999,
+          "quantity": 1,
+          "subtotal": 74999,
+          "category": "Electronics",
+          "sellerId": "seller-001",
+          "sellerName": "Samsung Store"
+        }
+      ],
+      "paymentMethod": "Credit Card",
+      "paymentBreakup": {
+        "subtotalAmount": 154899,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "rewardDiscountAmount": 1250,
+        "walletAmountUsed": 0,
+        "totalAmount": 154899,
+        "payableAmount": 153649
+      },
+      "id": "invoice-db-1784045498649-mvwzof",
+      "createdAt": "2026-07-14T16:11:38.649Z",
+      "updatedAt": "2026-07-14T16:11:38.649Z"
+    },
+    {
+      "invoiceNumber": "INV-20260716-1784209182186",
+      "orderId": "ORD-20260716-1883",
+      "orderDbId": "order-db-1784209182140",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "invoiceDate": "2026-07-16T13:39:42.186Z",
+      "billingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "shippingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "items": [
+        {
+          "productId": "prod-004",
+          "name": "Dell Inspiron 15 Laptop",
+          "brand": "Dell",
+          "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "price": 58999,
+          "quantity": 1,
+          "subtotal": 58999,
+          "category": "Electronics",
+          "sellerId": "seller-004",
+          "sellerName": "Dell Official Store"
+        }
+      ],
+      "paymentMethod": "Credit Card",
+      "paymentBreakup": {
+        "subtotalAmount": 58999,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "rewardDiscountAmount": 0,
+        "walletAmountUsed": 0,
+        "totalAmount": 58999,
+        "payableAmount": 58999
+      },
+      "id": "invoice-db-1784209182186-tirxn4",
+      "createdAt": "2026-07-16T13:39:42.186Z",
+      "updatedAt": "2026-07-16T13:39:42.186Z"
+    },
+    {
+      "invoiceNumber": "INV-20260717-1784231248942",
+      "orderId": "ORD-20260716-5454",
+      "orderDbId": "order-db-1784231248884",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "invoiceDate": "2026-07-16T19:47:28.941Z",
+      "billingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "shippingAddress": {
+        "fullName": "Test User",
+        "mobile": "9876543210",
+        "addressLine": "MG Road, Near Metro Station",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "pincode": "560001"
+      },
+      "items": [
+        {
+          "productId": "prod-007",
+          "name": "Nike Sports T-Shirt",
+          "brand": "Nike",
+          "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+          "price": 1499,
+          "quantity": 1,
+          "subtotal": 1499,
+          "selectedSize": "M",
+          "category": "Clothing",
+          "sellerId": "seller-007",
+          "sellerName": "Nike Sports Store"
+        }
+      ],
+      "paymentMethod": "Credit Card",
+      "paymentBreakup": {
+        "subtotalAmount": 1499,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "rewardDiscountAmount": 0,
+        "walletAmountUsed": 0,
+        "totalAmount": 1499,
+        "payableAmount": 1499
+      },
+      "id": "invoice-db-1784231248942-8dy79t",
+      "createdAt": "2026-07-16T19:47:28.942Z",
+      "updatedAt": "2026-07-16T19:47:28.942Z"
+    }
+  ],
+  "deliveryZones": [
+    {
+      "id": 1,
+      "zone": "Andhra Pradesh & Telangana",
+      "prefixes": [
+        "50",
+        "51",
+        "52",
+        "53"
+      ],
+      "deliveryDays": 2,
+      "warehouse": "Hyderabad Fulfillment Center",
+      "cashOnDelivery": true,
+      "freeDelivery": true,
+      "warehouseId": 1,
+      "active": true
+    },
+    {
+      "id": 2,
+      "zone": "Tamil Nadu",
+      "prefixes": [
+        "60",
+        "61",
+        "62",
+        "63",
+        "64"
+      ],
+      "deliveryDays": 2,
+      "warehouse": "Chennai Fulfillment Center",
+      "cashOnDelivery": true,
+      "freeDelivery": true,
+      "active": true,
+      "warehouseId": 2
+    },
+    {
+      "id": 3,
+      "zone": "Karnataka",
+      "prefixes": [
+        "56",
+        "57",
+        "58"
+      ],
+      "deliveryDays": 3,
+      "warehouse": "Bengaluru Fulfillment Center",
+      "cashOnDelivery": true,
+      "freeDelivery": true,
+      "active": true,
+      "warehouseId": 3
+    },
+    {
+      "id": 4,
+      "zone": "Delhi NCR",
+      "prefixes": [
+        "11",
+        "12"
+      ],
+      "deliveryDays": 3,
+      "warehouse": "Delhi Fulfillment Center",
+      "cashOnDelivery": true,
+      "freeDelivery": true,
+      "active": true,
+      "warehouseId": 5
+    },
+    {
+      "id": 5,
+      "zone": "West Zone",
+      "prefixes": [
+        "40",
+        "41",
+        "42",
+        "43"
+      ],
+      "deliveryDays": 4,
+      "warehouse": "Mumbai Fulfillment Center",
+      "cashOnDelivery": true,
+      "freeDelivery": false,
+      "active": true,
+      "warehouseId": 4
+    },
+    {
+      "id": 6,
+      "zone": "North East",
+      "prefixes": [
+        "79"
+      ],
+      "deliveryDays": 6,
+      "warehouse": "Guwahati Fulfillment Center",
+      "cashOnDelivery": false,
+      "freeDelivery": false,
+      "active": true,
+      "warehouseId": 6
+    }
+  ],
+  "warehouses": [
+    {
+      "id": 1,
+      "name": "Hyderabad Fulfillment Center",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Chennai Fulfillment Center",
+      "city": "Chennai",
+      "state": "Tamil Nadu",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Bengaluru Fulfillment Center",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "active": true
+    },
+    {
+      "id": 5,
+      "name": "Delhi Fulfillment Center",
+      "city": "Delhi",
+      "state": "Delhi",
+      "active": true
+    },
+    {
+      "id": 4,
+      "name": "Mumbai Fulfillment Center",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "active": true
+    },
+    {
+      "id": 6,
+      "name": "Guwahati Fulfillment Center",
+      "city": "Guwahati",
+      "state": "Assam",
+      "active": true
+    }
+  ],
+  "deliverySlaRules": [
+    {
+      "id": 1,
+      "category": "Electronics",
+      "handlingDays": 1,
+      "additionalDays": 0,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 2,
+      "category": "Clothing",
+      "handlingDays": 1,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 3,
+      "category": "Footwear",
+      "handlingDays": 1,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 4,
+      "category": "Books",
+      "handlingDays": 0,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 5,
+      "category": "Accessories",
+      "handlingDays": 1,
+      "additionalDays": 0,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 6,
+      "category": "Men",
+      "handlingDays": 1,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 7,
+      "category": "Women",
+      "handlingDays": 1,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 8,
+      "category": "Kids",
+      "handlingDays": 1,
+      "additionalDays": 1,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 9,
+      "category": "Home",
+      "handlingDays": 2,
+      "additionalDays": 2,
+      "priority": 1,
+      "active": true
+    },
+    {
+      "id": 10,
+      "category": "Beauty",
+      "handlingDays": 1,
+      "additionalDays": 0,
+      "priority": 1,
+      "active": true
+    }
+  ],
+  "sellerFulfillmentMappings": [
+    {
+      "id": 1,
+      "sellerId": "seller-001",
+      "sellerName": "Samsung Store",
+      "warehouseIds": [
+        1,
+        3
+      ],
+      "preferredWarehouseId": 1,
+      "active": true
+    },
+    {
+      "id": 2,
+      "sellerId": "seller-002",
+      "sellerName": "Apple Authorized Store",
+      "warehouseIds": [
+        3,
+        5,
+        6
+      ],
+      "preferredWarehouseId": 3,
+      "active": true
+    },
+    {
+      "id": 3,
+      "sellerId": "seller-006",
+      "sellerName": "Levi's Fashion Store",
+      "warehouseIds": [
+        2,
+        4
+      ],
+      "preferredWarehouseId": 2,
+      "active": true
+    },
+    {
+      "id": 4,
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "warehouseIds": [
+        2,
+        3
+      ],
+      "preferredWarehouseId": 2,
+      "active": true
+    },
+    {
+      "id": 5,
+      "sellerId": "seller-010",
+      "sellerName": "Penguin Books Store",
+      "warehouseIds": [
+        4,
+        5
+      ],
+      "preferredWarehouseId": 5,
+      "active": true
+    }
+  ],
+  "deliveryPromise": {
+    "pincode": "600001",
+    "zoneId": 2,
+    "zoneName": "Tamil Nadu",
+    "warehouseId": 2,
+    "warehouseName": "Chennai Fulfillment Center",
+    "sellerId": "seller-007",
+    "sellerName": "Nike Sports Store",
+    "estimatedDeliveryDate": "2026-07-12T10:00:00.000Z",
+    "finalDeliveryDays": 4,
+    "cashOnDelivery": true,
+    "freeDelivery": true,
+    "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+    "categorySlaApplied": {
+      "category": "Footwear",
+      "handlingDays": 1,
+      "additionalDays": 1
+    }
+  },
+  "returnPolicyRules": [
+    {
+      "id": 1,
+      "category": "Electronics",
+      "returnWindowDays": 7,
+      "returnable": true,
+      "replacementAllowed": true,
+      "active": true
+    },
+    {
+      "id": 2,
+      "category": "Clothing",
+      "returnWindowDays": 14,
+      "returnable": true,
+      "replacementAllowed": true,
+      "active": true
+    },
+    {
+      "id": 3,
+      "category": "Footwear",
+      "returnWindowDays": 14,
+      "returnable": true,
+      "replacementAllowed": true,
+      "active": true
+    },
+    {
+      "id": 4,
+      "category": "Books",
+      "returnWindowDays": 5,
+      "returnable": true,
+      "replacementAllowed": false,
+      "active": true
+    },
+    {
+      "id": 5,
+      "category": "Beauty",
+      "returnWindowDays": 0,
+      "returnable": false,
+      "replacementAllowed": false,
+      "active": true
+    },
+    {
+      "id": 6,
+      "category": "Home",
+      "returnWindowDays": 7,
+      "returnable": true,
+      "replacementAllowed": true,
+      "active": true
+    }
+  ],
+  "returnRequests": [
+    {
+      "id": "return-db-1784300001001",
+      "requestId": "RET-20260717-1784300001001",
+      "returnRequestId": "RET-20260717-1784300001001",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-17T09:00:00.000Z",
+      "createdAt": "2026-07-17T09:00:00.000Z",
+      "updatedAt": "2026-07-17T09:20:00.000Z",
+      "reason": "Product not as expected",
+      "returnReason": "Product not as expected",
+      "comments": "Customer wants to return Apple iPhone 15 after checking product condition.",
+      "customerComment": "Customer wants to return Apple iPhone 15 after checking product condition.",
+      "status": "REQUESTED",
+      "pickupStatus": "NOT_SCHEDULED",
+      "qualityCheckStatus": "NOT_STARTED",
+      "refundStatus": "PENDING",
+      "refundId": null,
+      "refundAmount": 79900,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": null,
+      "pickupSlot": null,
+      "pickupPartnerId": null,
+      "pickupPartnerName": null,
+      "pickupPartnerPhone": null,
+      "pickupAttemptCount": 0,
+      "lastPickupAttemptId": null,
+      "nextPickupAttemptAt": null,
+      "items": [
+        {
+          "productId": "prod-002",
+          "name": "Apple iPhone 15",
+          "brand": "Apple",
+          "price": 79900,
+          "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "quantity": 1,
+          "subtotal": 79900,
+          "category": "Electronics",
+          "sellerId": "seller-002",
+          "sellerName": "Apple Authorized Store"
+        }
+      ],
+      "adminRemarks": null,
+      "qualityCheckRemarks": null,
+      "approvedAt": null,
+      "rejectedAt": null,
+      "pickupScheduledAt": null,
+      "pickedUpAt": null,
+      "pickupCompletedAt": null,
+      "receivedAtWarehouseAt": null,
+      "qualityCheckedAt": null,
+      "refundInitiatedAt": null,
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001002",
+      "requestId": "RET-20260717-1784300001002",
+      "returnRequestId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "orderDbId": "order-db-1783970261132",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-17T09:30:00.000Z",
+      "createdAt": "2026-07-17T09:30:00.000Z",
+      "updatedAt": "2026-07-17T18:27:51.563Z",
+      "reason": "Quality issue",
+      "returnReason": "Quality issue",
+      "comments": "Customer reported device quality issue and requested return pickup.",
+      "customerComment": "Customer reported device quality issue and requested return pickup.",
+      "status": "PICKUP_SCHEDULED",
+      "pickupStatus": "SCHEDULED",
+      "qualityCheckStatus": "NOT_STARTED",
+      "refundStatus": "PENDING",
+      "refundId": null,
+      "refundAmount": 74999,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-20T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "pickupPartnerId": "RPP-001",
+      "pickupPartnerName": "Naveen Pickup Services",
+      "pickupPartnerPhone": "9876500101",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260717-1784312871480",
+      "nextPickupAttemptAt": "2026-07-20T00:00:00.000Z",
+      "items": [
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999,
+          "category": "Electronics",
+          "sellerId": "seller-001",
+          "sellerName": "Samsung Store"
+        }
+      ],
+      "adminRemarks": "Return for order ORD-20260713-7542 Pickup Assignment",
+      "qualityCheckRemarks": null,
+      "approvedAt": "2026-07-17T10:10:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-17T18:27:51.563Z",
+      "pickedUpAt": null,
+      "pickupCompletedAt": null,
+      "receivedAtWarehouseAt": null,
+      "qualityCheckedAt": null,
+      "refundInitiatedAt": null,
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001003",
+      "requestId": "RET-20260717-1784300001003",
+      "returnRequestId": "RET-20260717-1784300001003",
+      "orderId": "ORD-20260714-9446",
+      "orderDbId": "order-db-1784045498557",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-17T10:00:00.000Z",
+      "createdAt": "2026-07-17T10:00:00.000Z",
+      "updatedAt": "2026-07-17T11:00:00.000Z",
+      "reason": "Wrong item delivered",
+      "returnReason": "Wrong item delivered",
+      "comments": "Customer selected both electronics items for return verification.",
+      "customerComment": "Customer selected both electronics items for return verification.",
+      "status": "PICKUP_SCHEDULED",
+      "pickupStatus": "SCHEDULED",
+      "qualityCheckStatus": "NOT_STARTED",
+      "refundStatus": "PENDING",
+      "refundId": null,
+      "refundAmount": 154899,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-19T00:00:00.000Z",
+      "pickupSlot": "10 AM - 1 PM",
+      "pickupPartnerId": "RPP-001",
+      "pickupPartnerName": "Naveen Pickup Services",
+      "pickupPartnerPhone": "9876500101",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260717-001",
+      "nextPickupAttemptAt": "2026-07-19T00:00:00.000Z",
+      "items": [
+        {
+          "productId": "prod-002",
+          "name": "Apple iPhone 15",
+          "brand": "Apple",
+          "price": 79900,
+          "image": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "quantity": 1,
+          "subtotal": 79900,
+          "category": "Electronics",
+          "sellerId": "seller-002",
+          "sellerName": "Apple Authorized Store"
+        },
+        {
+          "productId": "prod-001",
+          "name": "Samsung Galaxy S24",
+          "brand": "Samsung",
+          "price": 74999,
+          "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "quantity": 1,
+          "subtotal": 74999,
+          "category": "Electronics",
+          "sellerId": "seller-001",
+          "sellerName": "Samsung Store"
+        }
+      ],
+      "adminRemarks": "Pickup scheduled with Naveen Pickup Services.",
+      "qualityCheckRemarks": null,
+      "approvedAt": "2026-07-17T10:20:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-17T11:00:00.000Z",
+      "pickedUpAt": null,
+      "pickupCompletedAt": null,
+      "receivedAtWarehouseAt": null,
+      "qualityCheckedAt": null,
+      "refundInitiatedAt": null,
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001004",
+      "requestId": "RET-20260717-1784300001004",
+      "returnRequestId": "RET-20260717-1784300001004",
+      "orderId": "ORD-20260716-1883",
+      "orderDbId": "order-db-1784209182140",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-17T11:30:00.000Z",
+      "createdAt": "2026-07-17T11:30:00.000Z",
+      "updatedAt": "2026-07-17T13:00:00.000Z",
+      "reason": "Damaged product",
+      "returnReason": "Damaged product",
+      "comments": "Customer reported laptop package damage and requested return.",
+      "customerComment": "Customer reported laptop package damage and requested return.",
+      "status": "QUALITY_CHECK_PENDING",
+      "pickupStatus": "PICKED_UP",
+      "qualityCheckStatus": "PENDING",
+      "refundStatus": "PENDING",
+      "refundId": null,
+      "refundAmount": 58999,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-17T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "pickupPartnerId": "RPP-002",
+      "pickupPartnerName": "QuickReturn Logistics",
+      "pickupPartnerPhone": "9876500102",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260717-002",
+      "nextPickupAttemptAt": null,
+      "items": [
+        {
+          "productId": "prod-004",
+          "name": "Dell Inspiron 15 Laptop",
+          "brand": "Dell",
+          "price": 58999,
+          "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "quantity": 1,
+          "subtotal": 58999,
+          "category": "Electronics",
+          "sellerId": "seller-004",
+          "sellerName": "Dell Official Store"
+        }
+      ],
+      "adminRemarks": "Pickup completed by QuickReturn Logistics and item received at warehouse. QC started.",
+      "qualityCheckRemarks": "QC pending. Warehouse team is validating returned product condition.",
+      "approvedAt": "2026-07-17T11:45:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-17T12:00:00.000Z",
+      "pickedUpAt": "2026-07-17T12:40:00.000Z",
+      "pickupCompletedAt": "2026-07-17T12:40:00.000Z",
+      "receivedAtWarehouseAt": "2026-07-17T12:55:00.000Z",
+      "qualityCheckedAt": null,
+      "refundInitiatedAt": null,
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001005",
+      "requestId": "RET-20260717-1784300001005",
+      "returnRequestId": "RET-20260717-1784300001005",
+      "orderId": "ORD-20260716-5454",
+      "orderDbId": "order-db-1784231248884",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-17T12:00:00.000Z",
+      "createdAt": "2026-07-17T12:00:00.000Z",
+      "updatedAt": "2026-07-17T18:00:54.520Z",
+      "reason": "Size issue",
+      "returnReason": "Size issue",
+      "comments": "Customer reported selected size does not fit as expected.",
+      "customerComment": "Customer reported selected size does not fit as expected.",
+      "status": "REFUND_COMPLETED",
+      "pickupStatus": "PICKED_UP",
+      "qualityCheckStatus": "PASSED",
+      "refundStatus": "COMPLETED",
+      "refundId": "RFND-RETURN-20260717-1005",
+      "refundAmount": 1499,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-17T00:00:00.000Z",
+      "pickupSlot": "4 PM - 7 PM",
+      "pickupPartnerId": "RPP-001",
+      "pickupPartnerName": "Naveen Pickup Services",
+      "pickupPartnerPhone": "9876500101",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260717-003",
+      "nextPickupAttemptAt": null,
+      "items": [
+        {
+          "productId": "prod-007",
+          "name": "Nike Sports T-Shirt",
+          "brand": "Nike",
+          "price": 1499,
+          "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+          "quantity": 1,
+          "subtotal": 1499,
+          "selectedSize": "M",
+          "category": "Clothing",
+          "sellerId": "seller-007",
+          "sellerName": "Nike Sports Store"
+        }
+      ],
+      "adminRemarks": "Pickup completed by Naveen Pickup Services. QC passed and refund request created.",
+      "qualityCheckRemarks": "Product received in sellable condition. Size issue validated.",
+      "approvedAt": "2026-07-17T12:10:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-17T12:30:00.000Z",
+      "pickedUpAt": "2026-07-17T13:45:00.000Z",
+      "pickupCompletedAt": "2026-07-17T13:45:00.000Z",
+      "receivedAtWarehouseAt": "2026-07-17T14:00:00.000Z",
+      "qualityCheckedAt": "2026-07-17T14:15:00.000Z",
+      "refundInitiatedAt": "2026-07-17T14:25:00.000Z",
+      "refundedAt": "2026-07-17T18:00:54.520Z",
+      "refundCompletedAt": "2026-07-17T18:00:54.520Z",
+      "cancelledAt": null
+    }
+  ],
+  "returnPickupPartners": [
+    {
+      "id": "return-pickup-partner-db-001",
+      "partnerId": "RPP-001",
+      "name": "Naveen Pickup Services",
+      "phone": "9876500101",
+      "email": "naveen.pickup@shopease.demo",
+      "city": "Bengaluru",
+      "zoneName": "Karnataka",
+      "status": "ACTIVE",
+      "activePickupCount": 2,
+      "maxDailyCapacity": 8,
+      "rating": 4.7,
+      "createdAt": "2026-07-17T08:00:00.000Z",
+      "updatedAt": "2026-07-17T18:27:51.518Z"
+    },
+    {
+      "id": "return-pickup-partner-db-002",
+      "partnerId": "RPP-002",
+      "name": "QuickReturn Logistics",
+      "phone": "9876500102",
+      "email": "quickreturn@shopease.demo",
+      "city": "Bengaluru",
+      "zoneName": "Karnataka",
+      "status": "ACTIVE",
+      "activePickupCount": 0,
+      "maxDailyCapacity": 10,
+      "rating": 4.5,
+      "createdAt": "2026-07-17T08:00:00.000Z",
+      "updatedAt": "2026-07-17T08:00:00.000Z"
+    },
+    {
+      "id": "return-pickup-partner-db-003",
+      "partnerId": "RPP-003",
+      "name": "Metro Reverse Pickup",
+      "phone": "9876500103",
+      "email": "metro.reverse@shopease.demo",
+      "city": "Bengaluru",
+      "zoneName": "Karnataka",
+      "status": "BUSY",
+      "activePickupCount": 10,
+      "maxDailyCapacity": 10,
+      "rating": 4.2,
+      "createdAt": "2026-07-17T08:00:00.000Z",
+      "updatedAt": "2026-07-17T08:00:00.000Z"
+    }
+  ],
+  "returnPickupAttempts": [
+    {
+      "id": "return-pickup-attempt-db-001",
+      "attemptId": "PKUP-20260717-001",
+      "returnRequestId": "RET-20260717-1784300001003",
+      "requestId": "RET-20260717-1784300001003",
+      "orderId": "ORD-20260714-9446",
+      "userId": "user-001",
+      "partnerId": "RPP-001",
+      "partnerName": "Naveen Pickup Services",
+      "partnerPhone": "9876500101",
+      "attemptNumber": 1,
+      "status": "SCHEDULED",
+      "scheduledPickupDate": "2026-07-19T00:00:00.000Z",
+      "pickupSlot": "10 AM - 1 PM",
+      "outForPickupAt": null,
+      "pickedUpAt": null,
+      "failedAt": null,
+      "rescheduledAt": null,
+      "cancelledAt": null,
+      "failureReason": null,
+      "pickupProofCode": null,
+      "remarks": "Pickup scheduled for customer return.",
+      "createdAt": "2026-07-17T11:00:00.000Z",
+      "updatedAt": "2026-07-17T11:00:00.000Z"
+    },
+    {
+      "id": "return-pickup-attempt-db-002",
+      "attemptId": "PKUP-20260717-002",
+      "returnRequestId": "RET-20260717-1784300001004",
+      "requestId": "RET-20260717-1784300001004",
+      "orderId": "ORD-20260716-1883",
+      "userId": "user-001",
+      "partnerId": "RPP-002",
+      "partnerName": "QuickReturn Logistics",
+      "partnerPhone": "9876500102",
+      "attemptNumber": 1,
+      "status": "PICKED_UP",
+      "scheduledPickupDate": "2026-07-17T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "outForPickupAt": "2026-07-17T12:20:00.000Z",
+      "pickedUpAt": "2026-07-17T12:40:00.000Z",
+      "failedAt": null,
+      "rescheduledAt": null,
+      "cancelledAt": null,
+      "failureReason": null,
+      "pickupProofCode": "POP-1784300002002",
+      "remarks": "Return package picked up successfully.",
+      "createdAt": "2026-07-17T12:00:00.000Z",
+      "updatedAt": "2026-07-17T12:40:00.000Z"
+    },
+    {
+      "id": "return-pickup-attempt-db-003",
+      "attemptId": "PKUP-20260717-003",
+      "returnRequestId": "RET-20260717-1784300001005",
+      "requestId": "RET-20260717-1784300001005",
+      "orderId": "ORD-20260716-5454",
+      "userId": "user-001",
+      "partnerId": "RPP-001",
+      "partnerName": "Naveen Pickup Services",
+      "partnerPhone": "9876500101",
+      "attemptNumber": 1,
+      "status": "PICKED_UP",
+      "scheduledPickupDate": "2026-07-17T00:00:00.000Z",
+      "pickupSlot": "4 PM - 7 PM",
+      "outForPickupAt": "2026-07-17T13:20:00.000Z",
+      "pickedUpAt": "2026-07-17T13:45:00.000Z",
+      "failedAt": null,
+      "rescheduledAt": null,
+      "cancelledAt": null,
+      "failureReason": null,
+      "pickupProofCode": "POP-1784300002003",
+      "remarks": "Return package picked up and handed over to warehouse.",
+      "createdAt": "2026-07-17T12:30:00.000Z",
+      "updatedAt": "2026-07-17T13:45:00.000Z"
+    },
+    {
+      "id": "return-pickup-attempt-db-1784312871480-g9ywt5",
+      "attemptId": "PKUP-20260717-1784312871480",
+      "returnRequestId": "RET-20260717-1784300001002",
+      "requestId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "userId": "user-001",
+      "partnerId": "RPP-001",
+      "partnerName": "Naveen Pickup Services",
+      "partnerPhone": "9876500101",
+      "attemptNumber": 1,
+      "scheduledPickupDate": "2026-07-20T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "remarks": "Return for order ORD-20260713-7542 Pickup Assignment",
+      "status": "SCHEDULED",
+      "outForPickupAt": null,
+      "pickedUpAt": null,
+      "failedAt": null,
+      "rescheduledAt": null,
+      "cancelledAt": null,
+      "failureReason": null,
+      "pickupProofCode": null,
+      "createdAt": "2026-07-17T18:27:51.480Z",
+      "updatedAt": "2026-07-17T18:27:51.480Z"
+    }
+  ],
+  "refunds": [
+    {
+      "id": "refund-db-001",
+      "refundId": "RFND-20260716-001",
+      "orderId": "ORD-20260713-7542",
+      "orderDbId": "order-db-1783970261132",
+      "returnRequestId": "return-request-db-001",
+      "userId": "user-001",
+      "amount": 1899,
+      "method": "ORIGINAL_PAYMENT",
+      "status": "COMPLETED",
+      "reason": "Refund completed after payment reconciliation for customer support case.",
+      "initiatedAt": "2026-07-16T09:00:00.000Z",
+      "completedAt": "2026-07-16T10:15:00.000Z",
+      "adminRemarks": "Refund completed to original payment mode.",
+      "compensationCouponCode": null,
+      "walletCreditAmount": 0
+    },
+    {
+      "id": "refund-db-002",
+      "refundId": "RFND-20260716-002",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "returnRequestId": "return-request-db-002",
+      "userId": "user-001",
+      "amount": 500,
+      "method": "WALLET",
+      "status": "PROCESSING",
+      "reason": "Coupon adjustment refund credited to wallet after order discount mismatch.",
+      "initiatedAt": "2026-07-16T11:00:00.000Z",
+      "adminRemarks": "Wallet refund processing for coupon adjustment.",
+      "compensationCouponCode": null,
+      "walletCreditAmount": 500
+    },
+    {
+      "id": "refund-db-003",
+      "refundId": "RFND-20260716-003",
+      "orderId": "ORD-20260714-9446",
+      "orderDbId": "order-db-1784045498557",
+      "returnRequestId": "return-request-db-003",
+      "userId": "user-001",
+      "amount": 1250,
+      "method": "ORIGINAL_PAYMENT",
+      "status": "PENDING",
+      "reason": "Reward redemption mismatch review pending.",
+      "initiatedAt": "2026-07-16T12:20:00.000Z",
+      "adminRemarks": "Pending refund review by refund team.",
+      "compensationCouponCode": null,
+      "walletCreditAmount": 0
+    }
+  ],
+  "refundRequests": [
+    {
+      "id": "refund-request-db-001",
+      "refundId": "RFND-AUTO-20260716-001",
+      "paymentId": "PAY-20260714-001",
+      "orderId": null,
+      "userId": "user-001",
+      "userName": "Test User",
+      "amount": 1899,
+      "refundMode": "ORIGINAL_PAYMENT_MODE",
+      "status": "PENDING_REVIEW",
+      "reason": "Payment captured but order was not created.",
+      "createdBy": "SYSTEM",
+      "assignedTeam": "REFUND_TEAM",
+      "createdAt": "2026-07-16T09:30:00.000Z",
+      "updatedAt": "2026-07-16T09:30:00.000Z",
+      "completedAt": null,
+      "failedAt": null,
+      "gatewayRefundReferenceId": null,
+      "resolutionNote": null
+    },
+    {
+      "id": "refund-request-db-002",
+      "refundId": "RFND-AUTO-20260716-002",
+      "paymentId": "PAY-20260714-003",
+      "orderId": "ORD-20260712-1001",
+      "userId": "user-001",
+      "userName": "Test User",
+      "amount": 1899,
+      "refundMode": "ORIGINAL_PAYMENT_MODE",
+      "status": "COMPLETED",
+      "reason": "Refund processed after payment gateway reconciliation.",
+      "createdBy": "SUPPORT",
+      "assignedTeam": "REFUND_TEAM",
+      "createdAt": "2026-07-16T10:00:00.000Z",
+      "updatedAt": "2026-07-16T11:45:00.000Z",
+      "completedAt": "2026-07-16T11:45:00.000Z",
+      "failedAt": null,
+      "gatewayRefundReferenceId": "GATEWAY-RFND-20260716-003",
+      "resolutionNote": "Refund completed and confirmed with gateway reference."
+    },
+    {
+      "id": "refund-request-db-003",
+      "refundId": "RFND-AUTO-20260716-003",
+      "paymentId": "PAY-ARJUN-20260716-001",
+      "orderId": "ORD-PENDING-20260713-003",
+      "userId": "user-01",
+      "userName": "Arjun Sharma",
+      "amount": 2499,
+      "refundMode": "ORIGINAL_PAYMENT_MODE",
+      "status": "COMPLETED",
+      "reason": "Customer reported amount debited but order was not created.",
+      "createdBy": "SUPPORT",
+      "assignedTeam": "REFUND_TEAM",
+      "createdAt": "2026-07-16T12:00:00.000Z",
+      "updatedAt": "2026-07-17T10:32:35.355Z",
+      "completedAt": "2026-07-17T10:32:35.355Z",
+      "failedAt": null,
+      "gatewayRefundReferenceId": "GATEWAY-RFND-PENDING-ARJUN-001",
+      "resolutionNote": "Refund completed and confirmed with gateway."
+    },
+    {
+      "id": "refund-request-return-db-001",
+      "refundId": "RFND-RETURN-20260717-1005",
+      "paymentId": "RETURN-RET-20260717-1784300001005",
+      "orderId": "ORD-20260716-5454",
+      "userId": "user-001",
+      "userName": "Test User",
+      "amount": 1499,
+      "refundMode": "ORIGINAL_PAYMENT_MODE",
+      "status": "PENDING_REVIEW",
+      "reason": "Return quality check passed for RET-20260717-1784300001005.",
+      "createdBy": "SYSTEM",
+      "assignedTeam": "REFUND_TEAM",
+      "createdAt": "2026-07-17T14:25:00.000Z",
+      "updatedAt": "2026-07-17T14:25:00.000Z",
+      "completedAt": null,
+      "failedAt": null,
+      "gatewayRefundReferenceId": null,
+      "resolutionNote": null
+    }
+  ],
+  "checkoutPaymentSessions": [
+    {
+      "id": "checkout-session-db-001",
+      "checkoutReferenceId": "checkout-20260716-001",
+      "paymentId": "PAY-20260714-001",
+      "userId": "user-001",
+      "status": "REFUND_REQUIRED",
+      "checkoutSnapshot": {
+        "user": {
+          "id": "user-001",
+          "name": "Test User",
+          "email": "test@example.com"
+        },
+        "orderPayload": {
+          "userId": "user-001",
+          "orderId": "ORD-PENDING-20260714-001",
+          "orderDate": "2026-07-16T09:20:00.000Z",
+          "items": [
+            {
+              "productId": "prod-010",
+              "name": "Atomic Habits",
+              "brand": "Penguin",
+              "price": 599,
+              "image": "https://placehold.co/600x400/e6f4ea/137333?text=Atomic+Habits",
+              "quantity": 2,
+              "subtotal": 1198,
+              "selectedSize": null,
+              "category": "Books",
+              "sellerId": "seller-010",
+              "sellerName": "Penguin Books Store"
+            },
+            {
+              "productId": "prod-011",
+              "name": "The Psychology of Money",
+              "brand": "Jaico",
+              "price": 399,
+              "image": "https://placehold.co/600x400/fce8e6/a50e0e?text=Psychology+of+Money",
+              "quantity": 1,
+              "subtotal": 399,
+              "selectedSize": null,
+              "category": "Books",
+              "sellerId": "seller-011",
+              "sellerName": "Jaico Books Store"
+            }
+          ],
+          "totalAmount": 1899,
+          "paymentMethod": "UPI",
+          "deliveryAddress": {
+            "fullName": "Test User",
+            "mobile": "9876543210",
+            "addressLine": "MG Road, Near Metro Station",
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "pincode": "560001"
+          },
+          "deliveryPromise": {
+            "pincode": "560001",
+            "zoneId": 3,
+            "zoneName": "Karnataka",
+            "warehouseId": 3,
+            "warehouseName": "Bengaluru Fulfillment Center",
+            "sellerId": "seller-010",
+            "sellerName": "Penguin Books Store",
+            "estimatedDeliveryDate": "2026-07-20T09:20:00.000Z",
+            "finalDeliveryDays": 4,
+            "cashOnDelivery": true,
+            "freeDelivery": true,
+            "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+            "categorySlaApplied": {
+              "category": "Books",
+              "handlingDays": 0,
+              "additionalDays": 1
+            }
+          },
+          "rewardRedemption": null,
+          "walletRedemption": null,
+          "orderStatus": "Order Placed",
+          "fulfillmentStatus": "PENDING",
+          "trackingSteps": [],
+          "trackingEvents": [],
+          "subtotalAmount": 1597,
+          "discountAmount": 0,
+          "deliveryFee": 302,
+          "couponCode": null,
+          "couponId": null
+        },
+        "subtotalAmount": 1597,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 302,
+        "totalAmount": 1899,
+        "rewardRedemption": null,
+        "walletRedemption": null,
+        "couponRedemption": null,
+        "rewardTransaction": null,
+        "walletTransaction": null
+      },
+      "createdAt": "2026-07-16T09:20:00.000Z",
+      "updatedAt": "2026-07-16T09:30:00.000Z",
+      "orderId": null,
+      "errorMessage": "Payment captured but order creation failed."
+    },
+    {
+      "id": "checkout-session-db-002",
+      "checkoutReferenceId": "checkout-20260716-002",
+      "paymentId": "PAY-20260714-002",
+      "userId": "user-001",
+      "status": "ORDER_CREATED",
+      "checkoutSnapshot": {
+        "user": {
+          "id": "user-001",
+          "name": "Test User",
+          "email": "test@example.com"
+        },
+        "orderPayload": {
+          "userId": "user-001",
+          "orderId": "ORD-20260713-1006",
+          "orderDate": "2026-07-16T10:30:00.000Z",
+          "items": [
+            {
+              "productId": "prod-014",
+              "name": "Nike Air Zoom Pegasus",
+              "brand": "Nike",
+              "price": 8995,
+              "image": "https://placehold.co/600x400/eaf4ff/185abc?text=Nike+Pegasus",
+              "quantity": 1,
+              "subtotal": 8995,
+              "selectedSize": "9",
+              "category": "Footwear",
+              "sellerId": "seller-007",
+              "sellerName": "Nike Sports Store"
+            }
+          ],
+          "totalAmount": 2299,
+          "paymentMethod": "UPI",
+          "deliveryAddress": {
+            "fullName": "Test User",
+            "mobile": "9876543210",
+            "addressLine": "MG Road, Near Metro Station",
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "pincode": "560001"
+          },
+          "deliveryPromise": {
+            "pincode": "560001",
+            "zoneId": 3,
+            "zoneName": "Karnataka",
+            "warehouseId": 3,
+            "warehouseName": "Bengaluru Fulfillment Center",
+            "sellerId": "seller-007",
+            "sellerName": "Nike Sports Store",
+            "estimatedDeliveryDate": "2026-07-20T10:30:00.000Z",
+            "finalDeliveryDays": 4,
+            "cashOnDelivery": true,
+            "freeDelivery": true,
+            "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+            "categorySlaApplied": {
+              "category": "Footwear",
+              "handlingDays": 1,
+              "additionalDays": 1
+            }
+          },
+          "rewardRedemption": null,
+          "walletRedemption": null,
+          "orderStatus": "Order Placed",
+          "fulfillmentStatus": "PENDING",
+          "trackingSteps": [],
+          "trackingEvents": [],
+          "subtotalAmount": 2299,
+          "discountAmount": 0,
+          "deliveryFee": 0,
+          "couponCode": null,
+          "couponId": null
+        },
+        "subtotalAmount": 2299,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "totalAmount": 2299,
+        "rewardRedemption": null,
+        "walletRedemption": null,
+        "couponRedemption": null,
+        "rewardTransaction": null,
+        "walletTransaction": null
+      },
+      "createdAt": "2026-07-16T10:30:00.000Z",
+      "updatedAt": "2026-07-16T10:35:00.000Z",
+      "orderId": "ORD-20260713-1006",
+      "errorMessage": null
+    },
+    {
+      "id": "checkout-session-db-003",
+      "checkoutReferenceId": "checkout-20260716-003",
+      "paymentId": "PAY-PRIYA-20260716-001",
+      "userId": "user-02",
+      "status": "PAYMENT_PENDING",
+      "checkoutSnapshot": {
+        "user": {
+          "id": "user-02",
+          "name": "Priya Nair",
+          "email": "priya.nair@mail.com"
+        },
+        "orderPayload": {
+          "userId": "user-02",
+          "orderId": "ORD-PENDING-PRIYA-20260716-001",
+          "orderDate": "2026-07-16T13:10:00.000Z",
+          "items": [
+            {
+              "productId": "prod-503",
+              "name": "Waterproof Ultra-Black Matte Liquid Eyeliner",
+              "brand": "Lakme",
+              "price": 425,
+              "image": "https://placehold.co/600x400/fafafa/18181b?text=Matte+Liquid+Eyeliner",
+              "quantity": 2,
+              "subtotal": 850,
+              "selectedSize": null,
+              "category": "Beauty",
+              "sellerId": "seller-401",
+              "sellerName": "GlamGloss Cosmetics"
+            }
+          ],
+          "totalAmount": 850,
+          "paymentMethod": "Credit Card",
+          "deliveryAddress": {
+            "fullName": "Priya Nair",
+            "mobile": "+918765432109",
+            "addressLine": "Tech Park Phase II, Sector 62",
+            "city": "Noida",
+            "state": "Uttar Pradesh",
+            "pincode": "201301"
+          },
+          "deliveryPromise": {
+            "pincode": "201301",
+            "zoneId": 4,
+            "zoneName": "Delhi NCR",
+            "warehouseId": 5,
+            "warehouseName": "Delhi Fulfillment Center",
+            "sellerId": "seller-401",
+            "sellerName": "GlamGloss Cosmetics",
+            "estimatedDeliveryDate": "2026-07-20T13:10:00.000Z",
+            "finalDeliveryDays": 4,
+            "cashOnDelivery": true,
+            "freeDelivery": true,
+            "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+            "categorySlaApplied": {
+              "category": "Beauty",
+              "handlingDays": 1,
+              "additionalDays": 0
+            }
+          },
+          "rewardRedemption": null,
+          "walletRedemption": null,
+          "orderStatus": "Order Placed",
+          "fulfillmentStatus": "PENDING",
+          "trackingSteps": [],
+          "trackingEvents": [],
+          "subtotalAmount": 850,
+          "discountAmount": 0,
+          "deliveryFee": 0,
+          "couponCode": null,
+          "couponId": null
+        },
+        "subtotalAmount": 850,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "totalAmount": 850,
+        "rewardRedemption": null,
+        "walletRedemption": null,
+        "couponRedemption": null,
+        "rewardTransaction": null,
+        "walletTransaction": null
+      },
+      "createdAt": "2026-07-16T13:10:00.000Z",
+      "updatedAt": "2026-07-16T13:15:00.000Z",
+      "orderId": null,
+      "errorMessage": null
+    },
+    {
+      "id": "checkout-session-db-1784208804735-7ivn4d",
+      "checkoutReferenceId": "checkout-20260716-1784208804632",
+      "paymentId": "PAY-20260716-1784208804632",
+      "userId": "user-001",
+      "status": "ORDER_CREATED",
+      "checkoutSnapshot": {
+        "user": {
+          "id": "user-001",
+          "name": "Test User",
+          "email": "test@example.com"
+        },
+        "orderPayload": {
+          "userId": "user-001",
+          "orderId": "ORD-20260716-1883",
+          "orderDate": "2026-07-16T13:33:24.631Z",
+          "items": [
+            {
+              "productId": "prod-004",
+              "name": "Dell Inspiron 15 Laptop",
+              "brand": "Dell",
+              "price": 58999,
+              "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+              "quantity": 1,
+              "subtotal": 58999,
+              "category": "Electronics",
+              "sellerId": "seller-004",
+              "sellerName": "Dell Official Store"
+            }
+          ],
+          "totalAmount": 58999,
+          "paymentMethod": "Credit Card",
+          "deliveryAddress": {
+            "fullName": "Test User",
+            "mobile": "9876543210",
+            "addressLine": "MG Road, Near Metro Station",
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "pincode": "560001"
+          },
+          "deliveryPromise": {
+            "pincode": "560001",
+            "zoneId": 3,
+            "zoneName": "Karnataka",
+            "warehouseId": 3,
+            "warehouseName": "Bengaluru Fulfillment Center",
+            "sellerId": "seller-004",
+            "sellerName": "Dell Official Store",
+            "estimatedDeliveryDate": "2026-07-20T13:33:06.195Z",
+            "finalDeliveryDays": 4,
+            "cashOnDelivery": true,
+            "freeDelivery": true,
+            "fulfillmentMessage": "Fulfilled through zone warehouse routing.",
+            "categorySlaApplied": {
+              "category": "Electronics",
+              "handlingDays": 1,
+              "additionalDays": 0
+            }
+          },
+          "rewardRedemption": null,
+          "walletRedemption": null,
+          "orderStatus": "Order Placed",
+          "fulfillmentStatus": "PENDING",
+          "trackingSteps": [
+            {
+              "label": "Order Placed",
+              "isCompleted": true
+            },
+            {
+              "label": "Packed",
+              "isCompleted": false
+            },
+            {
+              "label": "Shipped",
+              "isCompleted": false
+            },
+            {
+              "label": "Out for Delivery",
+              "isCompleted": false
+            },
+            {
+              "label": "Delivered",
+              "isCompleted": false
+            }
+          ],
+          "trackingEvents": [
+            {
+              "id": "track-1784208804631-001",
+              "status": "Order Placed",
+              "title": "Order placed successfully",
+              "description": "Your order has been received and payment details have been confirmed.",
+              "location": "ShopEase Order System",
+              "timestamp": "2026-07-16T13:33:24.631Z",
+              "isCompleted": true
+            },
+            {
+              "id": "track-1784208804631-002",
+              "status": "Packed",
+              "title": "Packing pending",
+              "description": "Your order will be packed at the seller warehouse.",
+              "location": "Seller Warehouse",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784208804631-003",
+              "status": "Shipped",
+              "title": "Shipment pending",
+              "description": "Your package will be handed over to the logistics partner.",
+              "location": "Logistics Hub",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784208804631-004",
+              "status": "Out for Delivery",
+              "title": "Out for delivery pending",
+              "description": "Your package will be assigned to a delivery partner.",
+              "location": "Nearest Delivery Hub",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784208804631-005",
+              "status": "Delivered",
+              "title": "Delivery pending",
+              "description": "Your package will be delivered to the selected address.",
+              "location": "Customer Address",
+              "timestamp": "",
+              "isCompleted": false
+            }
+          ],
+          "subtotalAmount": 58999,
+          "discountAmount": 0,
+          "deliveryFee": 0
+        },
+        "subtotalAmount": 58999,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "totalAmount": 58999,
+        "rewardRedemption": null,
+        "walletRedemption": null,
+        "couponRedemption": null,
+        "rewardTransaction": null,
+        "walletTransaction": null
+      },
+      "createdAt": "2026-07-16T13:33:24.735Z",
+      "updatedAt": "2026-07-16T13:39:42.264Z",
+      "orderId": "ORD-20260716-1883",
+      "errorMessage": null
+    },
+    {
+      "id": "checkout-session-db-1784231237428-ulgcmi",
+      "checkoutReferenceId": "checkout-20260717-1784231237347",
+      "paymentId": "PAY-20260717-1784231237347",
+      "userId": "user-001",
+      "status": "ORDER_CREATED",
+      "checkoutSnapshot": {
+        "user": {
+          "id": "user-001",
+          "name": "Test User",
+          "email": "test@example.com"
+        },
+        "orderPayload": {
+          "userId": "user-001",
+          "orderId": "ORD-20260716-5454",
+          "orderDate": "2026-07-16T19:47:17.347Z",
+          "items": [
+            {
+              "productId": "prod-007",
+              "name": "Nike Sports T-Shirt",
+              "brand": "Nike",
+              "price": 1499,
+              "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+              "quantity": 1,
+              "subtotal": 1499,
+              "selectedSize": "M",
+              "category": "Clothing",
+              "sellerId": "seller-007",
+              "sellerName": "Nike Sports Store"
+            }
+          ],
+          "totalAmount": 1499,
+          "paymentMethod": "Credit Card",
+          "deliveryAddress": {
+            "fullName": "Test User",
+            "mobile": "9876543210",
+            "addressLine": "MG Road, Near Metro Station",
+            "city": "Bengaluru",
+            "state": "Karnataka",
+            "pincode": "560001"
+          },
+          "deliveryPromise": {
+            "pincode": "560001",
+            "zoneId": 3,
+            "zoneName": "Karnataka",
+            "warehouseId": 3,
+            "warehouseName": "Bengaluru Fulfillment Center",
+            "sellerId": "seller-007",
+            "sellerName": "Nike Sports Store",
+            "estimatedDeliveryDate": "2026-07-21T19:46:24.423Z",
+            "finalDeliveryDays": 5,
+            "cashOnDelivery": true,
+            "freeDelivery": true,
+            "fulfillmentMessage": "Seller ships from the mapped zone warehouse.",
+            "categorySlaApplied": {
+              "category": "Clothing",
+              "handlingDays": 1,
+              "additionalDays": 1
+            }
+          },
+          "rewardRedemption": null,
+          "walletRedemption": null,
+          "orderStatus": "Order Placed",
+          "fulfillmentStatus": "PENDING",
+          "trackingSteps": [
+            {
+              "label": "Order Placed",
+              "isCompleted": true
+            },
+            {
+              "label": "Packed",
+              "isCompleted": false
+            },
+            {
+              "label": "Shipped",
+              "isCompleted": false
+            },
+            {
+              "label": "Out for Delivery",
+              "isCompleted": false
+            },
+            {
+              "label": "Delivered",
+              "isCompleted": false
+            }
+          ],
+          "trackingEvents": [
+            {
+              "id": "track-1784231237347-001",
+              "status": "Order Placed",
+              "title": "Order placed successfully",
+              "description": "Your order has been received and payment details have been confirmed.",
+              "location": "ShopEase Order System",
+              "timestamp": "2026-07-16T19:47:17.347Z",
+              "isCompleted": true
+            },
+            {
+              "id": "track-1784231237347-002",
+              "status": "Packed",
+              "title": "Packing pending",
+              "description": "Your order will be packed at the seller warehouse.",
+              "location": "Seller Warehouse",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784231237347-003",
+              "status": "Shipped",
+              "title": "Shipment pending",
+              "description": "Your package will be handed over to the logistics partner.",
+              "location": "Logistics Hub",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784231237347-004",
+              "status": "Out for Delivery",
+              "title": "Out for delivery pending",
+              "description": "Your package will be assigned to a delivery partner.",
+              "location": "Nearest Delivery Hub",
+              "timestamp": "",
+              "isCompleted": false
+            },
+            {
+              "id": "track-1784231237347-005",
+              "status": "Delivered",
+              "title": "Delivery pending",
+              "description": "Your package will be delivered to the selected address.",
+              "location": "Customer Address",
+              "timestamp": "",
+              "isCompleted": false
+            }
+          ],
+          "subtotalAmount": 1499,
+          "discountAmount": 0,
+          "deliveryFee": 0
+        },
+        "subtotalAmount": 1499,
+        "couponDiscountAmount": 0,
+        "deliveryFee": 0,
+        "totalAmount": 1499,
+        "rewardRedemption": null,
+        "walletRedemption": null,
+        "couponRedemption": null,
+        "rewardTransaction": null,
+        "walletTransaction": null
+      },
+      "createdAt": "2026-07-16T19:47:17.428Z",
+      "updatedAt": "2026-07-16T19:47:29.034Z",
+      "orderId": "ORD-20260716-5454",
+      "errorMessage": null
+    }
+  ],
+  "paymentGatewayCallbacks": [
+    {
+      "id": "gateway-callback-db-001",
+      "callbackId": "GW-CB-20260716-001",
+      "paymentId": "PAY-20260714-001",
+      "checkoutReferenceId": "checkout-20260716-001",
+      "gatewayStatus": "CAPTURED",
+      "gatewayReferenceId": "UPI-REF-20260716-001",
+      "gatewayMessage": "Payment captured successfully by mock gateway.",
+      "failureReason": null,
+      "forceOrderFailure": true,
+      "receivedAt": "2026-07-16T14:00:00.000Z",
+      "processedAt": "2026-07-16T14:00:05.000Z",
+      "processed": true
+    },
+    {
+      "id": "gateway-callback-db-1784231248783-5ztst5",
+      "callbackId": "GW-CB-20260717-1784231248783",
+      "paymentId": "PAY-20260717-1784231237347",
+      "checkoutReferenceId": "checkout-20260717-1784231237347",
+      "gatewayStatus": "CAPTURED",
+      "gatewayReferenceId": "CREDIT-CARD-REF-1784231237347",
+      "gatewayMessage": "Payment captured successfully by mock gateway.",
+      "failureReason": null,
+      "forceOrderFailure": false,
+      "receivedAt": "2026-07-16T19:47:28.783Z",
+      "processedAt": "2026-07-16T19:47:29.053Z",
+      "processed": true
+    }
+  ],
+  "walletTransactions": [
+    {
+      "id": "wallet-db-promo-001",
+      "transactionId": "WAL-PROMO-001",
+      "userId": "user-001",
+      "type": "CREDIT",
+      "source": "PROMOTION",
+      "amount": 500,
+      "description": "Festive promotional wallet credit",
+      "createdAt": "2026-07-09T10:00:00.000Z",
+      "expiresAt": "2026-08-09T23:59:59.000Z",
+      "createdBy": "admin-001",
+      "adminRemarks": "Festival promotion campaign"
+    },
+    {
+      "id": "wallet-db-promo-002",
+      "transactionId": "WAL-PROMO-002",
+      "userId": "user-001",
+      "type": "CREDIT",
+      "source": "PROMOTION",
+      "amount": 500,
+      "description": "Festive promotional wallet credit",
+      "createdAt": "2026-07-01T10:00:00.000Z",
+      "expiresAt": "2026-07-12T23:59:59.000Z",
+      "createdBy": "admin-001",
+      "adminRemarks": "Festival promotion campaign"
+    }
+  ],
+  "rewardRules": [
+    {
+      "id": "reward-rule-default",
+      "ruleName": "Default Rewards Rule",
+      "earnPointsPerAmount": 10,
+      "earnAmountThreshold": 100,
+      "redeemPointValue": 0.25,
+      "minRedeemPoints": 100,
+      "maxRedeemPointsPerOrder": 5000,
+      "expiryDays": 365,
+      "active": true
+    },
+    {
+      "id": "reward-rule-fashion",
+      "ruleName": "Fashion Bonus Rewards",
+      "earnPointsPerAmount": 15,
+      "earnAmountThreshold": 100,
+      "redeemPointValue": 0.25,
+      "minRedeemPoints": 150,
+      "maxRedeemPointsPerOrder": 4000,
+      "expiryDays": 180,
+      "active": false
+    },
+    {
+      "id": "reward-rule-festive",
+      "ruleName": "Festive Campaign Rewards",
+      "earnPointsPerAmount": 20,
+      "earnAmountThreshold": 100,
+      "redeemPointValue": 0.3,
+      "minRedeemPoints": 200,
+      "maxRedeemPointsPerOrder": 7000,
+      "expiryDays": 90,
+      "active": false
+    }
+  ],
+  "rewardTransactions": [
+    {
+      "id": "reward-db-004",
+      "transactionId": "RWD-PROMO-20260708-001",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "PROMOTION",
+      "points": 500,
+      "description": "Welcome bonus reward points",
+      "createdAt": "2026-07-08T09:00:00.000Z",
+      "referenceId": "reward-promo-welcome-user-001",
+      "expiresAt": "2026-10-08T23:59:59.000Z"
+    },
+    {
+      "id": "reward-db-005",
+      "transactionId": "RWD-ADJ-20260708-001",
+      "userId": "user-001",
+      "type": "ADJUSTED",
+      "source": "ADMIN_ADJUSTMENT",
+      "points": 250,
+      "description": "Goodwill reward points adjustment",
+      "createdAt": "2026-07-08T12:00:00.000Z",
+      "referenceId": "reward-admin-adjustment-user-001-001",
+      "createdBy": "admin-001",
+      "adminRemarks": "Manual adjustment for customer support case"
+    },
+    {
+      "id": "reward-db-006",
+      "transactionId": "RWD-REDEEM-20260709-001",
+      "userId": "user-001",
+      "type": "REDEEMED",
+      "source": "WALLET",
+      "points": 1000,
+      "description": "Reward points redeemed as wallet credit",
+      "createdAt": "2026-07-09T14:30:00.000Z",
+      "referenceId": "reward-redeem-wallet-user-001-001"
+    },
+    {
+      "id": "reward-db-007",
+      "transactionId": "RWD-EXP-20260709-001",
+      "userId": "user-001",
+      "type": "EXPIRED",
+      "source": "EXPIRY",
+      "points": 100,
+      "description": "Expired promotional reward points",
+      "createdAt": "2026-07-09T23:59:59.000Z",
+      "referenceId": "reward-expiry-user-001-001"
+    },
+    {
+      "id": "reward-db-expiring-001",
+      "transactionId": "RWD-EXPIRING-001",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "PROMOTION",
+      "points": 750,
+      "description": "Limited-time promotional reward points",
+      "createdAt": "2026-07-05T10:00:00.000Z",
+      "referenceId": "reward-promo-expiring-user-001",
+      "expiresAt": "2026-07-15T23:59:59.000Z"
+    },
+    {
+      "id": "reward-db-expired-source-001",
+      "transactionId": "RWD-OLD-PROMO-001",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "PROMOTION",
+      "points": 300,
+      "description": "Old promotional reward points",
+      "createdAt": "2026-06-01T10:00:00.000Z",
+      "referenceId": "reward-old-promo-user-001",
+      "expiresAt": "2026-07-01T23:59:59.000Z"
+    },
+    {
+      "id": "reward-db-1783782676407",
+      "transactionId": "RWD-EXP-1783782676406",
+      "userId": "user-001",
+      "type": "EXPIRED",
+      "source": "EXPIRY",
+      "points": 300,
+      "description": "Expired reward points from RWD-OLD-PROMO-001",
+      "createdAt": "2026-07-11T15:11:16.406Z",
+      "referenceId": "reward-expiry-reward-db-expired-source-001"
+    },
+    {
+      "id": "reward-db-1783929762514",
+      "transactionId": "RWD-1783929762514",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 7940,
+      "description": "Reward points earned for order ORD-20260713-7927",
+      "createdAt": "2026-07-13T08:02:42.514Z",
+      "orderId": "ORD-20260713-7927",
+      "referenceId": "reward-order-ORD-20260713-7927",
+      "expiresAt": "2027-07-13T08:02:42.514Z"
+    },
+    {
+      "id": "reward-db-1783929762520",
+      "transactionId": "RWD-1783929762520",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 7940,
+      "description": "Reward points earned for order ORD-20260713-7927",
+      "createdAt": "2026-07-13T08:02:42.520Z",
+      "orderId": "ORD-20260713-7927",
+      "referenceId": "reward-order-ORD-20260713-7927",
+      "expiresAt": "2027-07-13T08:02:42.520Z"
+    },
+    {
+      "id": "reward-db-1783970261614",
+      "transactionId": "RWD-1783970261613",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 7490,
+      "description": "Reward points earned for order ORD-20260713-7542",
+      "createdAt": "2026-07-13T19:17:41.613Z",
+      "orderId": "ORD-20260713-7542",
+      "referenceId": "reward-order-ORD-20260713-7542",
+      "expiresAt": "2027-07-13T19:17:41.614Z"
+    },
+    {
+      "id": "reward-db-1783970261685",
+      "transactionId": "RWD-1783970261685",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 7490,
+      "description": "Reward points earned for order ORD-20260713-7542",
+      "createdAt": "2026-07-13T19:17:41.685Z",
+      "orderId": "ORD-20260713-7542",
+      "referenceId": "reward-order-ORD-20260713-7542",
+      "expiresAt": "2027-07-13T19:17:41.685Z"
+    },
+    {
+      "id": "reward-db-1784045498747",
+      "transactionId": "RWD-1784045498556",
+      "userId": "user-001",
+      "type": "REDEEMED",
+      "source": "ORDER",
+      "points": 5000,
+      "description": "Reward points redeemed for order ORD-20260714-9446",
+      "createdAt": "2026-07-14T16:11:38.746Z",
+      "orderId": "ORD-20260714-9446",
+      "referenceId": "reward-redeem-ORD-20260714-9446"
+    },
+    {
+      "id": "reward-db-1784045498979",
+      "transactionId": "RWD-1784045498979",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 15480,
+      "description": "Reward points earned for order ORD-20260714-9446",
+      "createdAt": "2026-07-14T16:11:38.979Z",
+      "orderId": "ORD-20260714-9446",
+      "referenceId": "reward-order-ORD-20260714-9446",
+      "expiresAt": "2027-07-14T16:11:38.979Z"
+    },
+    {
+      "id": "reward-db-1784045499007",
+      "transactionId": "RWD-1784045499007",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 15480,
+      "description": "Reward points earned for order ORD-20260714-9446",
+      "createdAt": "2026-07-14T16:11:39.007Z",
+      "orderId": "ORD-20260714-9446",
+      "referenceId": "reward-order-ORD-20260714-9446",
+      "expiresAt": "2027-07-14T16:11:39.007Z"
+    },
+    {
+      "id": "reward-db-1784209182445",
+      "transactionId": "RWD-1784209182445",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 5890,
+      "description": "Reward points earned for order ORD-20260716-1883",
+      "createdAt": "2026-07-16T13:39:42.445Z",
+      "orderId": "ORD-20260716-1883",
+      "referenceId": "reward-order-ORD-20260716-1883",
+      "expiresAt": "2027-07-16T13:39:42.445Z"
+    },
+    {
+      "id": "reward-db-1784209182450",
+      "transactionId": "RWD-1784209182450",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 5890,
+      "description": "Reward points earned for order ORD-20260716-1883",
+      "createdAt": "2026-07-16T13:39:42.450Z",
+      "orderId": "ORD-20260716-1883",
+      "referenceId": "reward-order-ORD-20260716-1883",
+      "expiresAt": "2027-07-16T13:39:42.450Z"
+    },
+    {
+      "id": "reward-db-1784231249185",
+      "transactionId": "RWD-1784231249185",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 140,
+      "description": "Reward points earned for order ORD-20260716-5454",
+      "createdAt": "2026-07-16T19:47:29.185Z",
+      "orderId": "ORD-20260716-5454",
+      "referenceId": "reward-order-ORD-20260716-5454",
+      "expiresAt": "2027-07-16T19:47:29.185Z"
+    },
+    {
+      "id": "reward-db-1784231249191",
+      "transactionId": "RWD-1784231249191",
+      "userId": "user-001",
+      "type": "EARNED",
+      "source": "ORDER",
+      "points": 140,
+      "description": "Reward points earned for order ORD-20260716-5454",
+      "createdAt": "2026-07-16T19:47:29.191Z",
+      "orderId": "ORD-20260716-5454",
+      "referenceId": "reward-order-ORD-20260716-5454",
+      "expiresAt": "2027-07-16T19:47:29.191Z"
+    },
+    {
+      "id": "reward-db-1784283194682",
+      "transactionId": "RWD-EXP-1784283194682",
+      "userId": "user-001",
+      "type": "EXPIRED",
+      "source": "EXPIRY",
+      "points": 750,
+      "description": "Expired reward points from RWD-EXPIRING-001",
+      "createdAt": "2026-07-17T10:13:14.682Z",
+      "referenceId": "reward-expiry-reward-db-expiring-001"
     }
   ],
   "supportTickets": [
     {
-      "id": "ticket-001",
-      "ticketNumber": "TKT-20260703-1001",
+      "id": "support-ticket-db-001",
+      "ticketId": "SUP-20260712-001",
       "userId": "user-001",
-      "customerName": "Test User",
-      "customerEmail": "test@example.com",
-      "orderId": "ORD-20260701-1001",
-      "subject": "Need help with delivery",
-      "message": "I want to know the latest delivery update for my order.",
-      "status": "RESOLVED",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "category": "ORDER",
       "priority": "MEDIUM",
-      "createdAt": "2026-07-03T10:30:00.000Z",
-      "updatedAt": "2026-07-03T21:51:39.668Z",
-      "assignedTo": "support-001",
-      "response": "Item has been delivered."
+      "status": "IN_PROGRESS",
+      "subject": "Order tracking is not updating",
+      "message": "My order tracking timeline is not showing the latest fulfillment update even though the order status changed yesterday.",
+      "orderId": "ORD-20260712-1001",
+      "createdAt": "2026-07-12T04:30:00.000Z",
+      "updatedAt": "2026-07-15T14:57:11.914Z",
+      "slaDueAt": "2026-07-13T04:30:00.000Z",
+      "slaBreached": true,
+      "escalated": true,
+      "escalatedAt": "2026-07-13T05:00:00.000Z",
+      "escalationReason": "Ticket has breached SLA.",
+      "unreadForCustomer": false,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-001-001",
+          "authorId": "user-001",
+          "authorName": "Test User",
+          "authorRole": "CUSTOMER",
+          "message": "My order tracking timeline is not showing the latest fulfillment update even though the order status changed yesterday.",
+          "createdAt": "2026-07-12T04:30:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-001-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260712-001 was created by Test User.",
+          "createdAt": "2026-07-12T04:30:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-1784127431882-gy48c0",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from Open to In Progress.",
+          "createdAt": "2026-07-15T14:57:11.882Z",
+          "createdByRole": "SUPPORT"
+        }
+      ],
+      "internalNote": "Hi Support Team,\nPlease share the correct Payment linked id.\n\nSuggested Customer Reply:\nDear Customer,\nPlease share the payment id reference number.",
+      "assignedToSupportId": "support-payment-001",
+      "assignedToSupportName": "Payment Analyst",
+      "attachments": []
+    },
+    {
+      "id": "support-ticket-db-002",
+      "ticketId": "SUP-20260712-002",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "category": "RETURN_REFUND",
+      "priority": "HIGH",
+      "status": "IN_PROGRESS",
+      "subject": "Refund not credited after return pickup",
+      "message": "My return was picked up three days ago, but the refund status is still pending. Please check and update.",
+      "orderId": "ORD-20260710-1002",
+      "createdAt": "2026-07-12T08:10:00.000Z",
+      "updatedAt": "2026-07-12T12:15:00.000Z",
+      "slaDueAt": "2026-07-12T20:10:00.000Z",
+      "slaBreached": true,
+      "escalated": true,
+      "escalatedAt": "2026-07-12T20:30:00.000Z",
+      "escalationReason": "Ticket has breached SLA.",
+      "assignedToSupportId": "support-001",
+      "assignedToSupportName": "Support Agent",
+      "supportReply": "We have checked your return request. The refund is under review and should be updated shortly.",
+      "internalNote": "Refund request verified. Waiting for finance sync.",
+      "unreadForCustomer": true,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-002-001",
+          "authorId": "user-001",
+          "authorName": "Test User",
+          "authorRole": "CUSTOMER",
+          "message": "My return was picked up three days ago, but the refund status is still pending. Please check and update.",
+          "createdAt": "2026-07-12T08:10:00.000Z"
+        },
+        {
+          "id": "ticket-message-002-002",
+          "authorId": "support-001",
+          "authorName": "Support Agent",
+          "authorRole": "SUPPORT",
+          "message": "We have checked your return request. The refund is under review and should be updated shortly.",
+          "createdAt": "2026-07-12T12:15:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-002-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260712-002 was created by Test User.",
+          "createdAt": "2026-07-12T08:10:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-002-002",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from Open to In Progress.",
+          "createdAt": "2026-07-12T12:00:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-002-003",
+          "label": "Support Replied",
+          "description": "Support added a reply for the customer.",
+          "createdAt": "2026-07-12T12:15:00.000Z",
+          "createdByRole": "SUPPORT"
+        }
+      ]
+    },
+    {
+      "id": "support-ticket-db-003",
+      "ticketId": "SUP-20260713-003",
+      "userId": "user-01",
+      "userName": "Arjun Sharma",
+      "userEmail": "arjun.sharma@mail.com",
+      "category": "PAYMENT",
+      "priority": "URGENT",
+      "status": "ON_HOLD",
+      "subject": "Amount debited but order not created",
+      "message": "Payment amount was debited from my account, but the order was not created in ShopEase. Please help urgently.",
+      "orderId": "ORD-PENDING-20260713-003",
+      "createdAt": "2026-07-13T04:45:00.000Z",
+      "updatedAt": "2026-07-13T07:20:00.000Z",
+      "slaDueAt": "2026-07-13T08:45:00.000Z",
+      "slaBreached": true,
+      "escalated": true,
+      "escalatedAt": "2026-07-13T04:50:00.000Z",
+      "escalationReason": "Urgent priority ticket requires immediate attention.",
+      "assignedToSupportId": "support-001",
+      "assignedToSupportName": "Support Agent",
+      "supportReply": "We have placed this ticket on hold while checking the payment gateway transaction sync.",
+      "internalNote": "Payment gateway reconciliation required. Marked urgent.",
+      "unreadForCustomer": true,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-003-001",
+          "authorId": "user-01",
+          "authorName": "Arjun Sharma",
+          "authorRole": "CUSTOMER",
+          "message": "Payment amount was debited from my account, but the order was not created in ShopEase. Please help urgently.",
+          "createdAt": "2026-07-13T04:45:00.000Z"
+        },
+        {
+          "id": "ticket-message-003-002",
+          "authorId": "support-001",
+          "authorName": "Support Agent",
+          "authorRole": "SUPPORT",
+          "message": "We have placed this ticket on hold while checking the payment gateway transaction sync.",
+          "createdAt": "2026-07-13T07:20:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-003-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260713-003 was created by Arjun Sharma.",
+          "createdAt": "2026-07-13T04:45:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-003-002",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from Open to On Hold.",
+          "createdAt": "2026-07-13T07:10:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-003-003",
+          "label": "Support Replied",
+          "description": "Support added a reply for the customer.",
+          "createdAt": "2026-07-13T07:20:00.000Z",
+          "createdByRole": "SUPPORT"
+        }
+      ]
+    },
+    {
+      "id": "support-ticket-db-004",
+      "ticketId": "SUP-20260711-004",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "category": "WALLET_REWARDS",
+      "priority": "LOW",
+      "status": "OPEN",
+      "subject": "Reward points not visible in wallet",
+      "message": "I earned reward points from my last order, but the points are not visible in my rewards page.",
+      "orderId": "ORD-20260709-1004",
+      "createdAt": "2026-07-11T08:00:00.000Z",
+      "updatedAt": "2026-07-12T10:30:00.000Z",
+      "resolvedAt": "2026-07-12T10:30:00.000Z",
+      "slaDueAt": "2026-07-13T08:00:00.000Z",
+      "slaBreached": false,
+      "escalated": false,
+      "assignedToSupportId": "support-001",
+      "assignedToSupportName": "Support Agent",
+      "supportReply": "Your reward points have been synced successfully. Please refresh the rewards page.",
+      "internalNote": "Reward transaction was missing due to delayed sync. Fixed manually.",
+      "unreadForCustomer": false,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-004-001",
+          "authorId": "user-001",
+          "authorName": "Test User",
+          "authorRole": "CUSTOMER",
+          "message": "I earned reward points from my last order, but the points are not visible in my rewards page.",
+          "createdAt": "2026-07-11T08:00:00.000Z"
+        },
+        {
+          "id": "ticket-message-004-002",
+          "authorId": "support-001",
+          "authorName": "Support Agent",
+          "authorRole": "SUPPORT",
+          "message": "Your reward points have been synced successfully. Please refresh the rewards page.",
+          "createdAt": "2026-07-12T10:20:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-004-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260711-004 was created by Test User.",
+          "createdAt": "2026-07-11T08:00:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-004-002",
+          "label": "Support Replied",
+          "description": "Support added a reply for the customer.",
+          "createdAt": "2026-07-12T10:20:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-004-003",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from In Progress to Resolved.",
+          "createdAt": "2026-07-12T10:30:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-1783968476479",
+          "label": "Status Changed",
+          "description": "Status changed from RESOLVED to OPEN.",
+          "createdAt": "2026-07-13T18:47:56.479Z",
+          "createdByRole": "SUPPORT"
+        }
+      ]
+    },
+    {
+      "id": "support-ticket-db-005",
+      "ticketId": "SUP-20260710-005",
+      "userId": "user-02",
+      "userName": "Priya Nair",
+      "userEmail": "priya.nair@mail.com",
+      "category": "COUPON",
+      "priority": "MEDIUM",
+      "status": "CLOSED",
+      "subject": "Coupon applied but discount not reflected",
+      "message": "I applied a valid coupon during checkout, but the discount was not reflected in the order total.",
+      "orderId": "ORD-20260708-1005",
+      "createdAt": "2026-07-10T11:15:00.000Z",
+      "updatedAt": "2026-07-11T14:40:00.000Z",
+      "resolvedAt": "2026-07-11T13:55:00.000Z",
+      "closedAt": "2026-07-11T14:40:00.000Z",
+      "slaDueAt": "2026-07-11T11:15:00.000Z",
+      "slaBreached": false,
+      "escalated": false,
+      "assignedToSupportId": "support-001",
+      "assignedToSupportName": "Support Agent",
+      "supportReply": "The coupon discount issue was corrected. The discount benefit has been credited to your wallet.",
+      "internalNote": "Coupon redemption mismatch fixed and wallet credit issued.",
+      "unreadForCustomer": false,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-005-001",
+          "authorId": "user-02",
+          "authorName": "Priya Nair",
+          "authorRole": "CUSTOMER",
+          "message": "I applied a valid coupon during checkout, but the discount was not reflected in the order total.",
+          "createdAt": "2026-07-10T11:15:00.000Z"
+        },
+        {
+          "id": "ticket-message-005-002",
+          "authorId": "support-001",
+          "authorName": "Support Agent",
+          "authorRole": "SUPPORT",
+          "message": "The coupon discount issue was corrected. The discount benefit has been credited to your wallet.",
+          "createdAt": "2026-07-11T13:55:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-005-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260710-005 was created by Priya Nair.",
+          "createdAt": "2026-07-10T11:15:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-005-002",
+          "label": "Support Replied",
+          "description": "Support added a reply for the customer.",
+          "createdAt": "2026-07-11T13:55:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-005-003",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from Resolved to Closed.",
+          "createdAt": "2026-07-11T14:40:00.000Z",
+          "createdByRole": "SUPPORT"
+        }
+      ]
+    },
+    {
+      "id": "support-ticket-db-006",
+      "ticketId": "SUP-20260713-006",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "category": "DELIVERY",
+      "priority": "HIGH",
+      "status": "IN_PROGRESS",
+      "subject": "Package marked delivered but not received",
+      "message": "The order is marked as delivered, but I have not received the package. Please check with the courier partner.",
+      "orderId": "ORD-20260713-1006",
+      "createdAt": "2026-07-13T12:00:00.000Z",
+      "updatedAt": "2026-07-13T13:15:00.000Z",
+      "slaDueAt": "2026-07-14T00:00:00.000Z",
+      "slaBreached": false,
+      "escalated": false,
+      "assignedToSupportId": "support-001",
+      "assignedToSupportName": "Support Agent",
+      "supportReply": "We are checking this delivery issue with the courier partner and will update you shortly.",
+      "internalNote": "Courier confirmation pending.",
+      "unreadForCustomer": true,
+      "unreadForSupport": false,
+      "messages": [
+        {
+          "id": "ticket-message-006-001",
+          "authorId": "user-001",
+          "authorName": "Test User",
+          "authorRole": "CUSTOMER",
+          "message": "The order is marked as delivered, but I have not received the package. Please check with the courier partner.",
+          "createdAt": "2026-07-13T12:00:00.000Z"
+        },
+        {
+          "id": "ticket-message-006-002",
+          "authorId": "support-001",
+          "authorName": "Support Agent",
+          "authorRole": "SUPPORT",
+          "message": "We are checking this delivery issue with the courier partner and will update you shortly.",
+          "createdAt": "2026-07-13T13:15:00.000Z"
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-006-001",
+          "label": "Ticket Created",
+          "description": "Ticket SUP-20260713-006 was created by Test User.",
+          "createdAt": "2026-07-13T12:00:00.000Z",
+          "createdByRole": "CUSTOMER"
+        },
+        {
+          "id": "ticket-activity-006-002",
+          "label": "Ticket Status Updated",
+          "description": "Ticket status changed from Open to In Progress.",
+          "createdAt": "2026-07-13T13:00:00.000Z",
+          "createdByRole": "SUPPORT"
+        },
+        {
+          "id": "ticket-activity-006-003",
+          "label": "Support Replied",
+          "description": "Support added a reply for the customer.",
+          "createdAt": "2026-07-13T13:15:00.000Z",
+          "createdByRole": "SUPPORT"
+        }
+      ]
     }
   ]
 }

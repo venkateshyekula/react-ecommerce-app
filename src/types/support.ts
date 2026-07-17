@@ -1,4 +1,4 @@
-export type SupportTicketStatus = "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED";
+export type SupportTicketStatus = "OPEN" | "IN_PROGRESS" | "ON_HOLD" | "RESOLVED" | "CLOSED";
 
 export type SupportTicketPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 

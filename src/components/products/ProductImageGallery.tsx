@@ -44,7 +44,7 @@ const ProductImageGallery = ({ product }: ProductImageGalleryProps) => {
   }, [galleryImages]);
 
   return (
-    <div className="product-gallery bg-white rounded-4 shadow-sm p-3">
+    <div className="product-gallery bg-white p-3">
       {/* FIXED: Changed from raw string rendering to an actual img element */}
       <div className="product-gallery-main position-relative mb-3 text-center bg-light rounded-3 overflow-hidden">
         <img

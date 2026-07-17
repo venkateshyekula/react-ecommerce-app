@@ -1,4 +1,4 @@
-import type { Product } from "./product";
+import type { Product, ProductCategory } from "./product";
 
 export interface CartItem {
   cartItemId: string;
@@ -10,6 +10,10 @@ export interface CartItem {
   stock: number;
   quantity: number;
   selectedSize?: string;
+
+  category: ProductCategory;
+  sellerId?: string;
+  sellerName?: string;
 }
 
 export interface CartState {

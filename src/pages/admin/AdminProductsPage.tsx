@@ -1,17 +1,30 @@
-import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import Button from "../../components/common/Button";
 import Loader from "../../components/common/Loader";
-import { adminProductService, type ProductPayload } from "../../services/adminProductService";
+import {
+  adminProductService,
+  type ProductPayload,
+} from "../../services/adminProductService";
 import { productService } from "../../services/productService";
 import type { Product, ProductCategory } from "../../types/product";
 import { formatCurrency } from "../../utils/currencyFormatter";
+import AdminTableActions from "../../components/admin/AdminTableActions";
+import AdminTablePagination from "../../components/admin/AdminTablePagination";
+import { useAdminTablePagination } from "../../hooks/useAdminTablePagination";
+import { useToast } from "../../context/useToast";
 
 const categories: ProductCategory[] = [
   "Electronics",
   "Clothing",
   "Books",
   "Footwear",
-  "Accessories"
+  "Accessories",
 ];
 
 interface ProductFormValues {
@@ -37,7 +50,7 @@ const initialFormValues: ProductFormValues = {
   image: "",
   stock: "",
   discount: "",
-  specifications: "{\n  \"Feature\": \"Value\"\n}"
+  specifications: '{\n  "Feature": "Value"\n}',
 };
 
 const AdminProductsPage = () => {
@@ -50,6 +63,7 @@ const AdminProductsPage = () => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const { showToast } = useToast();
 
   const loadProducts = async (): Promise<void> => {
     try {
@@ -60,7 +74,7 @@ const AdminProductsPage = () => {
       setProducts(productList);
     } catch {
       setErrorMessage(
-        "Unable to load products. Please make sure JSON Server is running."
+        "Unable to load products. Please make sure JSON Server is running.",
       );
     } finally {
       setIsLoading(false);
@@ -82,18 +96,32 @@ const AdminProductsPage = () => {
       (product) =>
         product.name.toLowerCase().includes(query) ||
         product.brand.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
+        product.category.toLowerCase().includes(query),
     );
   }, [products, searchText]);
 
+  const {
+    currentPage,
+    itemsPerPage,
+    paginatedItems: paginatedProducts,
+    setCurrentPage,
+    setItemsPerPage,
+  } = useAdminTablePagination({
+    items: filteredProducts,
+    defaultItemsPerPage: 10,
+    resetDependencies: [searchText],
+  });
+
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ): void => {
     const { name, value } = event.target;
 
     setFormValues((previousValues) => ({
       ...previousValues,
-      [name]: value
+      [name]: value,
     }));
 
     setErrorMessage("");
@@ -102,9 +130,10 @@ const AdminProductsPage = () => {
 
   const buildPayload = (): ProductPayload | null => {
     try {
-      const specifications = JSON.parse(
-        formValues.specifications
-      ) as Record<string, string>;
+      const specifications = JSON.parse(formValues.specifications) as Record<
+        string,
+        string
+      >;
 
       return {
         name: formValues.name.trim(),
@@ -116,7 +145,7 @@ const AdminProductsPage = () => {
         image: formValues.image.trim(),
         stock: Number(formValues.stock),
         discount: Number(formValues.discount),
-        specifications
+        specifications,
       };
     } catch {
       setErrorMessage("Specifications must be valid JSON.");
@@ -125,7 +154,12 @@ const AdminProductsPage = () => {
   };
 
   const validatePayload = (payload: ProductPayload): boolean => {
-    if (!payload.name || !payload.description || !payload.brand || !payload.image) {
+    if (
+      !payload.name ||
+      !payload.description ||
+      !payload.brand ||
+      !payload.image
+    ) {
       setErrorMessage("Name, description, brand, and image are required.");
       return false;
     }
@@ -135,7 +169,11 @@ const AdminProductsPage = () => {
       return false;
     }
 
-    if (Number.isNaN(payload.rating) || payload.rating < 0 || payload.rating > 5) {
+    if (
+      Number.isNaN(payload.rating) ||
+      payload.rating < 0 ||
+      payload.rating > 5
+    ) {
       setErrorMessage("Rating must be between 0 and 5.");
       return false;
     }
@@ -154,7 +192,7 @@ const AdminProductsPage = () => {
   };
 
   const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>
+    event: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
 
@@ -172,19 +210,22 @@ const AdminProductsPage = () => {
       if (editingProductId) {
         const updatedProduct = await adminProductService.updateProduct(
           editingProductId,
-          payload
+          payload,
         );
 
         setProducts((previousProducts) =>
           previousProducts.map((product) =>
-            product.id === updatedProduct.id ? updatedProduct : product
-          )
+            product.id === updatedProduct.id ? updatedProduct : product,
+          ),
         );
 
         setSuccessMessage("Product updated successfully.");
       } else {
         const createdProduct = await adminProductService.createProduct(payload);
-        setProducts((previousProducts) => [createdProduct, ...previousProducts]);
+        setProducts((previousProducts) => [
+          createdProduct,
+          ...previousProducts,
+        ]);
         setSuccessMessage("Product added successfully.");
       }
 
@@ -210,18 +251,18 @@ const AdminProductsPage = () => {
       image: product.image,
       stock: String(product.stock),
       discount: String(product.discount),
-      specifications: JSON.stringify(product.specifications, null, 2)
+      specifications: JSON.stringify(product.specifications, null, 2),
     });
 
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
   const handleDelete = async (productId: string): Promise<void> => {
     const shouldDelete = window.confirm(
-      "Are you sure you want to delete this product?"
+      "Are you sure you want to delete this product?",
     );
 
     if (!shouldDelete) {
@@ -232,12 +273,16 @@ const AdminProductsPage = () => {
       await adminProductService.deleteProduct(productId);
 
       setProducts((previousProducts) =>
-        previousProducts.filter((product) => product.id !== productId)
+        previousProducts.filter((product) => product.id !== productId),
       );
 
-      setSuccessMessage("Product deleted successfully.");
+      showToast(
+"Product deleted",
+"Product was deleted successfully.",
+"success"
+);
     } catch {
-      setErrorMessage("Unable to delete product. Please try again.");
+      showToast("Unable to delete product", "Please try again.", "danger")
     }
   };
 
@@ -440,7 +485,7 @@ const AdminProductsPage = () => {
             </thead>
 
             <tbody>
-              {filteredProducts.map((product) => (
+              {paginatedProducts.map((product) => (
                 <tr key={product.id}>
                   <td>
                     <div className="d-flex align-items-center gap-3">
@@ -476,23 +521,13 @@ const AdminProductsPage = () => {
                   </td>
 
                   <td>
-                    <div className="d-flex gap-2">
-                      <Button
-                        variant="outline-primary"
-                        className="btn-sm"
-                        onClick={() => handleEdit(product)}
-                      >
-                        Edit
-                      </Button>
-
-                      <Button
-                        variant="outline-danger"
-                        className="btn-sm"
-                        onClick={() => void handleDelete(product.id)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                    <AdminTableActions
+                      itemName={`product ${product.name}`}
+                      showToggle={false}
+                      isLoading={editingProductId === product.id}
+                      onEdit={() => handleEdit(product)}
+                      onDelete={() => void handleDelete(product.id)}
+                    />
                   </td>
                 </tr>
               ))}
@@ -507,6 +542,14 @@ const AdminProductsPage = () => {
             </tbody>
           </table>
         </div>
+        <AdminTablePagination
+          totalItems={filteredProducts.length}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+          itemLabel="products"
+        />
       </div>
     </div>
   );

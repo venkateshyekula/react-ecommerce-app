@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import EmptyState from "../components/common/EmptyState";
+import { Link, useSearchParams } from "react-router-dom";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
 import ProductCard from "../components/products/ProductCard";
 import ProductFilter from "../components/products/ProductFilter";
-import AdvancedSearchBox from "../components/products/AdvancedSearchBox";
+import ProductListingToolbar from "../components/products/ProductListingToolbar";
 import { usePagination } from "../hooks/usePagination";
 import { productService } from "../services/productService";
 import type {
@@ -14,52 +13,79 @@ import type {
   ProductFilters,
   ProductViewMode,
 } from "../types/product";
+import { getProductFiltersFromSearchParams } from "../utils/productFilterUrl";
+import PersonalizedRecommendationsSection from "../components/products/PersonalizedRecommendationsSection";
 
-const initialFilters: ProductFilters = {
-  searchText: "",
+const DEFAULT_ITEMS_PER_PAGE = 8;
+
+const getProductSearchableText = (product: Product): string => {
+  const subcategory = String(
+    (product as Product & { subcategory?: string }).subcategory ?? "",
+  );
+
+  const color = String(product.specifications?.Color ?? "");
+  const idealFor = String(product.specifications?.["Ideal For"] ?? "");
+  const sellerName = String(product.sellerName ?? "");
+
+  return [
+    product.name,
+    product.brand,
+    product.category,
+    subcategory,
+    sellerName,
+    product.description,
+    color,
+    idealFor,
+  ]
+    .join(" ")
+    .toLowerCase();
+};
+
+const getProductGender = (product: Product): string => {
+  const searchableText = getProductSearchableText(product);
+
+  if (searchableText.includes("boys")) return "Boys";
+  if (searchableText.includes("girls")) return "Girls";
+  if (searchableText.includes("women")) return "Women";
+  if (searchableText.includes("men")) return "Men";
+  return "";
+};
+
+const getProductColor = (product: Product): string => {
+  return String(product.specifications?.Color ?? "").trim();
+};
+
+const createInitialFilters = (searchText = ""): ProductFilters => ({
+  searchText,
+  gender: "",
   category: "",
   brand: "",
+  color: "",
   priceRange: "",
+  priceMin: 0,
+  priceMax: 100000,
   rating: "",
   discount: "",
   availability: "",
   sortBy: "RELEVANCE",
-};
-
-const priceRangeLabels: Record<
-  Exclude<ProductFilters["priceRange"], "">,
-  string
-> = {
-  BELOW_1000: "Below ₹1,000",
-  BETWEEN_1000_10000: "₹1,000 - ₹10,000",
-  BETWEEN_10000_50000: "₹10,000 - ₹50,000",
-  ABOVE_50000: "Above ₹50,000",
-};
-
-const ratingLabels: Record<Exclude<ProductFilters["rating"], "">, string> = {
-  ABOVE_4: "4★ and above",
-  ABOVE_3: "3★ and above",
-  ABOVE_2: "2★ and above",
-};
-
-const discountLabels: Record<
-  Exclude<ProductFilters["discount"], "">,
-  string
-> = {
-  ABOVE_10: "10% and above",
-  ABOVE_20: "20% and above",
-  ABOVE_30: "30% and above",
-};
-
-const DEFAULT_ITEMS_PER_PAGE = 8;
+});
 
 const ProductListPage = () => {
+  const [searchParams] = useSearchParams();
+  const globalSearch = searchParams.get("search") ?? "";
+
   const [products, setProducts] = useState<Product[]>([]);
-  const [filters, setFilters] = useState<ProductFilters>(initialFilters);
+  const [filters, setFilters] = useState<ProductFilters>(() =>
+    getProductFiltersFromSearchParams(
+      searchParams,
+      createInitialFilters(globalSearch),
+    ),
+  );
   const [viewMode, setViewMode] = useState<ProductViewMode>("grid");
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     DEFAULT_ITEMS_PER_PAGE,
   );
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -84,8 +110,10 @@ const ProductListPage = () => {
   }, []);
 
   const categories = useMemo<ProductCategory[]>(() => {
-    return Array.from(new Set(products.map((product) => product.category)));
-  }, [products]);
+  return Array.from(
+    new Set(products.map((product) => product.category as ProductCategory))
+  );
+}, [products]);
 
   const brands = useMemo<string[]>(() => {
     return Array.from(new Set(products.map((product) => product.brand))).sort();
@@ -96,30 +124,26 @@ const ProductListPage = () => {
       const searchText = filters.searchText.trim().toLowerCase();
 
       const matchesSearch =
-        !searchText ||
-        product.name.toLowerCase().includes(searchText) ||
-        product.category.toLowerCase().includes(searchText) ||
-        product.brand.toLowerCase().includes(searchText) ||
-        product.sellerName?.toLowerCase().includes(searchText);
+        !searchText || getProductSearchableText(product).includes(searchText);
+
+      const matchesGender =
+        !filters.gender || getProductGender(product) === filters.gender;
 
       const matchesCategory =
         !filters.category || product.category === filters.category;
 
       const matchesBrand = !filters.brand || product.brand === filters.brand;
 
+      const matchesColor =
+        !filters.color ||
+        getProductColor(product).toLowerCase() === filters.color.toLowerCase();
+
       const matchesPrice =
-        !filters.priceRange ||
-        (filters.priceRange === "BELOW_1000" && product.price < 1000) ||
-        (filters.priceRange === "BETWEEN_1000_10000" &&
-          product.price >= 1000 &&
-          product.price <= 10000) ||
-        (filters.priceRange === "BETWEEN_10000_50000" &&
-          product.price >= 10000 &&
-          product.price <= 50000) ||
-        (filters.priceRange === "ABOVE_50000" && product.price > 50000);
+        product.price >= filters.priceMin && product.price <= filters.priceMax;
 
       const matchesRating =
         !filters.rating ||
+        (filters.rating === "ABOVE_5" && product.rating >= 5) ||
         (filters.rating === "ABOVE_4" && product.rating >= 4) ||
         (filters.rating === "ABOVE_3" && product.rating >= 3) ||
         (filters.rating === "ABOVE_2" && product.rating >= 2);
@@ -128,7 +152,13 @@ const ProductListPage = () => {
         !filters.discount ||
         (filters.discount === "ABOVE_10" && product.discount >= 10) ||
         (filters.discount === "ABOVE_20" && product.discount >= 20) ||
-        (filters.discount === "ABOVE_30" && product.discount >= 30);
+        (filters.discount === "ABOVE_30" && product.discount >= 30) ||
+        (filters.discount === "ABOVE_40" && product.discount >= 40) ||
+        (filters.discount === "ABOVE_50" && product.discount >= 50) ||
+        (filters.discount === "ABOVE_60" && product.discount >= 60) ||
+        (filters.discount === "ABOVE_70" && product.discount >= 70) ||
+        (filters.discount === "ABOVE_80" && product.discount >= 80) ||
+        (filters.discount === "ABOVE_90" && product.discount >= 90);
 
       const matchesAvailability =
         !filters.availability ||
@@ -137,8 +167,10 @@ const ProductListPage = () => {
 
       return (
         matchesSearch &&
+        matchesGender &&
         matchesCategory &&
         matchesBrand &&
+        matchesColor &&
         matchesPrice &&
         matchesRating &&
         matchesDiscount &&
@@ -150,20 +182,14 @@ const ProductListPage = () => {
       switch (filters.sortBy) {
         case "PRICE_LOW_TO_HIGH":
           return firstProduct.price - secondProduct.price;
-
         case "PRICE_HIGH_TO_LOW":
           return secondProduct.price - firstProduct.price;
-
         case "RATING_HIGH_TO_LOW":
           return secondProduct.rating - firstProduct.rating;
-
         case "DISCOUNT_HIGH_TO_LOW":
           return secondProduct.discount - firstProduct.discount;
-
         case "STOCK_HIGH_TO_LOW":
           return secondProduct.stock - firstProduct.stock;
-
-        case "RELEVANCE":
         default:
           return 0;
       }
@@ -183,90 +209,49 @@ const ProductListPage = () => {
     itemsPerPage,
   });
 
-  const appliedFilters = useMemo(() => {
-    const chips: Array<{
-      key: keyof ProductFilters;
-      label: string;
-    }> = [];
-
-    if (filters.searchText) {
-      chips.push({
-        key: "searchText",
-        label: `Search: ${filters.searchText}`,
-      });
-    }
-
-    if (filters.category) {
-      chips.push({
-        key: "category",
-        label: `Category: ${filters.category}`,
-      });
-    }
-
-    if (filters.brand) {
-      chips.push({
-        key: "brand",
-        label: `Brand: ${filters.brand}`,
-      });
-    }
-
-    if (filters.priceRange) {
-      chips.push({
-        key: "priceRange",
-        label: `Price: ${priceRangeLabels[filters.priceRange]}`,
-      });
-    }
-
-    if (filters.rating) {
-      chips.push({
-        key: "rating",
-        label: `Rating: ${ratingLabels[filters.rating]}`,
-      });
-    }
-
-    if (filters.discount) {
-      chips.push({
-        key: "discount",
-        label: `Discount: ${discountLabels[filters.discount]}`,
-      });
-    }
-
-    if (filters.availability) {
-      chips.push({
-        key: "availability",
-        label:
-          filters.availability === "IN_STOCK"
-            ? "Availability: In Stock"
-            : "Availability: Out of Stock",
-      });
-    }
-
-    return chips;
-  }, [filters]);
-
   const handleFilterChange = <K extends keyof ProductFilters>(
     key: K,
     value: ProductFilters[K],
   ): void => {
-    setFilters((previousFilters) => ({
-      ...previousFilters,
-      [key]: value,
-    }));
+    setFilters((previousFilters) => {
+      const normalizedFilters = {
+        ...previousFilters,
+        [key]: value,
+      } as ProductFilters;
 
-    resetPage();
-  };
+      let nextFilters: ProductFilters;
 
-  const handleClearSingleFilter = (key: keyof ProductFilters): void => {
-    setFilters((previousFilters) => ({
-      ...previousFilters,
-      [key]: initialFilters[key],
-    }));
+      if (key === "priceMin" && typeof value === "number") {
+        const clampedMin = Math.min(value, previousFilters.priceMax);
+        nextFilters = {
+          ...normalizedFilters,
+          priceMin: clampedMin,
+          priceRange: "",
+        };
+      } else if (key === "priceMax" && typeof value === "number") {
+        const clampedMax = Math.max(value, previousFilters.priceMin);
+        nextFilters = {
+          ...normalizedFilters,
+          priceMax: clampedMax,
+          priceRange: "",
+        };
+      } else {
+        nextFilters = {
+          ...normalizedFilters,
+          priceRange: "",
+        };
+      }
+
+      return nextFilters;
+    });
 
     resetPage();
   };
 
   const handleClearFilters = (): void => {
-    setFilters(initialFilters);
+    const nextFilters = createInitialFilters("");
+
+    setFilters(nextFilters);
     resetPage();
   };
 
@@ -279,28 +264,27 @@ const ProductListPage = () => {
     <main className="product-list-page bg-light">
       <section className="page-header bg-white border-bottom">
         <div className="container py-4">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-            <div>
-              <h1 className="fw-bold mb-1">Products</h1>
-              <p className="text-muted mb-0">
-                Discover products with search, filters, sorting, pagination, and
-                view options.
-              </p>
-            </div>
-
-            <Link to="/" className="btn btn-outline-primary">
-              <i className="bi bi-house me-2" />
-              Back to Home
-            </Link>
-          </div>
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb mb-2">
+              <li className="breadcrumb-item">
+                <Link to="/">Home</Link>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                Products
+              </li>
+            </ol>
+          </nav>
+          <p className="text-muted mb-0">
+            Browse, filter, sort, compare and discover products.
+          </p>
         </div>
       </section>
 
-      <section className="container py-4 py-md-5">
+      <section className="container-fluid py-4">
         {isLoading ? <Loader message="Loading products..." /> : null}
 
         {!isLoading && errorMessage ? (
-          <div className="alert alert-danger text-center">
+          <div className="alert alert-danger text-center" role="alert">
             <p>{errorMessage}</p>
             <button
               type="button"
@@ -314,12 +298,13 @@ const ProductListPage = () => {
 
         {!isLoading && !errorMessage ? (
           <div className="row g-4">
-            <div className="col-lg-3">
+            <div className="col-lg-3 marketplace-filter-desktop">
               <div className="product-filter-sticky">
                 <ProductFilter
                   filters={filters}
                   categories={categories}
                   brands={brands}
+                  products={products}
                   onFilterChange={handleFilterChange}
                   onClearFilters={handleClearFilters}
                 />
@@ -327,124 +312,30 @@ const ProductListPage = () => {
             </div>
 
             <div className="col-lg-9">
-              <div className="advanced-product-toolbar bg-white rounded-4 shadow-sm p-3 p-md-4 mb-4">
-                <AdvancedSearchBox
-                  value={filters.searchText}
-                  products={products}
-                  onChange={(value) => handleFilterChange("searchText", value)}
-                />
-
-                <div className="d-flex flex-column flex-xl-row justify-content-between align-items-xl-center gap-3 mt-3">
-                  <div>
-                    <p className="text-muted mb-1">
-                      Showing <strong>{filteredProducts.length}</strong> of{" "}
-                      <strong>{products.length}</strong> products
-                    </p>
-
-                    <p className="small text-muted mb-0">
-                      Page <strong>{currentPage}</strong> of{" "}
-                      <strong>{totalPages}</strong>
-                    </p>
-                  </div>
-
-                  <div className="d-flex flex-column flex-sm-row gap-2">
-                    <select
-                      className="form-select product-sort-select"
-                      value={filters.sortBy}
-                      onChange={(event) =>
-                        handleFilterChange(
-                          "sortBy",
-                          event.target.value as ProductFilters["sortBy"],
-                        )
-                      }
-                    >
-                      <option value="RELEVANCE">Sort: Relevance</option>
-                      <option value="PRICE_LOW_TO_HIGH">
-                        Price: Low to High
-                      </option>
-                      <option value="PRICE_HIGH_TO_LOW">
-                        Price: High to Low
-                      </option>
-                      <option value="RATING_HIGH_TO_LOW">
-                        Rating: High to Low
-                      </option>
-                      <option value="DISCOUNT_HIGH_TO_LOW">
-                        Discount: High to Low
-                      </option>
-                      <option value="STOCK_HIGH_TO_LOW">
-                        Stock: High to Low
-                      </option>
-                    </select>
-
-                    <div className="btn-group product-view-toggle">
-                      <button
-                        type="button"
-                        className={`btn ${
-                          viewMode === "grid"
-                            ? "btn-primary"
-                            : "btn-outline-primary"
-                        }`}
-                        onClick={() => setViewMode("grid")}
-                        aria-label="Grid view"
-                      >
-                        <i className="bi bi-grid-3x3-gap" />
-                      </button>
-
-                      <button
-                        type="button"
-                        className={`btn ${
-                          viewMode === "list"
-                            ? "btn-primary"
-                            : "btn-outline-primary"
-                        }`}
-                        onClick={() => setViewMode("list")}
-                        aria-label="List view"
-                      >
-                        <i className="bi bi-list-ul" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {appliedFilters.length > 0 ? (
-                  <div className="applied-filter-chips mt-3">
-                    {appliedFilters.map((chip) => (
-                      <button
-                        key={chip.key}
-                        type="button"
-                        className="applied-filter-chip"
-                        onClick={() => handleClearSingleFilter(chip.key)}
-                      >
-                        {chip.label}
-                        <i className="bi bi-x ms-1" />
-                      </button>
-                    ))}
-
-                    <button
-                      type="button"
-                      className="applied-filter-chip clear-all"
-                      onClick={handleClearFilters}
-                    >
-                      Clear All
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+              <ProductListingToolbar
+                title="All Products"
+                totalCount={products.length}
+                filteredCount={filteredProducts.length}
+                sortBy={filters.sortBy}
+                viewMode={viewMode}
+                onSortChange={(sortBy) => handleFilterChange("sortBy", sortBy)}
+                onViewModeChange={setViewMode}
+                onOpenMobileFilters={() => setIsMobileFilterOpen(true)}
+              />
 
               {filteredProducts.length === 0 ? (
-                <EmptyState
-                  title="No products found"
-                  message="Try adjusting your filters to find what you're looking for."
-                  action={
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={handleClearFilters}
-                    >
-                      Clear Filters
-                    </button>
-                  }
-                />
+                <div className="text-center py-5 bg-white rounded border">
+                  <p className="text-muted mb-3">
+                    No products match your active selection criteria.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleClearFilters}
+                  >
+                    Clear Filters
+                  </button>
+                </div>
               ) : (
                 <>
                   <div
@@ -482,6 +373,41 @@ const ProductListPage = () => {
           </div>
         ) : null}
       </section>
+
+      <section className="container-fluid pb-5">
+        <PersonalizedRecommendationsSection
+          title="More Picks for You"
+          subtitle="Based on your browsing and shopping activity."
+          limit={4}
+        />
+      </section>
+
+      {isMobileFilterOpen ? (
+        <div className="marketplace-mobile-filter-overlay">
+          <aside className="marketplace-mobile-filter-drawer bg-white">
+            <div className="marketplace-mobile-filter-header">
+              <h5 className="fw-bold mb-0">Filters</h5>
+              <button
+                type="button"
+                className="btn btn-light rounded-circle"
+                onClick={() => setIsMobileFilterOpen(false)}
+                aria-label="Close filters"
+              >
+                <i className="bi bi-x-lg" />
+              </button>
+            </div>
+
+            <ProductFilter
+              filters={filters}
+              categories={categories}
+              brands={brands}
+              products={products}
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+            />
+          </aside>
+        </div>
+      ) : null}
     </main>
   );
 };

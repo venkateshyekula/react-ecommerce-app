@@ -14,7 +14,7 @@ const EmptyState = ({
   action
 }: EmptyStateProps) => {
   return (
-    <div className="empty-state text-center bg-white rounded-4 shadow-sm p-5">
+    <div className="empty-state text-center bg-white p-5">
       <div className="empty-state-icon mb-3">
         <i className={`${iconClassName} display-4 text-primary`} />
       </div>

@@ -7,22 +7,18 @@ interface CouponValidationResult {
 
 export const calculateCouponDiscount = (
   coupon: Coupon,
-  subtotalAmount: number
+  cartTotal: number
 ): number => {
-  if (!coupon.isActive) {
-    return 0;
-  }
-
-  if (subtotalAmount < coupon.minimumOrderAmount) {
+  if (coupon.discountType === "FREE_SHIPPING") {
     return 0;
   }
 
   if (coupon.discountType === "FLAT") {
-    return Math.min(coupon.discountValue, subtotalAmount);
+    return Math.min(coupon.discountValue, cartTotal);
   }
 
   const percentageDiscount = Math.round(
-    (subtotalAmount * coupon.discountValue) / 100
+    (cartTotal * coupon.discountValue) / 100
   );
 
   if (coupon.maxDiscountAmount) {
@@ -34,7 +30,7 @@ export const calculateCouponDiscount = (
 
 export const validateCouponForCart = (
   coupon: Coupon | null,
-  subtotalAmount: number
+  cartTotal: number
 ): CouponValidationResult => {
   if (!coupon) {
     return {
@@ -46,14 +42,42 @@ export const validateCouponForCart = (
   if (!coupon.isActive) {
     return {
       isValid: false,
-      message: "This coupon is no longer active."
+      message: "This coupon is currently inactive."
     };
   }
 
-  if (subtotalAmount < coupon.minimumOrderAmount) {
+  const now = new Date();
+  const validFrom = new Date(coupon.validFrom);
+  const validUntil = new Date(coupon.validUntil);
+
+  if (now < validFrom) {
     return {
       isValid: false,
-      message: `Minimum order amount should be ₹${coupon.minimumOrderAmount}.`
+      message: "This coupon is not active yet."
+    };
+  }
+
+  if (now > validUntil) {
+    return {
+      isValid: false,
+      message: "This coupon has expired."
+    };
+  }
+
+  if (cartTotal < coupon.minCartValue) {
+    return {
+      isValid: false,
+      message: `Minimum cart value should be ₹${coupon.minCartValue}.`
+    };
+  }
+
+  if (
+    typeof coupon.usageLimit === "number" &&
+    coupon.usedCount >= coupon.usageLimit
+  ) {
+    return {
+      isValid: false,
+      message: "This coupon usage limit has been reached."
     };
   }
 

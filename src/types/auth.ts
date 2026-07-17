@@ -8,6 +8,9 @@ export interface User {
   mobile: string;
   address: string;
   role?: UserRole;
+  supportTeamCode?: string;
+  supportTeamRole?: string;
+  isActive?: boolean;
 }
 
 export interface AuthUser {
@@ -17,6 +20,9 @@ export interface AuthUser {
   mobile: string;
   address: string;
   role: UserRole;
+  supportTeamCode?: string;
+  supportTeamRole?: string;
+  isActive?: boolean;
 }
 
 export interface RegisterPayload {

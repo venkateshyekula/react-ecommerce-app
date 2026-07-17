@@ -201,75 +201,17 @@ react-ecommerce-app/
   src/
     components/
       common/
-        Button.tsx
-        EmptyState.tsx
-        FormInput.tsx
-        Loader.tsx
-
       layout/
-        Footer.tsx
-        Navbar.tsx
-
       products/
-        ProductCard.tsx
-        ProductFilter.tsx
-        SearchBar.tsx
-
       cart/
-        CartItem.tsx
-
       orders/
-        OrderCard.tsx
-        OrderTrackingTimeline.tsx
-
     context/
-      AuthProvider.tsx
-      CartProvider.tsx
-      AuthContextObject.ts
-      CartContextObject.ts
-      useAuth.ts
-      useCart.ts
-
     hooks/
-      useLocalStorage.ts
-
     pages/
-      HomePage.tsx
-      LoginPage.tsx
-      RegisterPage.tsx
-      ProfilePage.tsx
-      ProductListPage.tsx
-      ProductDetailsPage.tsx
-      CategoryPage.tsx
-      CartPage.tsx
-      CheckoutPage.tsx
-      OrderSuccessPage.tsx
-      OrderHistoryPage.tsx
-      NotFoundPage.tsx
-
     routes/
-      AppRoutes.tsx
-      ProtectedRoute.tsx
-
     services/
-      apiClient.ts
-      authService.ts
-      productService.ts
-      orderService.ts
-
     types/
-      api.ts
-      auth.ts
-      cart.ts
-      order.ts
-      product.ts
-
     utils/
-      currencyFormatter.ts
-      orderUtils.ts
-      storage.ts
-      validation.ts
-
     App.tsx
     main.tsx
     index.css

@@ -1,38 +1,50 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Button from "../components/common/Button";
-import EmptyState from "../components/common/EmptyState";
 import Loader from "../components/common/Loader";
-import OrderTrackingTimeline from "../components/orders/OrderTrackingTimeline";
+import OrderDeliveryPromiseCard from "../components/orders/OrderDeliveryPromiseCard";
+import OrderFulfillmentTimeline from "../components/orders/OrderFulfillmentTimeline";
+import OrderRefundStatusCard from "../components/orders/OrderRefundStatusCard";
+import OrderRewardRedemptionCard from "../components/orders/OrderRewardRedemptionCard";
+import OrderWalletPaymentCard from "../components/orders/OrderWalletPaymentCard";
+import { useToast } from "../context/useToast";
 import { orderService } from "../services/orderService";
+import { refundService } from "../services/refundService";
+import { rewardService } from "../services/rewardService";
 import type { Order } from "../types/order";
+import type { RefundRecord } from "../types/refund";
 import { formatCurrency } from "../utils/currencyFormatter";
+import { getFallbackFulfillmentStatus } from "../utils/fulfillmentUtils";
+import {
+  calculateEarnedRewardPoints,
+  getRewardExpiryDate,
+} from "../utils/rewardUtils";
 
 const getLocalOrderStatusBadgeClass = (status: string): string => {
   if (status === "Order Placed") {
     return "bg-primary-subtle text-primary border border-primary-subtle px-3 py-2";
   }
-  if (
-    status === "Cancelled" ||
-    status === "Canceled" ||
-    status === "Order Cancelled"
-  ) {
+
+  if (status === "Cancelled" || status === "Order Cancelled") {
     return "bg-danger-subtle text-danger border border-danger-subtle px-3 py-2";
   }
+
   return "bg-success-subtle text-success border border-success-subtle px-3 py-2";
 };
 
 const OrderSuccessPage = () => {
   const { orderId } = useParams<{ orderId: string }>();
+  const { showToast } = useToast();
 
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isCancelling, setIsCancelling] = useState<boolean>(false);
   const [cancelError, setCancelError] = useState<string>("");
+  const [refunds, setRefunds] = useState<RefundRecord[]>([]);
 
   useEffect(() => {
-    const loadOrder = async (): Promise<void> => {
+    const loadOrderAndRefunds = async (): Promise<void> => {
       if (!orderId) {
         setErrorMessage("Order ID is missing.");
         setIsLoading(false);
@@ -52,6 +64,57 @@ const OrderSuccessPage = () => {
         }
 
         setOrder(orderDetails);
+
+        try {
+          const rules = await rewardService.getRules();
+          const activeRule = rewardService.getActiveRule(rules);
+
+          const points = calculateEarnedRewardPoints(
+            orderDetails.totalAmount,
+            activeRule,
+          );
+
+          if (points > 0 && activeRule) {
+            const referenceId = `reward-order-${orderDetails.orderId}`;
+
+            const existingRewardTransactions =
+              await rewardService.getTransactionsByReferenceId(referenceId);
+
+            if (existingRewardTransactions.length === 0) {
+              await rewardService.createTransaction({
+                transactionId: `RWD-${Date.now()}`,
+                userId: orderDetails.userId,
+                type: "EARNED",
+                source: "ORDER",
+                points,
+                description: `Reward points earned for order ${orderDetails.orderId}`,
+                createdAt: new Date().toISOString(),
+                orderId: orderDetails.orderId,
+                referenceId,
+                expiresAt: getRewardExpiryDate(activeRule.expiryDays),
+              });
+            }
+          }
+        } catch (rewardError) {
+          console.error("Reward points could not be processed:", rewardError);
+
+          showToast(
+            "Warning",
+            "Order placed successfully, but reward points could not be processed right now.",
+            "warning",
+          );
+        }
+
+        try {
+          const refundRecords = await refundService.getRefundsByOrderId(
+            orderDetails.orderId,
+          );
+
+          setRefunds(refundRecords);
+        } catch (refundError) {
+          console.error("Failed to load refund details:", refundError);
+          setRefunds([]);
+        }
       } catch {
         setErrorMessage(
           "Unable to load order details. Please make sure JSON Server is running.",
@@ -61,8 +124,8 @@ const OrderSuccessPage = () => {
       }
     };
 
-    void loadOrder();
-  }, [orderId]);
+    void loadOrderAndRefunds();
+  }, [orderId, showToast]);
 
   const handleCancelOrder = async (): Promise<void> => {
     if (!order) return;
@@ -70,6 +133,7 @@ const OrderSuccessPage = () => {
     const confirmCancel = window.confirm(
       "Are you sure you want to cancel this order? This action cannot be undone.",
     );
+
     if (!confirmCancel) return;
 
     try {
@@ -80,13 +144,23 @@ const OrderSuccessPage = () => {
         order.id,
         "Cancelled by customer from order confirmation screen.",
       );
+
       setOrder(updatedOrder);
+
+      const updatedRefunds = await refundService.getRefundsByOrderId(
+        updatedOrder.orderId,
+      );
+
+      setRefunds(updatedRefunds);
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
           : "An error occurred during cancellation.";
+
       setCancelError(message);
+
+      showToast("Error", message, "danger");
     } finally {
       setIsCancelling(false);
     }
@@ -94,8 +168,8 @@ const OrderSuccessPage = () => {
 
   if (isLoading) {
     return (
-      <main className="order-success-page bg-light">
-        <div className="container py-5">
+      <main className="order-success-page bg-light shopease-brand-page">
+        <div className="container-fluid py-3">
           <Loader message="Loading order confirmation..." />
         </div>
       </main>
@@ -104,18 +178,13 @@ const OrderSuccessPage = () => {
 
   if (errorMessage || !order) {
     return (
-      <main className="order-success-page bg-light">
-        <div className="container py-5">
-          <EmptyState
-            title="Order details unavailable"
-            message={errorMessage}
-            iconClassName="bi bi-receipt"
-            action={
-              <Link to="/products" className="btn btn-primary">
-                Continue Shopping
-              </Link>
-            }
-          />
+      <main className="order-success-page bg-light shopease-brand-page">
+        <div className="container-fluid py-3">
+          {
+            <Link to="/products" className="btn btn-primary">
+              Continue Shopping
+            </Link>
+          }
         </div>
       </main>
     );
@@ -129,13 +198,13 @@ const OrderSuccessPage = () => {
   const currentStatusStr = order.orderStatus as string;
   const isEligibleForCancellation = currentStatusStr === "Order Placed";
   const isCancelled =
-    currentStatusStr === "Cancelled" || currentStatusStr === "Canceled";
+    currentStatusStr === "Cancelled" || currentStatusStr === "Order Cancelled";
 
   return (
-    <main className="order-success-page bg-light">
-      <section className="container py-5">
+    <main className="order-success-page bg-light shopease-brand-page">
+      <section className="container-fluid py-3">
         <div className="row justify-content-center">
-          <div className="col-xl-10">
+          <div className="col-xl">
             {cancelError ? (
               <div className="alert alert-danger mb-4 rounded-4" role="alert">
                 <i className="bi bi-exclamation-triangle-fill me-2" />
@@ -143,9 +212,11 @@ const OrderSuccessPage = () => {
               </div>
             ) : null}
 
-            <div className="order-success-card bg-white rounded-4 shadow-sm p-4 p-md-5 text-center mb-4">
+            <div className="order-success-card bg-white rounded-4 p-4 text-center mb-4 shopease-brand-card">
               <div
-                className={`success-icon mx-auto mb-3 ${isCancelled ? "bg-danger-subtle text-danger" : ""}`}
+                className={`success-icon mx-auto mb-3 ${
+                  isCancelled ? "bg-danger-subtle text-danger" : ""
+                }`}
               >
                 <i
                   className={`bi ${isCancelled ? "bi-x-lg" : "bi-check-lg"}`}
@@ -158,9 +229,42 @@ const OrderSuccessPage = () => {
 
               <p className="text-muted mb-4">
                 {isCancelled
-                  ? "This package pipeline sequence was completely canceled. Distribution steps are terminated."
+                  ? "This package pipeline sequence was completely cancelled. Distribution steps are terminated."
                   : "Thank you for shopping with ShopEase. Your order has been created and tracking has started."}
               </p>
+
+              <div className="mb-4">
+                <OrderDeliveryPromiseCard
+                  deliveryPromise={order.deliveryPromise}
+                />
+              </div>
+
+              <div className="mb-4">
+                <OrderRewardRedemptionCard
+                  rewardRedemption={order.rewardRedemption}
+                />
+              </div>
+
+              <div className="mb-4">
+                <OrderWalletPaymentCard
+                  walletRedemption={order.walletRedemption}
+                />
+              </div>
+
+              <div className="mb-4">
+                <OrderFulfillmentTimeline
+                  fulfillmentStatus={getFallbackFulfillmentStatus(
+                    order.orderStatus,
+                    order.fulfillmentStatus,
+                  )}
+                  orderStatus={order.orderStatus}
+                  events={order.trackingEvents}
+                />
+              </div>
+
+              <div className="mb-4">
+                <OrderRefundStatusCard refunds={refunds} />
+              </div>
 
               <div className="order-success-summary bg-light rounded-4 p-4 mb-4">
                 <div className="row g-3 text-start">
@@ -189,7 +293,9 @@ const OrderSuccessPage = () => {
                   <div className="col-md-4">
                     <p className="small text-muted mb-1">Order Status</p>
                     <span
-                      className={`badge ${getLocalOrderStatusBadgeClass(currentStatusStr)}`}
+                      className={`badge ${getLocalOrderStatusBadgeClass(
+                        currentStatusStr,
+                      )}`}
                     >
                       {order.orderStatus}
                     </span>
@@ -205,39 +311,6 @@ const OrderSuccessPage = () => {
                 </div>
               </div>
 
-              <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                <Link to="/orders" className="btn btn-primary px-4">
-                  <i className="bi bi-receipt me-2" />
-                  View My Orders
-                </Link>
-
-                <Link to="/products" className="btn btn-outline-primary px-4">
-                  Continue Shopping
-                </Link>
-
-                {isEligibleForCancellation ? (
-                  <Button
-                    variant="outline-danger"
-                    className="px-4"
-                    isLoading={isCancelling}
-                    onClick={handleCancelOrder}
-                  >
-                    <i className="bi bi-x-circle me-2" />
-                    Cancel Order
-                  </Button>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-4 shadow-sm p-4 p-md-5">
-              <h4 className="fw-bold mb-4">Advanced Order Tracking</h4>
-
-              {/* FIXED: Removed the unaccepted events property completely to satisfy TS(2322) and ESLint rules */}
-              <OrderTrackingTimeline
-                steps={order.trackingSteps || []}
-                currentStatus={order.orderStatus}
-              />
-
               <hr className="my-4" />
 
               <h5 className="fw-bold mb-3">Ordered Items</h5>
@@ -251,7 +324,8 @@ const OrderSuccessPage = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="order-item-image"
+                      className="rounded-3 border object-fit-cover"
+                      style={{ width: "75px", height: "75px" }}
                     />
 
                     <div className="flex-grow-1">
@@ -287,6 +361,39 @@ const OrderSuccessPage = () => {
                 {order.deliveryAddress.city}, {order.deliveryAddress.state} -{" "}
                 {order.deliveryAddress.pincode}
               </p>
+
+              <hr className="my-4" />
+
+              <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                <Link to="/orders" className="btn btn-primary px-4">
+                  <i className="bi bi-receipt me-2" />
+                  View My Orders
+                </Link>
+
+                <Link
+                  to={`/invoice/${orderId}`}
+                  className="btn btn-outline-primary"
+                >
+                  <i className="bi bi-receipt me-2" />
+                  View Invoice
+                </Link>
+
+                <Link to="/products" className="btn btn-outline-primary px-4">
+                  Continue Shopping
+                </Link>
+
+                {isEligibleForCancellation ? (
+                  <Button
+                    variant="outline-danger"
+                    className="px-4"
+                    isLoading={isCancelling}
+                    onClick={handleCancelOrder}
+                  >
+                    <i className="bi bi-x-circle me-2" />
+                    Cancel Order
+                  </Button>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>

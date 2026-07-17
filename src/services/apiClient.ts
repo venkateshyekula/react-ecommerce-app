@@ -76,9 +76,16 @@ export const apiClient = {
     });
   },
 
-  delete: <TResponse>(endpoint: string): Promise<TResponse> => {
+  /*delete: <TResponse>(endpoint: string): Promise<TResponse> => {
     return request<TResponse>(endpoint, {
       method: "DELETE"
     });
-  }
+  }*/
+ delete: <TResponse>(endpoint: string): Promise<TResponse> => {
+  console.warn("[API DELETE REQUEST]", endpoint);
+
+  return request<TResponse>(endpoint, {
+    method: "DELETE"
+  });
+}
 };

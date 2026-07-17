@@ -1,4 +1,6 @@
-export type PaymentMethod = "Credit Card" | "UPI" | "Cash on Delivery";
+import type { DeliveryPromiseSnapshot } from "./delivery";
+
+export type PaymentMethod = "Credit Card" | "UPI" | "Cash on Delivery" | "Wallet";
 
 export type OrderStatus =
   | "Order Placed"
@@ -10,6 +12,14 @@ export type OrderStatus =
   | "Return Requested"
   | "Returned";
 
+export type FulfillmentStatus =
+  | "PENDING"
+  | "ALLOCATED"
+  | "PACKED"
+  | "SHIPPED"
+  | "OUT_FOR_DELIVERY"
+  | "DELIVERED"
+  | "FAILED";  
 export interface DeliveryAddress {
   fullName: string;
   mobile: string;
@@ -28,6 +38,14 @@ export interface OrderItem {
   quantity: number;
   subtotal: number;
   selectedSize?: string;
+
+  category?: string;
+  sellerId?: string;
+  sellerName?: string;
+  hsnCode?: string;
+  gstRate?: number;
+  cessRate?: number;
+  unit?: string;
 }
 
 export interface TrackingSubStep {
@@ -62,9 +80,10 @@ export interface Order {
   discountAmount?: number;
   deliveryFee?: number;
   couponCode?: string;
+  couponId?: string | number;
   totalAmount: number;
   paymentMethod: PaymentMethod;
-  deliveryAddress: DeliveryAddress;
+  deliveryAddress: CheckoutFormValues["deliveryAddress"];
   orderStatus: OrderStatus;
   trackingSteps: TrackingStep[];
   trackingEvents?: TrackingEvent[];
@@ -72,6 +91,18 @@ export interface Order {
   cancellationReason?: string;
   returnRequestedAt?: string;
   returnReason?: string;
+  deliveryPromise?: DeliveryPromiseSnapshot | null;
+  fulfillmentStatus?: FulfillmentStatus;
+  walletRedemption?: WalletRedemptionSnapshot | null;
+  rewardRedemption?: RewardRedemptionSnapshot | null;
+  invoiceId?: string;
+  invoiceNumber?: string;
+}
+export interface WalletRedemptionSnapshot {
+  walletApplied: boolean;
+  walletAmountUsed: number;
+  payableAmount: number;
+  walletTransactionId?: string;
 }
 
 export type CreateOrderPayload = Omit<Order, "id">;
@@ -92,4 +123,12 @@ export interface CheckoutFormValues {
   paymentMethod: PaymentMethod | "";
   cardDetails: CardPaymentDetails;
   upiDetails: UpiPaymentDetails;
+}
+
+export interface RewardRedemptionSnapshot {
+  rewardsApplied: boolean;
+  pointsUsed: number;
+  rewardDiscountAmount: number;
+  payableAmountAfterRewards: number;
+  rewardTransactionId?: string;
 }
