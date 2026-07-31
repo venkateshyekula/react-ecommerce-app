@@ -345,7 +345,7 @@ const HeaderSearchBar = () => {
           ref={inputRef}
           type="search"
           className="form-control header-search-input"
-          placeholder="Search products, brands, categories..."
+          placeholder="Search products, brands and more"
           value={searchText}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setSearchText(event.target.value);

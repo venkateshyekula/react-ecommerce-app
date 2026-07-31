@@ -18,7 +18,15 @@ export type DeleteEntityType =
   | "warehouse"
   | "deliverySlaRule"
   | "sellerFulfillmentMapping"
-  | "returnPolicyRule";
+  | "returnPolicyRule"
+  | "sellerReturnDispute"
+  | "inventoryRestockLog"
+  | "openBoxInventoryItem"
+  | "damagedReturnInventoryItem"
+  | "agentAssignment"
+  | "agentTaskLog"
+  | "pickupProof"
+  | "deliveryProof";
 
 interface DeleteIdRule {
   prefixes?: string[];
@@ -104,6 +112,36 @@ const deleteIdRules: Record<DeleteEntityType, DeleteIdRule> = {
 
   returnPolicyRule: {
     allowNumeric: true
+  },
+  sellerReturnDispute: {
+    prefixes: ["seller-dispute-db-", "SRD-"]
+  },
+
+  inventoryRestockLog: {
+    prefixes: ["restock-log-db-", "RSTK-"]
+  },
+
+  openBoxInventoryItem: {
+    prefixes: ["open-box-db-", "OBX-"]
+  },
+
+  damagedReturnInventoryItem: {
+    prefixes: ["damaged-return-db-", "DMG-"]
+  },
+  agentAssignment: {
+    prefixes: ["agent-assignment-db-", "AGT-ASG-"]
+  },
+
+  agentTaskLog: {
+    prefixes: ["agent-task-log-db-"]
+  },
+
+  pickupProof: {
+    prefixes: ["pickup-proof-db-", "PKP-PRF-"]
+  },
+
+  deliveryProof: {
+    prefixes: ["delivery-proof-db-", "DLY-PRF-"]
   }
 };
 

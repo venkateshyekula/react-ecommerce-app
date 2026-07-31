@@ -1,113 +1,331 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+import {
+  Link,
+  useNavigate,
+  useParams
+} from "react-router-dom";
+
 import Button from "../components/common/Button";
 import Loader from "../components/common/Loader";
+
 import ProductCard from "../components/products/ProductCard";
+import ProductComparisonDetails from "../components/products/ProductComparisonDetails";
 import ProductDeliveryChecker from "../components/products/ProductDeliveryChecker";
+import ProductDetailsTabs, {
+  type ProductDetailsTab
+} from "../components/products/ProductDetailsTabs";
 import ProductHighlights from "../components/products/ProductHighlights";
 import ProductImageGallery from "../components/products/ProductImageGallery";
-import ProductReviews from "../components/products/ProductReviews";
-import ProductSizeChart from "../components/products/ProductSizeChart";
-import ProductSizeSelector from "../components/products/ProductSizeSelector";
 import ProductOffersPanel from "../components/products/ProductOffersPanel";
+import ProductQuestions from "../components/products/ProductQuestions";
+import ProductReviews from "../components/products/ProductReviews";
 import ProductSellerSummary from "../components/products/ProductSellerSummary";
+import ProductSizeChart from "../components/products/ProductSizeChart";
+import ProductSizeRecommendationCard from "../components/products/ProductSizeRecommendationCard";
+import ProductSizeSelector from "../components/products/ProductSizeSelector";
 import ProductTrustHighlights from "../components/products/ProductTrustHighlights";
+import RecentlyViewedProductsSection from "../components/products/RecentlyViewedProductsSection";
+import RecommendedProductsSection from "../components/products/RecommendedProductsSection";
+
 import { useAuth } from "../context/useAuth";
 import { useCart } from "../context/useCart";
 import { useWishlist } from "../context/useWishlist";
+
 import { productService } from "../services/productService";
+
 import type { Product } from "../types/product";
-import { formatCurrency, getDiscountedPrice } from "../utils/currencyFormatter";
-import RecentlyViewedProductsSection from "../components/products/RecentlyViewedProductsSection";
-import RecommendedProductsSection from "../components/products/RecommendedProductsSection";
+
+import {
+  formatCurrency,
+  getDiscountedPrice
+} from "../utils/currencyFormatter";
 import { saveRecentlyViewedProduct } from "../utils/recentlyViewedStorage";
-import ProductComparisonDetails from "../components/products/ProductComparisonDetails";
-import ProductQuestions from "../components/products/ProductQuestions";
-import ProductDetailsTabs, {
-  type ProductDetailsTab,
-} from "../components/products/ProductDetailsTabs";
-import ProductSizeRecommendationCard from "../components/products/ProductSizeRecommendationCard";
+
+import "./ProductDetailsPage.css";
+
+/* ==========================================================================
+   Constants
+   ========================================================================== */
+
+const SIMILAR_PRODUCT_LIMIT = 4;
+const PRODUCT_HIGHLIGHT_LIMIT = 6;
+
+/* ==========================================================================
+   Helpers
+   ========================================================================== */
+
+const hasText = (
+  value: string | undefined
+): value is string => {
+  return Boolean(value?.trim());
+};
+
+const getProductCategoryPath = (
+  category: string
+): string => {
+  return `/categories/${encodeURIComponent(
+    category
+  )}`;
+};
+
+const getProductRatingLabel = (
+  rating: number
+): string => {
+  if (!Number.isFinite(rating)) {
+    return "Not rated";
+  }
+
+  return rating.toFixed(
+    rating % 1 === 0 ? 0 : 1
+  );
+};
+
+const getProductRatingCountLabel = (
+  count: number
+): string => {
+  return new Intl.NumberFormat("en-IN").format(
+    count
+  );
+};
+
+/* ==========================================================================
+   Product Details Page
+   ========================================================================== */
 
 const ProductDetailsPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{
+    id: string;
+  }>();
+
   const navigate = useNavigate();
 
   const { currentUser } = useAuth();
+
   const { addToCart } = useCart();
-  const { isInWishlist, toggleWishlist } = useWishlist();
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
-  const [activeTab, setActiveTab] = useState<ProductDetailsTab>("description");
+  const {
+    isInWishlist,
+    toggleWishlist
+  } = useWishlist();
 
-  const [selectedSize, setSelectedSize] = useState<string>("");
-  const [sizeError, setSizeError] = useState<string>("");
-  const [isSizeChartOpen, setIsSizeChartOpen] = useState<boolean>(false);
+  const [product, setProduct] =
+    useState<Product | null>(null);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [
+    similarProducts,
+    setSimilarProducts
+  ] = useState<Product[]>([]);
+
+  const [activeTab, setActiveTab] =
+    useState<ProductDetailsTab>(
+      "description"
+    );
+
+  const [selectedSize, setSelectedSize] =
+    useState<string>("");
+
+  const [sizeError, setSizeError] =
+    useState<string>("");
+
+  const [
+    isSizeChartOpen,
+    setIsSizeChartOpen
+  ] = useState<boolean>(false);
+
+  const [isLoading, setIsLoading] =
+    useState<boolean>(true);
+
+  const [errorMessage, setErrorMessage] =
+    useState<string>("");
+
+  /* ==========================================================================
+     Role-Based Shopping Access
+     ========================================================================== */
 
   const userRole = currentUser?.role;
 
   const canUseShoppingFeatures =
-    !currentUser || userRole === "CUSTOMER" || userRole === "ADMIN";
+    !currentUser ||
+    userRole === "CUSTOMER" ||
+    userRole === "ADMIN";
 
   const canUseWishlist =
-    Boolean(currentUser) && (userRole === "CUSTOMER" || userRole === "ADMIN");
+    !currentUser ||
+    userRole === "CUSTOMER" ||
+    userRole === "ADMIN";
+
+  /* ==========================================================================
+     Load Product
+     ========================================================================== */
 
   useEffect(() => {
-    const loadProduct = async (): Promise<void> => {
-      if (!id) {
-        setErrorMessage("Product ID is missing.");
-        setIsLoading(false);
-        return;
-      }
+    let isMounted = true;
 
-      try {
-        setIsLoading(true);
-        setErrorMessage("");
+    const resetProductState = (): void => {
+      setProduct(null);
+      setSimilarProducts([]);
+      setActiveTab("description");
+      setSelectedSize("");
+      setSizeError("");
+      setIsSizeChartOpen(false);
+      setErrorMessage("");
+    };
 
-        const productDetails = await productService.getProductById(id);
+    const loadProduct =
+      async (): Promise<void> => {
+        if (!id) {
+          if (isMounted) {
+            resetProductState();
+            setErrorMessage(
+              "Product ID is missing."
+            );
+            setIsLoading(false);
+          }
 
-        if (!productDetails) {
-          setProduct(null);
-          setErrorMessage("Product not found.");
           return;
         }
 
-        setProduct(productDetails);
-        saveRecentlyViewedProduct(productDetails);
-        setSelectedSize("");
-        setSizeError("");
-        setIsSizeChartOpen(false);
+        try {
+          setIsLoading(true);
+          resetProductState();
 
-        const allProducts = await productService.getProducts();
+          const productDetails =
+            await productService.getProductById(
+              id
+            );
 
-        const relatedProducts = allProducts
-          .filter(
-            (item) =>
-              item.category === productDetails.category &&
-              item.id !== productDetails.id,
-          )
-          .slice(0, 4);
+          if (!isMounted) {
+            return;
+          }
 
-        setSimilarProducts(relatedProducts);
-      } catch {
-        setErrorMessage(
-          "Unable to load product details. Please make sure JSON Server is running.",
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
+          if (!productDetails) {
+            setErrorMessage(
+              "Product not found."
+            );
+
+            return;
+          }
+
+          setProduct(productDetails);
+
+          saveRecentlyViewedProduct(
+            productDetails
+          );
+
+          try {
+            const allProducts =
+              await productService.getProducts();
+
+            if (!isMounted) {
+              return;
+            }
+
+            const relatedProducts =
+              allProducts
+                .filter(
+                  (item) =>
+                    item.category ===
+                      productDetails.category &&
+                    item.id !== productDetails.id
+                )
+                .slice(
+                  0,
+                  SIMILAR_PRODUCT_LIMIT
+                );
+
+            setSimilarProducts(
+              relatedProducts
+            );
+          } catch {
+            /*
+             * Product details can still render when
+             * the secondary similar-products request
+             * fails.
+             */
+            if (isMounted) {
+              setSimilarProducts([]);
+            }
+          }
+        } catch {
+          if (!isMounted) {
+            return;
+          }
+
+          setProduct(null);
+
+          setErrorMessage(
+            "Unable to load product details. Please make sure JSON Server is running."
+          );
+        } finally {
+          if (isMounted) {
+            setIsLoading(false);
+          }
+        }
+      };
 
     void loadProduct();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
-  const productHighlights = useMemo(() => {
-    if (!product) return [];
-    return Object.entries(product.specifications).slice(0, 5);
-  }, [product]);
+  /* ==========================================================================
+     Derived Product Information
+     ========================================================================== */
+
+  const specificationHighlights =
+    useMemo(() => {
+      if (
+        !product ||
+        !product.specifications
+      ) {
+        return [];
+      }
+
+      return Object.entries(
+        product.specifications
+      ).slice(
+        0,
+        PRODUCT_HIGHLIGHT_LIMIT
+      );
+    }, [product]);
+
+  const productDetailsList =
+    useMemo<string[]>(() => {
+      if (!product) {
+        return [];
+      }
+
+      return (
+        product.productDetails?.filter(
+          (detail) =>
+            Boolean(detail.trim())
+        ) ?? []
+      );
+    }, [product]);
+
+  const materialAndCareList =
+    useMemo<string[]>(() => {
+      if (!product) {
+        return [];
+      }
+
+      return (
+        product.materialAndCare?.filter(
+          (detail) =>
+            Boolean(detail.trim())
+        ) ?? []
+      );
+    }, [product]);
+
+  /* ==========================================================================
+     Loading State
+     ========================================================================== */
 
   if (isLoading) {
     return (
@@ -119,90 +337,228 @@ const ProductDetailsPage = () => {
     );
   }
 
-  // FIXED: Render actual error message to give user visual feedback
+  /* ==========================================================================
+     Error State
+     ========================================================================== */
+
   if (errorMessage || !product) {
     return (
       <main className="product-details-page bg-light">
-        <div className="container-fluid py-5 text-center">
-          <div
-            className="alert alert-warning max-w-md mx-auto mb-4"
-            role="alert"
-          >
-            <i className="bi bi-exclamation-triangle-fill me-2" />
-            {errorMessage || "Product data is unavailable."}
+        <div className="container-fluid py-5">
+          <div className="product-details-error-state">
+            <span className="product-details-error-icon">
+              <i
+                className="bi bi-exclamation-triangle"
+                aria-hidden="true"
+              />
+            </span>
+
+            <h1>Product Unavailable</h1>
+
+            <p>
+              {errorMessage ||
+                "Product data is unavailable."}
+            </p>
+
+            <Link
+              to="/products"
+              className="btn btn-primary"
+            >
+              <i
+                className="bi bi-arrow-left me-2"
+                aria-hidden="true"
+              />
+
+              Back to Products
+            </Link>
           </div>
-          <Link to="/products" className="btn btn-primary">
-            Back to Products
-          </Link>
         </div>
       </main>
     );
   }
 
-  const discountedPrice = getDiscountedPrice(product.price, product.discount);
-  const isOutOfStock = product.stock <= 0;
-  const isWishlisted = isInWishlist(product.id);
+  /* ==========================================================================
+     Current Product Values
+     ========================================================================== */
 
-  // OPTIMIZED: Drop hardcoded string categories in favor of checking dynamic array presence
-  const isSizeRequired = Boolean(
-    product.sizeOptions && product.sizeOptions.length > 0,
+  const discountedPrice =
+    getDiscountedPrice(
+      product.price,
+      product.discount
+    );
+
+  const savedAmount = Math.max(
+    0,
+    product.price - discountedPrice
   );
 
-  const validateSelectedSize = (): boolean => {
-    if (isSizeRequired && !selectedSize) {
-      setSizeError("Please select a size.");
-      return false;
-    }
+  const isOutOfStock =
+    product.stock <= 0;
 
-    setSizeError("");
-    return true;
-  };
+  const isWishlisted =
+    isInWishlist(product.id);
+
+  const hasSizeOptions = Boolean(
+    product.sizeOptions?.length
+  );
+
+  const hasSpecifications =
+    Object.keys(
+      product.specifications ?? {}
+    ).length > 0;
+
+  const totalRatings =
+    product.ratingSummary?.totalRatings;
+
+  const totalReviews =
+    product.ratingSummary?.totalReviews;
+
+  /* ==========================================================================
+     Size Validation
+     ========================================================================== */
+
+  const validateSelectedSize =
+    (): boolean => {
+      if (
+        hasSizeOptions &&
+        !selectedSize
+      ) {
+        setSizeError(
+          "Please select a size before continuing."
+        );
+
+        return false;
+      }
+
+      if (
+        selectedSize &&
+        !product.sizeOptions?.includes(
+          selectedSize
+        )
+      ) {
+        setSizeError(
+          "The selected size is not available."
+        );
+
+        return false;
+      }
+
+      setSizeError("");
+
+      return true;
+    };
+
+  /* ==========================================================================
+     Shopping Handlers
+     ========================================================================== */
 
   const handleAddToCart = (): void => {
-    if (isOutOfStock || !canUseShoppingFeatures) return;
-    if (!validateSelectedSize()) return;
+    if (
+      isOutOfStock ||
+      !canUseShoppingFeatures
+    ) {
+      return;
+    }
 
-    // Bypasses excess property check by asserting as Product
-    //const cartItem = (isSizeRequired ? { ...product, selectedSize } : product) as Product;
-    //addToCart(cartItem);
-    addToCart(product, selectedSize || undefined);
+    if (!validateSelectedSize()) {
+      return;
+    }
+
+    addToCart(
+      product,
+      selectedSize || undefined
+    );
   };
 
   const handleBuyNow = (): void => {
-    if (isOutOfStock || !canUseShoppingFeatures) return;
-    if (!validateSelectedSize()) return;
+    if (
+      isOutOfStock ||
+      !canUseShoppingFeatures
+    ) {
+      return;
+    }
 
-    // Bypasses excess property check by asserting as Product
-    //const cartItem = (isSizeRequired ? { ...product, selectedSize } : product) as Product;
-    //addToCart(cartItem);
-    addToCart(product, selectedSize || undefined);
+    if (!validateSelectedSize()) {
+      return;
+    }
+
+    addToCart(
+      product,
+      selectedSize || undefined
+    );
+
     navigate("/cart");
   };
 
-  const handleWishlistClick = (): void => {
-    if (canUseWishlist) {
+  const handleWishlistClick =
+    (): void => {
+      if (!canUseWishlist) {
+        return;
+      }
+
       toggleWishlist(product);
-    }
+    };
+
+  const handleSizeChange = (
+    size: string
+  ): void => {
+    setSelectedSize(size);
+    setSizeError("");
   };
+
+  /* ==========================================================================
+     Tab Handling
+     ========================================================================== */
+
+  const handleTabChange = (
+    tab: ProductDetailsTab
+  ): void => {
+    setActiveTab(tab);
+  };
+
+  /* ==========================================================================
+     Render
+     ========================================================================== */
 
   return (
     <main className="product-details-page bg-light">
-      <section className="page-header bg-white border-bottom">
-        <div className="container-fluid py-4">
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb mb-2">
+      {/* Breadcrumb Header */}
+      <section className="product-details-page-header bg-white border-bottom">
+        <div className="container-fluid py-3 py-md-4">
+          <nav aria-label="Breadcrumb">
+            <ol className="breadcrumb product-details-breadcrumb mb-0">
               <li className="breadcrumb-item">
                 <Link to="/">Home</Link>
               </li>
+
               <li className="breadcrumb-item">
-                <Link to="/products">Products</Link>
+                <Link to="/products">
+                  Products
+                </Link>
               </li>
+
               <li className="breadcrumb-item">
-                <Link to={`/categories/${product.category}`}>
+                <Link
+                  to={getProductCategoryPath(
+                    product.category
+                  )}
+                >
                   {product.category}
                 </Link>
               </li>
-              <li className="breadcrumb-item active" aria-current="page">
+
+              {hasText(
+                product.subcategory
+              ) ? (
+                <li className="breadcrumb-item d-none d-md-item">
+                  {product.subcategory.trim()}
+                </li>
+              ) : null}
+
+              <li
+                className="breadcrumb-item active"
+                aria-current="page"
+              >
                 {product.name}
               </li>
             </ol>
@@ -210,251 +566,615 @@ const ProductDetailsPage = () => {
         </div>
       </section>
 
-      <section className="container-fluid py-4 ">
+      <section className="container-fluid py-2">
+        {/* Main Product Section */}
         <div className="row g-4">
+          {/* Gallery */}
           <div className="col-lg-5">
             <div className="product-details-gallery-sticky">
-              <ProductImageGallery product={product} />
+              <ProductImageGallery
+                product={product}
+              />
             </div>
           </div>
 
+          {/* Product Information */}
           <div className="col-lg-7">
-            <div className="bg-white p-4 p-md-5 product-details-info-card">
-              <div className="d-flex flex-wrap gap-2 mb-3">
-                <span className="badge bg-light text-primary border">
+            <article className="product-details-info-card bg-white">
+              {/* Product Badges */}
+              <div className="product-details-badges">
+                <span className="product-details-badge category">
                   {product.category}
                 </span>
-                <span className="badge bg-light text-dark border">
+
+                <span className="product-details-badge brand">
                   {product.brand}
                 </span>
-                {product.sellerName && (
-                  <span className="badge bg-light text-secondary border">
-                    Sold by {product.sellerName}
+
+                {hasText(product.sellerName) ? (
+                  <span className="product-details-badge seller">
+                    Sold by{" "}
+                    {product.sellerName}
                   </span>
-                )}
+                ) : null}
+
                 <span
-                  className={`badge ${isOutOfStock ? "bg-secondary" : "bg-success"}`}
+                  className={`product-details-badge ${
+                    isOutOfStock
+                      ? "out-of-stock"
+                      : "in-stock"
+                  }`}
                 >
-                  {isOutOfStock ? "Out of Stock" : "In Stock"}
+                  {isOutOfStock
+                    ? "Out of Stock"
+                    : "In Stock"}
                 </span>
-                {product.discount > 0 && (
-                  <span className="badge bg-danger">
+
+                {product.discount > 0 ? (
+                  <span className="product-details-badge discount">
                     {product.discount}% OFF
                   </span>
-                )}
+                ) : null}
               </div>
 
-              <h2 className="fw-bold mb-2">{product.name}</h2>
+              {/* Product Identity */}
+              <header className="product-details-identity">
+                <p className="product-details-brand">
+                  {product.brand}
+                </p>
 
-              <div className="d-flex align-items-center flex-wrap gap-2 mb-3">
-                <span className="rating-badge">
-                  <i className="bi bi-star-fill text-warning me-1" />
-                  {product.rating}
+                <h1 className="product-details-name">
+                  {product.name}
+                </h1>
+
+                {hasText(
+                  product.subcategory
+                ) ? (
+                  <p className="product-details-subcategory">
+                    {product.subcategory.trim()}
+                  </p>
+                ) : null}
+              </header>
+
+              {/* Rating */}
+              <div className="product-details-rating-row">
+                <span
+                  className="product-details-rating-badge"
+                  aria-label={`${getProductRatingLabel(
+                    product.rating
+                  )} out of 5 stars`}
+                >
+                  {getProductRatingLabel(
+                    product.rating
+                  )}
+
+                  <i
+                    className="bi bi-star-fill"
+                    aria-hidden="true"
+                  />
                 </span>
-                <span className="text-muted small">
-                  {Math.max(120, Math.round(product.rating * 485))} ratings
-                </span>
+
+                {typeof totalRatings ===
+                  "number" &&
+                totalRatings >= 0 ? (
+                  <span className="product-details-rating-count">
+                    {getProductRatingCountLabel(
+                      totalRatings
+                    )}{" "}
+                    ratings
+                  </span>
+                ) : null}
+
+                {typeof totalReviews ===
+                  "number" &&
+                totalReviews >= 0 ? (
+                  <button
+                    type="button"
+                    className="product-details-review-link"
+                    onClick={() =>
+                      handleTabChange(
+                        "reviews"
+                      )
+                    }
+                  >
+                    {getProductRatingCountLabel(
+                      totalReviews
+                    )}{" "}
+                    reviews
+                  </button>
+                ) : null}
               </div>
 
-              <p className="text-muted mb-4">{product.description}</p>
+              <p className="product-details-short-description">
+                {product.description}
+              </p>
 
-              <div className="d-flex flex-wrap align-items-center gap-3 mb-4">
-                <span className="display-6 fw-bold text-dark">
-                  {formatCurrency(discountedPrice)}
-                </span>
-                {product.discount > 0 && (
-                  <>
-                    <span className="fs-5 text-muted text-decoration-line-through">
-                      {formatCurrency(product.price)}
-                    </span>
-                    <span className="text-success fw-bold">
-                      You save {formatCurrency(product.price - discountedPrice)}
-                    </span>
-                  </>
-                )}
-              </div>
+              {/* Price */}
+              <div className="product-details-price-section">
+                <div className="product-details-price-row">
+                  <span className="product-details-selling-price">
+                    {formatCurrency(
+                      discountedPrice
+                    )}
+                  </span>
 
-              <div className="product-stock-info bg-light rounded-4 p-3 mb-4">
-                <div className="d-flex justify-content-between">
-                  <span className="text-muted">Available Stock</span>
-                  <span className="fw-bold">{product.stock}</span>
+                  {product.discount > 0 ? (
+                    <>
+                      <span className="product-details-original-price">
+                        {formatCurrency(
+                          product.price
+                        )}
+                      </span>
+
+                      <span className="product-details-discount-label">
+                        {product.discount}% OFF
+                      </span>
+                    </>
+                  ) : null}
                 </div>
+
+                {savedAmount > 0 ? (
+                  <p className="product-details-savings">
+                    You save{" "}
+                    <strong>
+                      {formatCurrency(
+                        savedAmount
+                      )}
+                    </strong>
+                  </p>
+                ) : null}
+
+                {product.isTaxInclusive ? (
+                  <p className="product-details-tax-note">
+                    Inclusive of applicable
+                    taxes
+                  </p>
+                ) : null}
               </div>
 
+              {/* Stock Status */}
+              <div
+                className={`product-stock-info ${
+                  isOutOfStock
+                    ? "out-of-stock"
+                    : product.stock <= 5
+                      ? "low-stock"
+                      : "in-stock"
+                }`}
+              >
+                <div>
+                  <span className="product-stock-label">
+                    Availability
+                  </span>
+
+                  <strong>
+                    {isOutOfStock
+                      ? "Currently unavailable"
+                      : product.stock <= 5
+                        ? `Only ${product.stock} left`
+                        : "Available"}
+                  </strong>
+                </div>
+
+                {!isOutOfStock ? (
+                  <span className="product-stock-count">
+                    {product.stock} in stock
+                  </span>
+                ) : null}
+              </div>
+
+              {/* Size Selection */}
               <ProductSizeSelector
                 product={product}
                 selectedSize={selectedSize}
                 errorMessage={sizeError}
-                onSizeChange={(size) => {
-                  setSelectedSize(size);
-                  setSizeError("");
-                }}
-                onOpenSizeChart={() => setIsSizeChartOpen(true)}
+                onSizeChange={
+                  handleSizeChange
+                }
+                onOpenSizeChart={() =>
+                  setIsSizeChartOpen(true)
+                }
               />
 
               <ProductSizeRecommendationCard
                 product={product}
-                onSelectSize={(size) => {
-                  setSelectedSize(size);
-                  setSizeError("");
-                }}
+                selectedSize={selectedSize}
+                onSelectSize={
+                  handleSizeChange
+                }
               />
 
+              {/* Shopping Actions */}
               {canUseShoppingFeatures ? (
-                <div className="d-flex flex-column flex-sm-row gap-3 mb-4">
+                <div className="product-details-actions">
                   <Button
+                    type="button"
                     variant="primary"
                     disabled={isOutOfStock}
                     onClick={handleAddToCart}
-                    className="px-4"
+                    className="product-details-action-button"
                   >
-                    <i className="bi bi-cart-plus me-2" />
-                    {isOutOfStock ? "Out of Stock" : "Add to Cart"}
+                    <i
+                      className="bi bi-bag-plus me-2"
+                      aria-hidden="true"
+                    />
+
+                    {isOutOfStock
+                      ? "Out of Stock"
+                      : "Add to Bag"}
                   </Button>
 
                   <Button
+                    type="button"
                     variant="success"
                     disabled={isOutOfStock}
                     onClick={handleBuyNow}
-                    className="px-4"
+                    className="product-details-action-button"
                   >
-                    <i className="bi bi-lightning-charge me-2" />
+                    <i
+                      className="bi bi-lightning-charge me-2"
+                      aria-hidden="true"
+                    />
+
                     Buy Now
                   </Button>
 
-                  {canUseWishlist && (
+                  {canUseWishlist ? (
                     <Button
-                      variant={isWishlisted ? "danger" : "outline-danger"}
-                      onClick={handleWishlistClick}
-                      className="px-4"
+                      type="button"
+                      variant={
+                        isWishlisted
+                          ? "danger"
+                          : "outline-danger"
+                      }
+                      onClick={
+                        handleWishlistClick
+                      }
+                      className="product-details-action-button product-details-wishlist-button"
+                      aria-pressed={
+                        isWishlisted
+                      }
                     >
                       <i
-                        className={`bi ${isWishlisted ? "bi-heart-fill" : "bi-heart"} me-2`}
+                        className={`bi ${
+                          isWishlisted
+                            ? "bi-heart-fill"
+                            : "bi-heart"
+                        } me-2`}
+                        aria-hidden="true"
                       />
-                      {isWishlisted ? "Wishlisted" : "Wishlist"}
+
+                      {isWishlisted
+                        ? "Wishlisted"
+                        : "Wishlist"}
                     </Button>
-                  )}
+                  ) : null}
                 </div>
               ) : (
-                <div className="alert alert-info mb-4" role="alert">
-                  <i className="bi bi-info-circle me-2" />
-                  Shopping actions are available only for customer and admin
-                  accounts.
+                <div
+                  className="alert alert-info"
+                  role="status"
+                >
+                  <i
+                    className="bi bi-info-circle me-2"
+                    aria-hidden="true"
+                  />
+
+                  Shopping actions are available
+                  only for customer and
+                  administrator accounts.
                 </div>
               )}
 
-              <ProductHighlights product={product} />
+              {/* Product Highlights */}
+              <div className="border-top">
+                <ProductHighlights
+                product={product}
+              />
+              </div>
 
-              <div className="product-details-marketplace-panels mt-4">
+              {/* Marketplace Panels */}
+              <div className="product-details-marketplace-panels border-top">
                 <div className="product-offers-panel">
-                  <ProductOffersPanel product={product} />
+                  <ProductOffersPanel
+                    product={product}
+                  />
                 </div>
 
-                <div>
-                  <ProductDeliveryChecker product={product} />
+                <div className="product-delivery-panel-wrapper">
+                  <ProductDeliveryChecker
+                    product={product}
+                  />
                 </div>
 
-                <div className="product-seller-panel">
-                  <ProductSellerSummary product={product} />
+                <div className="product-seller-panel border-top">
+                  <ProductSellerSummary
+                    product={product}
+                  />
                 </div>
 
                 <div className="product-trust-panel">
-                  <ProductTrustHighlights />
+                  <ProductTrustHighlights
+                    product={product}
+                  />
                 </div>
               </div>
 
-              {productHighlights.length > 0 && (
-                <div className="product-key-highlights mt-4">
-                  <h5 className="fw-bold mb-3">Key Highlights</h5>
-                  <div className="row g-3">
-                    {productHighlights.map(([key, value]) => (
-                      <div className="col-sm-6" key={key}>
-                        <div className="key-highlight-item bg-light rounded-4 p-3">
-                          <p className="small text-muted mb-1">{key}</p>
-                          <h6 className="fw-bold mb-0">{value}</h6>
+              {/* Specification Highlights */}
+              {specificationHighlights.length >
+              0 ? (
+                <section
+                  className="product-specification-highlights"
+                  aria-labelledby={`product-specification-highlights-title-${product.id}`}
+                >
+                  <h2
+                    id={`product-specification-highlights-title-${product.id}`}
+                    className="product-specification-highlights-title"
+                  >
+                    Key Specifications
+                  </h2>
+
+                  <dl className="product-specification-highlights-grid">
+                    {specificationHighlights.map(
+                      ([key, value]) => (
+                        <div
+                          className="product-specification-highlight"
+                          key={key}
+                        >
+                          <dt>{key}</dt>
+                          <dd>{value}</dd>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+                      )
+                    )}
+                  </dl>
+                </section>
+              ) : null}
+            </article>
           </div>
         </div>
 
-        <div className="bg-white p-4 p-md-5 mt-4 product-details-tabs-card">
+        {/* Product Details Tabs */}
+        <section className="product-details-tabs-card bg-white">
           <ProductDetailsTabs
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={
+              handleTabChange
+            }
           />
 
-          {activeTab === "description" && (
-            <div
-              id="product-description-panel"
-              role="tabpanel"
-              aria-labelledby="product-description-tab"
-            >
-              <h4 className="fw-bold mb-3">Product Description</h4>
-              <p className="text-muted mb-0">{product.description}</p>
-            </div>
-          )}
+          <div className="product-details-tab-content">
+            {/* Description */}
+            {activeTab ===
+            "description" ? (
+              <section
+                id="product-description-panel"
+                role="tabpanel"
+                aria-labelledby="product-description-tab"
+                tabIndex={0}
+                className="product-details-tab-panel"
+              >
+                <div className="product-tab-section-heading">
+                  <h2>Product Details</h2>
 
-          {activeTab === "specifications" && (
-            <div
-              id="product-specifications-panel"
-              role="tabpanel"
-              aria-labelledby="product-specifications-tab"
-            >
-              <h4 className="fw-bold mb-3">Specifications</h4>
-              <div className="specification-list">
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <div
-                    className="specification-row d-flex justify-content-between gap-3 py-3 border-bottom"
-                    key={key}
-                  >
-                    <span className="text-muted">{key}</span>
-                    <span className="fw-semibold text-end">{value}</span>
+                  <p>
+                    Description and additional
+                    product information.
+                  </p>
+                </div>
+
+                <div className="product-description-content">
+                  <p>
+                    {product.description}
+                  </p>
+                </div>
+
+                {productDetailsList.length >
+                0 ? (
+                  <section className="product-additional-details">
+                    <h3>
+                      Additional Details
+                    </h3>
+
+                    <ul>
+                      {productDetailsList.map(
+                        (detail, index) => (
+                          <li
+                            key={`${detail}-${index}`}
+                          >
+                            <i
+                              className="bi bi-check2"
+                              aria-hidden="true"
+                            />
+
+                            <span>
+                              {detail}
+                            </span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </section>
+                ) : null}
+
+                {materialAndCareList.length >
+                0 ? (
+                  <section className="product-material-care">
+                    <h3>
+                      Material and Care
+                    </h3>
+
+                    <ul>
+                      {materialAndCareList.map(
+                        (instruction, index) => (
+                          <li
+                            key={`${instruction}-${index}`}
+                          >
+                            {instruction}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </section>
+                ) : null}
+
+                <dl className="product-origin-details">
+                  {hasText(
+                    product.productCode
+                  ) ? (
+                    <div>
+                      <dt>Product Code</dt>
+                      <dd>
+                        {product.productCode.trim()}
+                      </dd>
+                    </div>
+                  ) : null}
+
+                  {hasText(
+                    product.countryOfOrigin
+                  ) ? (
+                    <div>
+                      <dt>
+                        Country of Origin
+                      </dt>
+                      <dd>
+                        {product.countryOfOrigin.trim()}
+                      </dd>
+                    </div>
+                  ) : null}
+
+                  {hasText(
+                    product.warranty
+                  ) ? (
+                    <div>
+                      <dt>Warranty</dt>
+                      <dd>
+                        {product.warranty.trim()}
+                      </dd>
+                    </div>
+                  ) : null}
+
+                  {hasText(product.hsnCode) ? (
+                    <div>
+                      <dt>HSN Code</dt>
+                      <dd>
+                        {product.hsnCode.trim()}
+                      </dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </section>
+            ) : null}
+
+            {/* Specifications */}
+            {activeTab ===
+            "specifications" ? (
+              <section
+                id="product-specifications-panel"
+                role="tabpanel"
+                aria-labelledby="product-specifications-tab"
+                tabIndex={0}
+                className="product-details-tab-panel"
+              >
+                <div className="product-tab-section-heading">
+                  <h2>Specifications</h2>
+
+                  <p>
+                    Technical and product
+                    attributes provided for this
+                    item.
+                  </p>
+                </div>
+
+                {hasSpecifications ? (
+                  <dl className="specification-list">
+                    {Object.entries(
+                      product.specifications
+                    ).map(([key, value]) => (
+                      <div
+                        className="specification-row"
+                        key={key}
+                      >
+                        <dt>{key}</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <div className="product-details-empty-state">
+                    <i
+                      className="bi bi-list-ul"
+                      aria-hidden="true"
+                    />
+
+                    <p>
+                      Product specifications are
+                      not available.
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                )}
+              </section>
+            ) : null}
 
-          {activeTab === "reviews" && (
-            <div
-              id="product-reviews-panel"
-              role="tabpanel"
-              aria-labelledby="product-reviews-tab"
-            >
-              <h4 className="fw-bold mb-4">Ratings and Reviews</h4>
-              <ProductReviews product={product} />
-            </div>
-          )}
-          {activeTab === "questions" ? (
-            <div
-              id="product-questions-panel"
-              role="tabpanel"
-              aria-labelledby="product-questions-tab"
-            >
-              <h4 className="fw-bold mb-4">Product Questions & Answers</h4>
-              <ProductQuestions product={product} />
-            </div>
-          ) : null}
-        </div>
+            {/* Reviews */}
+            {activeTab === "reviews" ? (
+              <section
+                id="product-reviews-panel"
+                role="tabpanel"
+                aria-labelledby="product-reviews-tab"
+                tabIndex={0}
+                className="product-details-tab-panel"
+              >
+                <ProductReviews
+                  product={product}
+                />
+              </section>
+            ) : null}
 
-        <ProductComparisonDetails product={product} />
+            {/* Questions */}
+            {activeTab ===
+            "questions" ? (
+              <section
+                id="product-questions-panel"
+                role="tabpanel"
+                aria-labelledby="product-questions-tab"
+                tabIndex={0}
+                className="product-details-tab-panel"
+              >
+                <ProductQuestions
+                  product={product}
+                />
+              </section>
+            ) : null}
+          </div>
+        </section>
 
-        {similarProducts.length > 0 && (
-          <div className="similar-products-section mt-5">
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        {/* Comparison */}
+        <ProductComparisonDetails
+          product={product}
+        />
+
+        {/* Similar Products */}
+        {similarProducts.length > 0 ? (
+          <section
+            className="similar-products-section"
+            aria-labelledby="similar-products-title"
+          >
+            <div className="similar-products-header">
               <div>
-                <h3 className="fw-bold mb-1">Similar Products</h3>
-                <p className="text-muted mb-0">
-                  More products from {product.category}.
+                <h2 id="similar-products-title">
+                  Similar Products
+                </h2>
+
+                <p>
+                  More products from{" "}
+                  {product.category}.
                 </p>
               </div>
+
               <Link
-                to={`/categories/${product.category}`}
+                to={getProductCategoryPath(
+                  product.category
+                )}
                 className="btn btn-outline-primary"
               >
                 View All
@@ -462,24 +1182,45 @@ const ProductDetailsPage = () => {
             </div>
 
             <div className="row g-4">
-              {similarProducts.map((similarProduct) => (
-                <div className="col-sm-6 col-lg-3" key={similarProduct.id}>
-                  <ProductCard product={similarProduct} />
-                </div>
-              ))}
+              {similarProducts.map(
+                (similarProduct) => (
+                  <div
+                    className="col-sm-6 col-lg-3"
+                    key={similarProduct.id}
+                  >
+                    <ProductCard
+                      product={
+                        similarProduct
+                      }
+                    />
+                  </div>
+                )
+              )}
             </div>
-          </div>
-        )}
-        <RecommendedProductsSection product={product} />
-        <RecentlyViewedProductsSection currentProductId={product.id} />
+          </section>
+        ) : null}
+
+        {/* Recommendations */}
+        <RecommendedProductsSection
+          product={product}
+        />
+
+        {/* Recently Viewed */}
+        <RecentlyViewedProductsSection
+          currentProductId={product.id}
+        />
       </section>
 
-      {isSizeChartOpen && product.sizeChart && (
+      {/* Size Chart Modal */}
+      {isSizeChartOpen &&
+      product.sizeChart ? (
         <ProductSizeChart
           sizeChart={product.sizeChart}
-          onClose={() => setIsSizeChartOpen(false)}
+          onClose={() =>
+            setIsSizeChartOpen(false)
+          }
         />
-      )}
+      ) : null}
     </main>
   );
 };

@@ -9,6 +9,11 @@ import type {
   UpdateSupportTicketPayload
 } from "../types/customerSupport";
 import { assertValidDeleteId } from "../utils/deleteSafetyUtils";
+import {
+  isActiveReturnSupportTicket,
+  isReturnLinkedTicket
+} from "../utils/returnSupportTicketUtils";
+import { isDuplicateReturnSupportTicket } from "../utils/returnSupportTicketDuplicateUtils";
 
 const SUPPORT_TICKETS_ENDPOINT = "/supportTickets";
 
@@ -48,6 +53,47 @@ export const customerSupportService = {
       `${SUPPORT_TICKETS_ENDPOINT}?status=${encodeURIComponent(status)}`
     );
   },
+
+  async getActiveReturnTicketsByContext({
+    userId,
+    orderId,
+    returnRequestId
+  }: {
+    userId: string;
+    orderId?: string;
+    returnRequestId?: string;
+  }): Promise<CustomerSupportTicket[]> {
+    const userTickets = await this.getTicketsByUserId(userId);
+
+    return userTickets.filter((ticket) => {
+      return (
+        ticket.category === "RETURN_REFUND" &&
+        isActiveReturnSupportTicket(ticket) &&
+        isReturnLinkedTicket(ticket, orderId, returnRequestId)
+      );
+    });
+  },
+
+  async getDuplicateReturnSupportTickets({
+  userId,
+  orderId,
+  returnRequestId,
+}: {
+  userId: string;
+  orderId?: string;
+  returnRequestId?: string;
+}): Promise<CustomerSupportTicket[]> {
+  const userTickets = await customerSupportService.getTicketsByUserId(userId);
+
+  return userTickets.filter((ticket) =>
+    isDuplicateReturnSupportTicket({
+      ticket,
+      userId,
+      orderId,
+      returnRequestId,
+    }),
+  );
+},
 
   async createTicket(
     payload: CreateCustomerSupportTicketPayload

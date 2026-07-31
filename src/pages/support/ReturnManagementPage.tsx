@@ -16,6 +16,8 @@ import type {
   ReturnPickupPartner,
 } from "../../types/returnPickup";
 import { returnStatusOptions } from "../../utils/returnWorkflowUtils";
+import { useAuth } from "../../context/useAuth";
+import ReturnPackageTrackingPanel from "../../components/returns/ReturnPackageTrackingPanel";
 
 type ReturnStatusFilter = "ALL" | ReturnRequestStatus;
 
@@ -38,6 +40,7 @@ const ReturnManagementPage = () => {
   const [selectedReturnId, setSelectedReturnId] = useState<string>("");
 
   const isMounted = useRef<boolean>(true);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     isMounted.current = true;
@@ -60,7 +63,8 @@ const ReturnManagementPage = () => {
       const attemptEntries = await Promise.all(
         returnData.map(async (request) => {
           const returnId = request.returnRequestId ?? request.requestId;
-          const attempts = await returnPickupService.getAttemptsByReturnRequestId(returnId);
+          const attempts =
+            await returnPickupService.getAttemptsByReturnRequestId(returnId);
           return [returnId, attempts] as const;
         }),
       );
@@ -105,7 +109,8 @@ const ReturnManagementPage = () => {
         return true;
       }
 
-      const requestDisplayId = request.returnRequestId ?? request.requestId ?? "";
+      const requestDisplayId =
+        request.returnRequestId ?? request.requestId ?? "";
 
       const searchableText = [
         requestDisplayId,
@@ -173,7 +178,10 @@ const ReturnManagementPage = () => {
       (request) => request.id === selectedReturnId,
     );
 
-    if (!selectedReturnId || (!selectedRequestStillExists && selectedReturnId !== updatingId)) {
+    if (
+      !selectedReturnId ||
+      (!selectedRequestStillExists && selectedReturnId !== updatingId)
+    ) {
       setSelectedReturnId(filteredRequests[0].id);
     }
   }, [filteredRequests, selectedReturnId, updatingId]);
@@ -212,7 +220,8 @@ const ReturnManagementPage = () => {
       }
     } catch (error) {
       if (isMounted.current) {
-        const message = error instanceof Error ? error.message : "Unable to update return.";
+        const message =
+          error instanceof Error ? error.message : "Unable to update return.";
         showToast("Return update failed", message, "danger");
       }
     } finally {
@@ -233,8 +242,10 @@ const ReturnManagementPage = () => {
     try {
       setUpdatingId(request.id);
       const result = await action();
-      const returnId = result.request.returnRequestId ?? result.request.requestId;
-      const latestAttempts = await returnPickupService.getAttemptsByReturnRequestId(returnId);
+      const returnId =
+        result.request.returnRequestId ?? result.request.requestId;
+      const latestAttempts =
+        await returnPickupService.getAttemptsByReturnRequestId(returnId);
 
       if (isMounted.current) {
         updateRequestInState(result.request);
@@ -244,7 +255,8 @@ const ReturnManagementPage = () => {
       }
     } catch (error) {
       if (isMounted.current) {
-        const message = error instanceof Error ? error.message : "Unable to update pickup.";
+        const message =
+          error instanceof Error ? error.message : "Unable to update pickup.";
         showToast("Pickup update failed", message, "danger");
       }
     } finally {
@@ -260,9 +272,14 @@ const ReturnManagementPage = () => {
     setCurrentPage(1);
   };
 
-  const hasActiveFilters = searchText.trim().length > 0 || statusFilter !== "ALL";
-  const resultStart = filteredRequests.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
-  const resultEnd = Math.min(currentPage * ITEMS_PER_PAGE, filteredRequests.length);
+  const hasActiveFilters =
+    searchText.trim().length > 0 || statusFilter !== "ALL";
+  const resultStart =
+    filteredRequests.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
+  const resultEnd = Math.min(
+    currentPage * ITEMS_PER_PAGE,
+    filteredRequests.length,
+  );
 
   if (isLoading) {
     return (
@@ -282,12 +299,13 @@ const ReturnManagementPage = () => {
             <div>
               <h1 className="fw-bold mb-1">Return Management</h1>
               <p className="text-muted mb-0">
-                Manage return pickup, partner attempts, warehouse receipt, quality check, and refund initiation.
+                Manage return pickup, partner attempts, warehouse receipt,
+                quality check, and refund initiation.
               </p>
             </div>
             <button
               type="button"
-              className="btn btn-outline-secondary"
+              className="btn btn-outline-secondary support-agent-header-btn"
               onClick={() => void loadReturns()}
             >
               <i className="bi bi-arrow-clockwise me-2" />
@@ -301,7 +319,9 @@ const ReturnManagementPage = () => {
         <div className="support-ticket-toolbar bg-white border rounded-4 p-3 mb-4 shadow-sm">
           <div className="row g-3 align-items-end">
             <div className="col-lg-6">
-              <label className="form-label fw-semibold small">Search Returns</label>
+              <label className="form-label fw-semibold small">
+                Search Returns
+              </label>
               <input
                 className="form-control"
                 placeholder="Search by return ID, order, user, partner, refund, status..."
@@ -311,11 +331,15 @@ const ReturnManagementPage = () => {
             </div>
 
             <div className="col-lg-3">
-              <label className="form-label fw-semibold small">Workflow Status</label>
+              <label className="form-label fw-semibold small">
+                Workflow Status
+              </label>
               <select
                 className="form-select"
                 value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value as ReturnStatusFilter)}
+                onChange={(event) =>
+                  setStatusFilter(event.target.value as ReturnStatusFilter)
+                }
               >
                 <option value="ALL">All Statuses</option>
                 {returnStatusOptions.map((option) => (
@@ -341,11 +365,14 @@ const ReturnManagementPage = () => {
 
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
           <p className="text-muted small mb-0">
-            Showing <strong>{resultStart}</strong> to <strong>{resultEnd}</strong> of <strong>{filteredRequests.length}</strong> return requests
+            Showing <strong>{resultStart}</strong> to{" "}
+            <strong>{resultEnd}</strong> of{" "}
+            <strong>{filteredRequests.length}</strong> return requests
           </p>
           {totalPages > 1 ? (
             <p className="text-muted small mb-0">
-              Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+              Page <strong>{currentPage}</strong> of{" "}
+              <strong>{totalPages}</strong>
             </p>
           ) : null}
         </div>
@@ -359,7 +386,7 @@ const ReturnManagementPage = () => {
         ) : (
           <>
             <div className="row g-3 align-items-start">
-              <div className="col-xl-7">
+              <div className="col-xl-6">
                 <div className="d-flex flex-column gap-3">
                   {paginatedRequests.map((request) => (
                     <div
@@ -383,56 +410,90 @@ const ReturnManagementPage = () => {
                         onApprove={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.approveReturn({ request: currentRequest, adminRemarks: remarks }),
+                            () =>
+                              returnRequestService.approveReturn({
+                                request: currentRequest,
+                                adminRemarks: remarks,
+                              }),
                             "Return request approved successfully.",
                           )
                         }
                         onReject={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.rejectReturn({ request: currentRequest, adminRemarks: remarks }),
+                            () =>
+                              returnRequestService.rejectReturn({
+                                request: currentRequest,
+                                adminRemarks: remarks,
+                              }),
                             "Return request rejected successfully.",
                           )
                         }
                         onReceivedAtWarehouse={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.markReceivedAtWarehouse({ request: currentRequest, adminRemarks: remarks }),
+                            () =>
+                              returnRequestService.markReceivedAtWarehouse({
+                                request: currentRequest,
+                                adminRemarks: remarks,
+                              }),
                             "Return status shifted to received at warehouse.",
                           )
                         }
                         onStartQualityCheck={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.startQualityCheck({ request: currentRequest, qualityCheckRemarks: remarks }),
+                            () =>
+                              returnRequestService.startQualityCheck({
+                                request: currentRequest,
+                                qualityCheckRemarks: remarks,
+                              }),
                             "Quality check started successfully.",
                           )
                         }
                         onQualityCheckPassed={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.passQualityCheckAndCreateRefund({ request: currentRequest, qualityCheckRemarks: remarks }),
+                            () =>
+                              returnRequestService.passQualityCheckAndCreateRefund(
+                                {
+                                  request: currentRequest,
+                                  qualityCheckRemarks: remarks,
+                                },
+                              ),
                             "Quality inspection passed and refund request created.",
                           )
                         }
                         onQualityCheckFailed={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.failQualityCheck({ request: currentRequest, qualityCheckRemarks: remarks }),
+                            () =>
+                              returnRequestService.failQualityCheck({
+                                request: currentRequest,
+                                qualityCheckRemarks: remarks,
+                              }),
                             "Quality check failure confirmed.",
                           )
                         }
                         onRefundCompleted={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.markRefundCompleted({ request: currentRequest, adminRemarks: remarks }),
+                            () =>
+                              returnRequestService.markRefundCompleted({
+                                request: currentRequest,
+                                adminRemarks: remarks,
+                              }),
                             "Refund marked completed successfully.",
                           )
                         }
                         onClose={(currentRequest, remarks) =>
                           runAction(
                             currentRequest,
-                            () => returnRequestService.closeReturn({ request: currentRequest, adminRemarks: remarks }),
+                            () =>
+                              returnRequestService.closeReturn({
+                                request: currentRequest,
+                                adminRemarks: remarks,
+                              }),
                             "Return request closed successfully.",
                           )
                         }
@@ -442,57 +503,144 @@ const ReturnManagementPage = () => {
                 </div>
               </div>
 
-              <div className="col-xl-5">
+              <div className="col-xl-6">
                 <div className="return-pickup-side-panel">
                   {selectedReturnRequest ? (
-                    <ReturnPickupAssignmentPanel
-                      request={selectedReturnRequest}
-                      partners={partners}
-                      attempts={
-                        attemptsByReturnId[
-                          selectedReturnRequest.returnRequestId ?? selectedReturnRequest.requestId
-                        ] ?? []
-                      }
-                      isUpdating={updatingId === selectedReturnRequest.id}
-                      onAssignPartner={({ request: currentRequest, partner, pickupDate, pickupSlot, remarks }) =>
-                        runPickupAction(
-                          currentRequest,
-                          () => returnPickupService.assignPickupPartner({ request: currentRequest, partner, pickupDate, pickupSlot, remarks }),
-                          "Pickup partner assigned successfully.",
-                        )
-                      }
-                      onMarkOutForPickup={({ request: currentRequest, attempt, remarks }) =>
-                        runPickupAction(
-                          currentRequest,
-                          () => returnPickupService.markOutForPickup({ request: currentRequest, attempt, remarks }),
-                          "Pickup marked out for pickup.",
-                        )
-                      }
-                      onMarkPickedUp={({ request: currentRequest, attempt, partner, remarks }) =>
-                        runPickupAction(
-                          currentRequest,
-                          () => returnPickupService.markPickedUp({ request: currentRequest, attempt, partner, remarks }),
-                          "Pickup completed successfully.",
-                        )
-                      }
-                      onMarkFailedAttempt={({ request: currentRequest, attempt, failureReason }) =>
-                        runPickupAction(
-                          currentRequest,
-                          () => returnPickupService.markFailedAttempt({ request: currentRequest, attempt, failureReason }),
-                          "Pickup failed attempt recorded.",
-                        )
-                      }
-                      onReschedulePickup={({ request: currentRequest, previousAttempt, partner, pickupDate, pickupSlot, remarks }) =>
-                        runPickupAction(
-                          currentRequest,
-                          () => returnPickupService.reschedulePickupAttempt({ request: currentRequest, previousAttempt, partner, pickupDate, pickupSlot, remarks }),
-                          "Pickup rescheduled successfully.",
-                        )
-                      }
-                    />
+                    <>
+                      <ReturnPickupAssignmentPanel
+                        request={selectedReturnRequest}
+                        partners={partners}
+                        attempts={
+                          attemptsByReturnId[
+                            selectedReturnRequest.returnRequestId ??
+                              selectedReturnRequest.requestId
+                          ] ?? []
+                        }
+                        isUpdating={updatingId === selectedReturnRequest.id}
+                        onAssignPartner={({
+                          request: currentRequest,
+                          partner,
+                          pickupDate,
+                          pickupSlot,
+                          remarks,
+                        }) =>
+                          runPickupAction(
+                            currentRequest,
+                            () =>
+                              returnPickupService.assignPickupPartner({
+                                request: currentRequest,
+                                partner,
+                                pickupDate,
+                                pickupSlot,
+                                remarks,
+                              }),
+                            "Pickup partner assigned successfully.",
+                          )
+                        }
+                        onMarkOutForPickup={({
+                          request: currentRequest,
+                          attempt,
+                          remarks,
+                        }) =>
+                          runPickupAction(
+                            currentRequest,
+                            () =>
+                              returnPickupService.markOutForPickup({
+                                request: currentRequest,
+                                attempt,
+                                remarks,
+                              }),
+                            "Pickup marked out for pickup.",
+                          )
+                        }
+                        onMarkPickedUp={({
+                          request: currentRequest,
+                          attempt,
+                          partner,
+                          remarks,
+                        }) =>
+                          runPickupAction(
+                            currentRequest,
+                            () =>
+                              returnPickupService.markPickedUp({
+                                request: currentRequest,
+                                attempt,
+                                partner,
+                                remarks,
+                              }),
+                            "Pickup completed successfully.",
+                          )
+                        }
+                        onMarkFailedAttempt={({
+                          request: currentRequest,
+                          attempt,
+                          failureReason,
+                        }) =>
+                          runPickupAction(
+                            currentRequest,
+                            () =>
+                              returnPickupService.markFailedAttempt({
+                                request: currentRequest,
+                                attempt,
+                                failureReason,
+                              }),
+                            "Pickup failed attempt recorded.",
+                          )
+                        }
+                        onReschedulePickup={({
+                          request: currentRequest,
+                          previousAttempt,
+                          partner,
+                          pickupDate,
+                          pickupSlot,
+                          remarks,
+                        }) =>
+                          runPickupAction(
+                            currentRequest,
+                            () =>
+                              returnPickupService.reschedulePickupAttempt({
+                                request: currentRequest,
+                                previousAttempt,
+                                partner,
+                                pickupDate,
+                                pickupSlot,
+                                remarks,
+                              }),
+                            "Pickup rescheduled successfully.",
+                          )
+                        }
+                      />
+                      <div className="mt-2">
+                        <ReturnPackageTrackingPanel
+                          request={{
+                            id: selectedReturnRequest.id,
+                            requestId: selectedReturnRequest.requestId,
+                            returnRequestId:
+                              selectedReturnRequest.returnRequestId,
+                            orderId: selectedReturnRequest.orderId,
+                            pickupPartnerId:
+                              selectedReturnRequest.pickupPartnerId,
+                            pickupPartnerName:
+                              selectedReturnRequest.pickupPartnerName,
+                          }}
+                          currentUser={
+                            currentUser
+                              ? {
+                                  id: currentUser.id,
+                                  name: currentUser.name,
+                                }
+                              : null
+                          }
+                          canUpdateTracking
+                          canUploadProof
+                          canVerifyProof
+                        />
+                      </div>
+                    </>
                   ) : (
                     <div className="bg-white border rounded-4 p-4 text-muted">
-                      Select a return request to manage pickup assignment.
+                      Select a return request to manage pickup assignment and
+                      package tracking.
                     </div>
                   )}
                 </div>
@@ -509,7 +657,9 @@ const ReturnManagementPage = () => {
                   endItem={resultEnd}
                   itemsPerPage={ITEMS_PER_PAGE}
                   onPageChange={setCurrentPage}
-                  onItemsPerPageChange={(size) => console.log(`Change page size to: ${size}`)}
+                  onItemsPerPageChange={(size) =>
+                    console.log(`Change page size to: ${size}`)
+                  }
                 />
               </div>
             ) : null}

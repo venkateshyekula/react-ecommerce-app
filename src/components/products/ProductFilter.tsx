@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom"; // Added for structural isolation
+import { createPortal } from "react-dom"; 
 import type {
   Product,
   ProductCategory,
@@ -850,7 +850,7 @@ const ProductFilter = ({
                   )}
                 </div>
 
-                <div className="-more-filter-bottom-scroll">
+                <div className="more-filter-bottom-scroll">
                   <span />
                 </div>
               </div>

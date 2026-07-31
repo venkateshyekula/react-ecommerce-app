@@ -68,6 +68,32 @@ import PaymentReconciliationPage from "../pages/support/PaymentReconciliationPag
 import MyReturnsPage from "../pages/MyReturnsPage";
 import ReturnRequestPage from "../pages/ReturnRequestPage";
 import ReturnManagementPage from "../pages/support/ReturnManagementPage";
+import AgentLayout from "../components/agent/AgentLayout";
+import AgentDashboardPage from "../pages/agent/AgentDashboardPage";
+import AgentReturnPickupsPage from "../pages/agent/AgentReturnPickupsPage";
+import ReturnWarehouseQcPage from "../pages/support/ReturnWarehouseQcPage";
+import ReturnRefundSettlementPage from "../pages/support/ReturnRefundSettlementPage";
+import SellerReturnsPage from "../pages/seller/SellerReturnsPage";
+import SellerReturnDisputesPage from "../pages/seller/SellerReturnDisputesPage";
+import AdminReturnDisputesPage from "../pages/admin/AdminReturnDisputesPage";
+import AdminInventoryRestockPage from "../pages/admin/AdminInventoryRestockPage";
+import AdminReturnLossDashboardPage from "../pages/admin/AdminReturnLossDashboardPage";
+import AdminAgentAssignmentPage from "../pages/admin/AdminAgentAssignmentPage";
+import PickupAgentDashboardPage from "../pages/pickup/PickupAgentDashboardPage";
+import DeliveryAgentDashboardPage from "../pages/delivery/DeliveryAgentDashboardPage";
+import AdminAgentWorkloadDashboardPage from "../pages/admin/AdminAgentWorkloadDashboardPage";
+import AdminAgentProofVerificationPage from "../pages/admin/AdminAgentProofVerificationPage";
+import AdminAgentRoutePlanningPage from "../pages/admin/AdminAgentRoutePlanningPage";
+import AdminAgentPerformanceReportPage from "../pages/admin/AdminAgentPerformanceReportPage";
+import AdminAgentPayoutPage from "../pages/admin/AdminAgentPayoutPage";
+import AdminReturnAnalyticsRiskDashboardPage from "../pages/admin/AdminReturnAnalyticsRiskDashboardPage";
+import AdminCustomerReturnAbusePage from "../pages/admin/AdminCustomerReturnAbusePage";
+import AdminProductReturnQualityPage from "../pages/admin/AdminProductReturnQualityPage";
+import AdminSellerRiskCompliancePage from "../pages/admin/AdminSellerRiskCompliancePage";
+import AdminReturnFraudPatternDashboardPage from "../pages/admin/AdminReturnFraudPatternDashboardPage";
+import AdminReturnAutomationRulesPage from "../pages/admin/AdminReturnAutomationRulesPage";
+import AdminSellerPayoutSettlementPage from "../pages/admin/AdminSellerPayoutSettlementPage";
+import AdminReturnOperationsAuditPage from "../pages/admin/AdminReturnOperationsAuditPage";
 
 const AppRoutes = () => {
   return (
@@ -102,7 +128,10 @@ const AppRoutes = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         {/* Add Payment Processing route */}
-        <Route path="/payment-processing/:paymentId" element={<PaymentProcessingPage />} />
+        <Route
+          path="/payment-processing/:paymentId"
+          element={<PaymentProcessingPage />}
+        />
         <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
         <Route path="/orders" element={<OrderHistoryPage />} />
         <Route path="/addresses" element={<AddressBookPage />} />
@@ -114,7 +143,10 @@ const AppRoutes = () => {
         <Route path="/support-tickets" element={<MySupportTicketsPage />} />
         <Route path="/invoice/:orderId" element={<InvoicePage />} />
         <Route path="/my-returns" element={<MyReturnsPage />} />
-        <Route path="/returns/request/:orderId" element={<ReturnRequestPage />} />
+        <Route
+          path="/returns/request/:orderId"
+          element={<ReturnRequestPage />}
+        />
       </Route>
 
       {/* Admin routes */}
@@ -124,6 +156,10 @@ const AppRoutes = () => {
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="analytics" element={<AdminAnalyticsPage />} />
           <Route path="products" element={<AdminProductsPage />} />
+          <Route
+            path="inventory-restock"
+            element={<AdminInventoryRestockPage />}
+          />
           <Route path="orders" element={<AdminOrdersPage />} />
           <Route
             path="order-fulfillment"
@@ -133,15 +169,76 @@ const AppRoutes = () => {
             path="return-policies"
             element={<AdminReturnPolicyRulesPage />}
           />
+          <Route
+            path="customer-return-abuse"
+            element={<AdminCustomerReturnAbusePage />}
+          />
+          <Route
+            path="/admin/return-fraud-patterns"
+            element={<AdminReturnFraudPatternDashboardPage />}
+          />
+          <Route
+            path="/admin/return-automation-rules"
+            element={<AdminReturnAutomationRulesPage />}
+          />
           <Route path="return-requests" element={<AdminReturnRequestsPage />} />
+          <Route
+            path="product-return-quality"
+            element={<AdminProductReturnQualityPage />}
+          />
+          <Route
+            path="return-loss-dashboard"
+            element={<AdminReturnLossDashboardPage />}
+          />
+          <Route
+            path="return-operations-audit"
+            element={<AdminReturnOperationsAuditPage />}
+          />
+          <Route
+            path="seller-risk-compliance"
+            element={<AdminSellerRiskCompliancePage />}
+          />
+          <Route
+            path="seller-payout-settlement"
+            element={<AdminSellerPayoutSettlementPage />}
+          />
+          <Route
+            path="return-analytics-risk-dashboard"
+            element={<AdminReturnAnalyticsRiskDashboardPage />}
+          />
           <Route path="refunds" element={<AdminRefundsPage />} />
           <Route path="wallet-credits" element={<AdminWalletCreditsPage />} />
           <Route path="reward-rules" element={<AdminRewardRulesPage />} />
           <Route path="delivery" element={<AdminDeliveryZonesPage />} />
+          <Route
+            path="agent-assignments"
+            element={<AdminAgentAssignmentPage />}
+          />
+          <Route path="agent-payouts" element={<AdminAgentPayoutPage />} />
+          <Route
+            path="agent-route-planning"
+            element={<AdminAgentRoutePlanningPage />}
+          />
+          <Route
+            path="agent-performance-report"
+            element={<AdminAgentPerformanceReportPage />}
+          />
+          <Route
+            path="agent-workload-dashboard"
+            element={<AdminAgentWorkloadDashboardPage />}
+          />
+          <Route
+            path="agent-proof-verification"
+            element={<AdminAgentProofVerificationPage />}
+          />
           <Route path="delivery-sla" element={<AdminDeliverySlaRulesPage />} />
           <Route
             path="seller-fulfillment"
             element={<AdminSellerFulfillmentPage />}
+          />
+          <Route
+            path="/admin/return-disputes"
+            element={<AdminReturnDisputesPage />}
           />
           <Route
             path="delivery-analytics"
@@ -161,11 +258,20 @@ const AppRoutes = () => {
           <Route path="products" element={<SellerProductsPage />} />
           <Route path="orders" element={<SellerOrdersPage />} />
           <Route path="questions" element={<SellerQuestionsPage />} />
+          <Route path="/seller/returns" element={<SellerReturnsPage />} />
+          <Route
+            path="/seller/return-disputes"
+            element={<SellerReturnDisputesPage />}
+          />
         </Route>
       </Route>
 
       {/* Support routes */}
-      <Route element={<RoleRoute allowedRoles={["SUPPORT", "ADMIN"]} />}>
+      <Route
+        element={
+          <RoleRoute allowedRoles={["SUPPORT", "ADMIN", "WAREHOUSE_AGENT"]} />
+        }
+      >
         <Route path="/support" element={<SupportLayout />}>
           <Route index element={<Navigate to="/support/tickets" replace />} />
           <Route path="dashboard" element={<SupportDashboardPage />} />
@@ -173,8 +279,39 @@ const AppRoutes = () => {
           <Route path="tickets" element={<SupportTicketsPage />} />
           <Route path="escalations" element={<SupportEscalationQueuePage />} />
           <Route path="refunds" element={<RefundQueuePage />} />
-          <Route path="reconciliation" element={<PaymentReconciliationPage />} />
+          <Route
+            path="reconciliation"
+            element={<PaymentReconciliationPage />}
+          />
           <Route path="returns" element={<ReturnManagementPage />} />
+          <Route path="returns/qc" element={<ReturnWarehouseQcPage />} />
+          <Route
+            path="returns/refund-settlement"
+            element={<ReturnRefundSettlementPage />}
+          />
+        </Route>
+      </Route>
+
+      <Route
+        element={
+          <RoleRoute
+            allowedRoles={[
+              "PICKUP_AGENT",
+              "DELIVERY_AGENT",
+              "LOGISTICS_AGENT",
+              "ADMIN",
+            ]}
+          />
+        }
+      >
+        <Route path="/agent" element={<AgentLayout />}>
+          <Route index element={<Navigate to="/agent/dashboard" replace />} />
+          <Route path="dashboard" element={<AgentDashboardPage />} />
+          <Route path="returns" element={<PickupAgentDashboardPage />} />
+          <Route path="deliveries" element={<DeliveryAgentDashboardPage />} />
+
+          {/* Optional temporary legacy route */}
+          <Route path="returns-legacy" element={<AgentReturnPickupsPage />} />
         </Route>
       </Route>
 

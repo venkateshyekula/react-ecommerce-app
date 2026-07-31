@@ -71,7 +71,7 @@ const ProductComparisonDetails = ({
   if (isLoading) {
     return (
       <section className="product-inline-comparison mt-4">
-        <div className="product-inline-comparison-card bg-white p-4 p-md-5">
+        <div className="product-inline-comparison-card bg-white p-3">
           <Loader message="Loading product comparison..." />
         </div>
       </section>
@@ -81,8 +81,8 @@ const ProductComparisonDetails = ({
   if (comparisonProducts.length < 2) {
     return (
       <section className="product-inline-comparison mt-4">
-        <div className="product-inline-comparison-card bg-white p-4 p-md-5">
-          <div className="inline-compare-empty bg-light rounded-4 p-4">
+        <div className="product-inline-comparison-card bg-white p-3">
+          <div className="inline-compare-empty bg-light rounded-3 p-3">
             <div className="d-flex align-items-start gap-3">
               <div className="inline-compare-empty-icon">
                 <i className="bi bi-columns-gap" />
@@ -106,7 +106,7 @@ const ProductComparisonDetails = ({
 
   return (
     <section className="product-inline-comparison mt-4">
-      <div className="product-inline-comparison-card bg-white p-4 p-md-5">
+      <div className="product-inline-comparison-card bg-white rounded-3 p-3">
         <div className="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
           <div>
             <h3 className="fw-bold mb-1">Compare Similar Products</h3>

@@ -10,7 +10,8 @@ export type ReturnPickupAttemptStatus =
   | "PICKED_UP"
   | "FAILED_ATTEMPT"
   | "RESCHEDULED"
-  | "CANCELLED";
+  | "CANCELLED"
+  | "FAILED";
 
 export interface ReturnPickupPartner {
   id: string;

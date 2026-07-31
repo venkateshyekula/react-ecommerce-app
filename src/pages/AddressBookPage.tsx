@@ -239,7 +239,7 @@ const AddressBookPage = () => {
                   to="/addresses"
                   className="list-group-item list-group-item-action active"
                 >
-                  <i className="bi bi-geo-alt me-2" />
+                  <i className="bi bi-geo-alt-fill me-2" />
                   Addresses
                 </Link>
 
@@ -308,7 +308,7 @@ const AddressBookPage = () => {
                   <EmptyState
                     title="No Addresses Saved"
                     message="You don't have any shipping addresses saved yet. Add one to get started with a faster checkout experience."
-                    iconClassName="bi bi-geo-alt"
+                    iconClassName="bi bi-geo-alt-fill text-danger"
                     action={
                       <Button variant="dark" onClick={handleOpenAddModal}>
                         <i className="bi bi-plus-lg me-2" />
@@ -335,7 +335,7 @@ const AddressBookPage = () => {
                                 ) : null}
                               </div>
 
-                              <i className="bi bi-geo-alt text-muted fs-5" />
+                              <i className="bi bi-geo-alt-fill text-danger fs-5" />
                             </div>
                           </div>
 

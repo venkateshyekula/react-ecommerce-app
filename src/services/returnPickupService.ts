@@ -33,6 +33,30 @@ export const returnPickupService = {
     );
   },
 
+  async getPickupPartnerByPartnerId(
+    partnerId: string,
+  ): Promise<ReturnPickupPartner | null> {
+    const partners = await apiClient.get<ReturnPickupPartner[]>(
+      `${RETURN_PICKUP_PARTNERS_ENDPOINT}?partnerId=${encodeURIComponent(
+        partnerId,
+      )}`,
+    );
+
+    return partners[0] ?? null;
+  },
+
+  async getAttemptsByPartnerId(
+    partnerId: string,
+  ): Promise<ReturnPickupAttempt[]> {
+    const attempts = await apiClient.get<ReturnPickupAttempt[]>(
+      `${RETURN_PICKUP_ATTEMPTS_ENDPOINT}?partnerId=${encodeURIComponent(
+        partnerId,
+      )}`,
+    );
+
+    return sortAttemptsByLatest(attempts);
+  },
+
   async getActivePickupPartners(): Promise<ReturnPickupPartner[]> {
     const partners = await returnPickupService.getPickupPartners();
 
@@ -61,6 +85,32 @@ export const returnPickupService = {
     );
 
     return sortAttemptsByLatest(attempts);
+  },
+
+  async getPickupPartnerByUser({
+    partnerId,
+    email,
+    phone,
+    name,
+  }: {
+    partnerId?: string;
+    email?: string;
+    phone?: string;
+    name?: string;
+  }): Promise<ReturnPickupPartner | null> {
+    const partners = await returnPickupService.getPickupPartners();
+
+    return (
+      partners.find((partner) => partner.partnerId === partnerId) ??
+      partners.find((partner) => email && partner.email === email) ??
+      partners.find((partner) => phone && partner.phone === phone) ??
+      partners.find(
+        (partner) =>
+          name &&
+          partner.name.trim().toLowerCase() === name.trim().toLowerCase(),
+      ) ??
+      null
+    );
   },
 
   async createAttempt(
@@ -144,6 +194,7 @@ export const returnPickupService = {
     request: ReturnRequest;
     attempt: ReturnPickupAttempt;
   }> {
+    const requestId = request.id ?? request.requestId;
     const returnRequestId = request.returnRequestId ?? request.requestId;
 
     const existingAttempts =
@@ -166,7 +217,7 @@ export const returnPickupService = {
     await returnPickupService.incrementPartnerLoad(partner);
 
     const updatedRequest = await returnRequestService.updateRequest(
-      request.id,
+      requestId,
       {
         status: "PICKUP_SCHEDULED",
         pickupStatus: "SCHEDULED",
@@ -202,6 +253,7 @@ export const returnPickupService = {
     attempt: ReturnPickupAttempt;
   }> {
     const now = new Date().toISOString();
+    const requestId = request.id ?? request.requestId;
 
     const updatedAttempt = await returnPickupService.updateAttempt(attempt.id, {
       status: "OUT_FOR_PICKUP",
@@ -210,7 +262,7 @@ export const returnPickupService = {
     });
 
     const updatedRequest = await returnRequestService.updateRequest(
-      request.id,
+      requestId,
       {
         pickupStatus: "OUT_FOR_PICKUP",
         adminRemarks: remarks ?? "Pickup partner is out for pickup.",
@@ -239,6 +291,7 @@ export const returnPickupService = {
     attempt: ReturnPickupAttempt;
   }> {
     const now = new Date().toISOString();
+    const requestId = request.id ?? request.requestId;
 
     const updatedAttempt = await returnPickupService.updateAttempt(attempt.id, {
       status: "PICKED_UP",
@@ -247,12 +300,20 @@ export const returnPickupService = {
       remarks: remarks ?? "Return package picked up successfully.",
     });
 
-    if (partner) {
-      await returnPickupService.decrementPartnerLoad(partner);
+    // Fetch partner if not directly provided to ensure capacity load decrements cleanly
+    let partnerToDecrement = partner;
+    if (!partnerToDecrement && attempt.partnerId) {
+      partnerToDecrement = await returnPickupService.getPickupPartnerByPartnerId(
+        attempt.partnerId,
+      );
+    }
+
+    if (partnerToDecrement) {
+      await returnPickupService.decrementPartnerLoad(partnerToDecrement);
     }
 
     const updatedRequest = await returnRequestService.updateRequest(
-      request.id,
+      requestId,
       {
         status: "PICKED_UP",
         pickupStatus: "PICKED_UP",
@@ -282,6 +343,7 @@ export const returnPickupService = {
     attempt: ReturnPickupAttempt;
   }> {
     const now = new Date().toISOString();
+    const requestId = request.id ?? request.requestId;
 
     const updatedAttempt = await returnPickupService.updateAttempt(attempt.id, {
       status: "FAILED_ATTEMPT",
@@ -291,7 +353,7 @@ export const returnPickupService = {
     });
 
     const updatedRequest = await returnRequestService.updateRequest(
-      request.id,
+      requestId,
       {
         pickupStatus: "FAILED_ATTEMPT",
         adminRemarks: failureReason,

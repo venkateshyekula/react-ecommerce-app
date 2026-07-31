@@ -1,0 +1,118 @@
+<svg
+  width="420"
+  height="120"
+  viewBox="0 0 420 120"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-labelledby="shopeaseLogoTitle shopeaseLogoDesc"
+>
+  <title id="shopeaseLogoTitle">ShopEase Logo</title>
+  <desc id="shopeaseLogoDesc">
+    ShopEase logo with gradient background, shopping bag icon, and wordmark.
+  </desc>
+
+  <defs>
+    <linearGradient id="logoBackgroundGradient" x1="0" y1="0" x2="420" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFF1F5" />
+      <stop offset="45%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#FFE3EC" />
+    </linearGradient>
+
+    <linearGradient id="bagGradient" x1="52" y1="22" x2="126" y2="102" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF5F8F" />
+      <stop offset="45%" stop-color="#FF3F6C" />
+      <stop offset="100%" stop-color="#E91E63" />
+    </linearGradient>
+
+    <linearGradient id="textPinkGradient" x1="250" y1="34" x2="378" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF5F8F" />
+      <stop offset="100%" stop-color="#FF3F6C" />
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#FF3F6C" flood-opacity="0.18" />
+    </filter>
+
+    <filter id="textShadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#111827" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Gradient background -->
+  <rect width="420" height="120" rx="30" fill="url(#logoBackgroundGradient)" />
+
+  <!-- Background decorative glow -->
+  <circle cx="72" cy="58" r="52" fill="#FF3F6C" opacity="0.08" />
+  <circle cx="360" cy="60" r="58" fill="#FF3F6C" opacity="0.06" />
+
+  <!-- Shopping bag icon -->
+  <g filter="url(#softShadow)">
+    <!-- Bag handle -->
+    <path
+      d="M69 45V39C69 25.745 79.745 15 93 15C106.255 15 117 25.745 117 39V45"
+      stroke="#FF3F6C"
+      stroke-width="8"
+      stroke-linecap="round"
+    />
+
+    <!-- Bag body -->
+    <path
+      d="M54.6 43.5C55.2 36.9 60.75 31.85 67.4 31.85H118.6C125.25 31.85 130.8 36.9 131.4 43.5L136.2 96.3C136.9 104.2 130.7 111 122.75 111H63.25C55.3 111 49.1 104.2 49.8 96.3L54.6 43.5Z"
+      fill="url(#bagGradient)"
+    />
+
+    <!-- Bag highlight -->
+    <path
+      d="M117.7 37.8C123.2 37.8 127.8 42 128.3 47.5L132.6 94.7C133.1 100.3 128.7 105.1 123.1 105.1H111.9C116.8 99.1 119.9 88.3 119.9 73.6C119.9 57.9 117.4 45.45 112.5 37.8H117.7Z"
+      fill="#D91D59"
+      opacity="0.28"
+    />
+
+    <!-- White S mark -->
+    <path
+      d="M102.75 49.15C98.3 47.45 93.6 46.65 88.7 46.75C78.8 46.95 70.1 52.15 68 60.55C66.15 68.05 70.45 73.15 79.65 76.55L90.25 80.45C94.8 82.1 96.3 83.65 95.95 86.05C95.45 89.25 91.55 91.25 85.8 91.15C79.85 91.05 73.7 89.25 68.65 86.45C66.8 85.4 64.55 86.75 64.55 88.9V96.35C64.55 97.85 65.4 99.25 66.75 99.9C71.95 102.45 78.85 103.95 86.15 103.95C98.3 103.95 107.95 98.2 110 89.25C111.75 81.55 107.65 76.2 98.45 72.75L87.35 68.6C83.15 67.05 81.7 65.7 82.1 63.45C82.55 60.7 86.05 58.95 91.1 59C96.1 59.05 100.9 60.35 105.1 62.25C107.05 63.15 109.25 61.75 109.25 59.6V52.95C109.25 51.25 108.35 49.75 106.85 49.1C105.55 48.55 104.2 48.2 102.75 49.15Z"
+      fill="#FFFFFF"
+    />
+  </g>
+
+  <!-- Wordmark -->
+  <g filter="url(#textShadow)">
+    <text
+      x="156"
+      y="76"
+      font-family="Inter, Poppins, Arial, Helvetica, sans-serif"
+      font-size="48"
+      font-weight="900"
+      letter-spacing="-1.5"
+      fill="#111827"
+    >
+      Shop
+    </text>
+
+    <text
+      x="272"
+      y="76"
+      font-family="Inter, Poppins, Arial, Helvetica, sans-serif"
+      font-size="48"
+      font-weight="900"
+      letter-spacing="-1.5"
+      fill="url(#textPinkGradient)"
+    >
+      Ease
+    </text>
+  </g>
+
+  <!-- Tagline -->
+  <text
+    x="158"
+    y="96"
+    font-family="Inter, Poppins, Arial, Helvetica, sans-serif"
+    font-size="11"
+    font-weight="700"
+    letter-spacing="2.2"
+    fill="#6B7280"
+  >
+    SMART SHOPPING MADE EASY
+  </text>
+</svg>

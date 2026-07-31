@@ -2,7 +2,7 @@ import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import ToastContainer from "./components/common/ToastContainer";
 import ComparisonBar from "./components/products/ComparisonBar";
-import RecentlyViewedDrawer from "./components/products/RecentlyViewedDrawer";
+
 import { AuthProvider } from "./context/AuthProvider";
 import { CartProvider } from "./context/CartProvider";
 import { ComparisonProvider } from "./context/ComparisonProvider";
@@ -34,7 +34,7 @@ const App = () => {
                 <AppContent />
                 <Footer />
                 <ComparisonBar />
-                <RecentlyViewedDrawer />
+                {/*<RecentlyViewedDrawer />*/}
                 <ToastContainer />
               </div>
             </ComparisonProvider>

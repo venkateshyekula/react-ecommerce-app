@@ -1,28 +1,55 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { NavLink, Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
-import { supportTeamService } from "../../services/supportTeamService";
-import type { SupportEscalationTeam } from "../../types/supportEscalation";
-import type { SupportTeamMember } from "../../types/supportTeam";
 
-interface SupportNavItem {
-  label: string;
-  path: string;
-  icon: string;
-  access:
-    | "FULL_SUPPORT"
-    | "ALL_SUPPORT"
-    | "REFUND_ACCESS"
-    | "PAYMENT_RECONCILIATION_ACCESS"
-    | "RETURN_ACCESS";
-}
+type SupportEscalationTeam =
+  | "GENERAL_SUPPORT"
+  | "ORDER_SUPPORT"
+  | "PAYMENT_FINANCE"
+  | "REFUND_TEAM"
+  | "RETURN_TEAM"
+  | "CUSTOMER_OPERATIONS"
+  | "SELLER_FULFILLMENT"
+  | "ADMIN_ESCALATION";
 
 interface SupportUserAccessShape {
   id?: string;
   role?: string;
   supportTeamCode?: SupportEscalationTeam;
   supportTeamRole?: string;
+  warehouseTeamCode?: string;
+  warehouseTeamRole?: string;
 }
+
+interface SupportNavItem {
+  label: string;
+  path: string;
+  icon: string;
+  exact?: boolean;
+  access:
+    | "FULL_SUPPORT"
+    | "ALL_SUPPORT"
+    | "REFUND_ACCESS"
+    | "PAYMENT_RECONCILIATION_ACCESS"
+    | "RETURN_ACCESS"
+    | "REFUND_SETTLEMENT_ACCESS"
+    | "WAREHOUSE_AGENT";
+}
+
+const refundAllowedTeamCodes: SupportEscalationTeam[] = [
+  "REFUND_TEAM",
+  "PAYMENT_FINANCE",
+];
+
+const reconciliationAllowedTeamCodes: SupportEscalationTeam[] = [
+  "PAYMENT_FINANCE",
+];
+
+const returnAllowedTeamCodes: SupportEscalationTeam[] = [
+  "RETURN_TEAM",
+  "CUSTOMER_OPERATIONS",
+  "SELLER_FULFILLMENT",
+];
 
 const supportNavItems: SupportNavItem[] = [
   {
@@ -34,95 +61,65 @@ const supportNavItems: SupportNavItem[] = [
   {
     label: "Orders",
     path: "/support/orders",
-    icon: "bi bi-receipt",
+    icon: "bi bi-bag-check",
     access: "FULL_SUPPORT",
   },
   {
     label: "Tickets",
     path: "/support/tickets",
-    icon: "bi bi-headset",
+    icon: "bi bi-ticket-detailed",
     access: "ALL_SUPPORT",
   },
   {
     label: "Escalations",
     path: "/support/escalations",
-    icon: "bi bi-exclamation-diamond",
+    icon: "bi bi-exclamation-triangle",
     access: "ALL_SUPPORT",
   },
   {
-    label: "Refunds",
+    label: "Refund Queue",
     path: "/support/refunds",
     icon: "bi bi-arrow-counterclockwise",
     access: "REFUND_ACCESS",
   },
   {
-    label: "Reconciliation",
+    label: "Payment Reconciliation",
     path: "/support/reconciliation",
-    icon: "bi bi-shield-check",
+    icon: "bi bi-receipt-cutoff",
     access: "PAYMENT_RECONCILIATION_ACCESS",
   },
   {
     label: "Returns",
     path: "/support/returns",
     icon: "bi bi-arrow-return-left",
+    exact: true,
     access: "RETURN_ACCESS",
   },
-];
-
-const restrictedTeamMemberPaths = ["/support/dashboard", "/support/orders"];
-
-const refundAllowedTeamCodes: SupportEscalationTeam[] = [
-  "REFUND_TEAM",
-  "PAYMENT_FINANCE",
-];
-
-const reconciliationAllowedTeamCodes: SupportEscalationTeam[] = [
-  "PAYMENT_FINANCE",
-  "REFUND_TEAM",
-];
-
-const returnAllowedTeamCodes: SupportEscalationTeam[] = [
-  "REFUND_TEAM",
-  "DELIVERY_TEAM",
-  "SELLER_FULFILLMENT",
-  "CUSTOMER_OPERATIONS",
+  {
+    label: "Refund Settlement",
+    path: "/support/returns/refund-settlement",
+    icon: "bi bi-cash-coin",
+    access: "REFUND_SETTLEMENT_ACCESS",
+  },
+  {
+    label: "Warehouse QC",
+    path: "/support/returns/qc",
+    icon: "bi bi-clipboard-check",
+    access: "WAREHOUSE_AGENT",
+  },
 ];
 
 const SupportLayout = () => {
   const { currentUser } = useAuth();
   const location = useLocation();
 
-  const [currentTeamMember, setCurrentTeamMember] =
-    useState<SupportTeamMember | null>(null);
-
   const supportUser = currentUser as SupportUserAccessShape | null;
-
-  useEffect(() => {
-    const loadTeamMember = async (): Promise<void> => {
-      if (!supportUser?.id || supportUser.role !== "SUPPORT") {
-        setCurrentTeamMember(null);
-        return;
-      }
-
-      try {
-        const member = await supportTeamService.getMemberByUserId(
-          supportUser.id,
-        );
-
-        setCurrentTeamMember(member);
-      } catch {
-        setCurrentTeamMember(null);
-      }
-    };
-
-    void loadTeamMember();
-  }, [supportUser?.id, supportUser?.role]);
 
   const isAdmin = supportUser?.role === "ADMIN";
   const isSupport = supportUser?.role === "SUPPORT";
+  const isWarehouseAgent = supportUser?.role === "WAREHOUSE_AGENT";
 
-  const resolvedSupportTeamCode =
-    supportUser?.supportTeamCode ?? currentTeamMember?.teamCode ?? null;
+  const resolvedSupportTeamCode = supportUser?.supportTeamCode ?? null;
 
   const isSupportTeamMember = Boolean(isSupport && resolvedSupportTeamCode);
 
@@ -133,28 +130,65 @@ const SupportLayout = () => {
     canViewFullSupportNavigation ||
     Boolean(
       resolvedSupportTeamCode &&
-        refundAllowedTeamCodes.includes(resolvedSupportTeamCode),
+        refundAllowedTeamCodes.includes(resolvedSupportTeamCode)
     );
 
   const canViewPaymentReconciliationNavigation =
     canViewFullSupportNavigation ||
     Boolean(
       resolvedSupportTeamCode &&
-        reconciliationAllowedTeamCodes.includes(resolvedSupportTeamCode),
+        reconciliationAllowedTeamCodes.includes(resolvedSupportTeamCode)
     );
 
   const canViewReturnNavigation =
     canViewFullSupportNavigation ||
     Boolean(
       resolvedSupportTeamCode &&
-        returnAllowedTeamCodes.includes(resolvedSupportTeamCode),
+        returnAllowedTeamCodes.includes(resolvedSupportTeamCode)
     );
 
-  const isRestrictedPathForTeamMember =
+  const canViewWarehouseQcNavigation = isAdmin || isWarehouseAgent;
+
+  const visibleNavItems = useMemo(() => {
+    return supportNavItems.filter((item) => {
+      if (isWarehouseAgent) {
+        return item.access === "WAREHOUSE_AGENT";
+      }
+
+      switch (item.access) {
+        case "FULL_SUPPORT":
+          return canViewFullSupportNavigation;
+        case "ALL_SUPPORT":
+          return isAdmin || isSupport;
+        case "REFUND_ACCESS":
+        case "REFUND_SETTLEMENT_ACCESS":
+          return canViewRefundNavigation;
+        case "PAYMENT_RECONCILIATION_ACCESS":
+          return canViewPaymentReconciliationNavigation;
+        case "RETURN_ACCESS":
+          return canViewReturnNavigation;
+        case "WAREHOUSE_AGENT":
+          return canViewWarehouseQcNavigation;
+        default:
+          return canViewFullSupportNavigation;
+      }
+    });
+  }, [
+    isWarehouseAgent,
+    canViewFullSupportNavigation,
+    isAdmin,
+    isSupport,
+    canViewRefundNavigation,
+    canViewPaymentReconciliationNavigation,
+    canViewReturnNavigation,
+    canViewWarehouseQcNavigation,
+  ]);
+
+  const isRestrictedDashboardOrOrders =
     isSupportTeamMember &&
-    restrictedTeamMemberPaths.some((restrictedPath) =>
-      location.pathname.startsWith(restrictedPath),
-    );
+    (location.pathname.startsWith("/support/dashboard") ||
+      location.pathname.startsWith("/support/orders")) &&
+    !canViewFullSupportNavigation;
 
   const isRefundPathRestrictedForTeamMember =
     isSupportTeamMember &&
@@ -169,110 +203,99 @@ const SupportLayout = () => {
   const isReturnPathRestrictedForTeamMember =
     isSupportTeamMember &&
     location.pathname.startsWith("/support/returns") &&
+    !location.pathname.startsWith("/support/returns/qc") &&
+    !location.pathname.startsWith("/support/returns/refund-settlement") &&
     !canViewReturnNavigation;
 
-  const visibleNavItems = useMemo(() => {
-    return supportNavItems.filter((item) => {
-      if (item.access === "ALL_SUPPORT") {
-        return true;
-      }
+  const isRefundSettlementPathRestricted =
+    isSupportTeamMember &&
+    location.pathname.startsWith("/support/returns/refund-settlement") &&
+    !canViewRefundNavigation;
 
-      if (item.access === "REFUND_ACCESS") {
-        return canViewRefundNavigation;
-      }
+  const isWarehouseQcPathRestricted =
+    location.pathname.startsWith("/support/returns/qc") &&
+    !canViewWarehouseQcNavigation;
 
-      if (item.access === "PAYMENT_RECONCILIATION_ACCESS") {
-        return canViewPaymentReconciliationNavigation;
-      }
+  const isWarehouseAgentOnNonQcSupportPath =
+    isWarehouseAgent &&
+    location.pathname.startsWith("/support") &&
+    !location.pathname.startsWith("/support/returns/qc");
 
-      if (item.access === "RETURN_ACCESS") {
-        return canViewReturnNavigation;
-      }
+  if (isWarehouseAgentOnNonQcSupportPath) {
+    return <Navigate to="/support/returns/qc" replace />;
+  }
 
-      return canViewFullSupportNavigation;
-    });
-  }, [
-    canViewFullSupportNavigation,
-    canViewRefundNavigation,
-    canViewPaymentReconciliationNavigation,
-    canViewReturnNavigation,
-  ]);
+  if (isWarehouseQcPathRestricted) {
+    return <Navigate to="/support/escalations" replace />;
+  }
 
   if (
-    isRestrictedPathForTeamMember ||
+    isRestrictedDashboardOrOrders ||
     isRefundPathRestrictedForTeamMember ||
     isReconciliationPathRestrictedForTeamMember ||
-    isReturnPathRestrictedForTeamMember
+    isReturnPathRestrictedForTeamMember ||
+    isRefundSettlementPathRestricted
   ) {
     return <Navigate to="/support/escalations" replace />;
   }
 
   return (
-    <div className="support-layout bg-light">
+    <main className="support-layout dashboard-layout bg-light">
       <div className="container-fluid">
         <div className="row">
-          <aside className="col-lg-2 bg-white support-sidebar py-3 border-end min-vh-100">
-            <div className="p-3 border-bottom mb-3">
-              <div className="d-flex align-items-center gap-3">
-                <div className="support-sidebar-icon rounded-4 bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center">
-                  <i className="bi bi-headset fs-5" />
-                </div>
+          <aside className="col-lg-2 dashboard-sidebar support-sidebar">
+            <div className="dashboard-sidebar-inner support-sidebar-inner">
+              <div className="dashboard-sidebar-header mb-4">
+                <h4 className="fw-bold mb-1">
+                  <i
+                    className={`${
+                      isWarehouseAgent ? "bi bi-box-seam" : "bi bi-headset"
+                    } me-2 text-primary`}
+                  />
+                  {isWarehouseAgent ? "Warehouse" : "Support"}
+                </h4>
 
-                <div>
-                  <h5 className="fw-bold mb-1">Support</h5>
-
-                  <p
-                    className="text-muted small mb-0"
-                    style={{ fontSize: "0.75rem" }}
-                  >
-                    {isSupportTeamMember
-                      ? "Manage assigned escalations"
-                      : "Manage support operations"}
-                  </p>
-                </div>
+                <p className="small text-muted mb-0">
+                  {isWarehouseAgent
+                    ? "Manage return QC"
+                    : isSupportTeamMember
+                      ? "Assigned escalations"
+                      : "Operations dashboard"}
+                </p>
               </div>
-            </div>
 
-            {isSupportTeamMember ? (
-              <div className="alert alert-info small mx-3 mb-3">
-                <strong>Team scoped access</strong>
-
-                <div style={{ fontSize: "0.8rem" }}>
-                  You can access tickets and escalations linked to{" "}
-                  <strong>{resolvedSupportTeamCode}</strong>.
-                </div>
-              </div>
-            ) : null}
-
-            <nav className="support-sidebar-nav-wrapper px-2">
-              <ul className="nav nav-pills flex-column gap-2 vertical-tabs support-vertical-tabs support-sidebar-nav list-unstyled mb-0">
+              <nav
+                className="nav nav-underline flex-column dashboard-vertical-tabs support-vertical-tabs"
+                aria-label="Support navigation"
+              >
                 {visibleNavItems.map((item) => (
-                  <li className="nav-item w-100" key={item.path}>
-                    <NavLink
-                      to={item.path}
-                      className={({ isActive }) =>
-                        `nav-link dashboard-vertical-tab support-vertical-tab d-flex align-items-center gap-2 rounded-4 px-3 py-2 ${
-                          isActive
-                            ? "active text-primary bg-primary-subtle fw-semibold shadow-sm"
-                            : "text-secondary"
-                        }`
-                      }
-                    >
-                      <i className={`${item.icon} fs-5`} />
-                      <span>{item.label}</span>
-                    </NavLink>
-                  </li>
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.exact}
+                    className={({ isActive }) =>
+                      `nav-link dashboard-vertical-tab support-vertical-tab ${
+                        isActive ? "active" : ""
+                      }`
+                    }
+                  >
+                    <span className="dashboard-tab-icon">
+                      <i className={item.icon} />
+                    </span>
+
+                    <span className="dashboard-tab-label">{item.label}</span>
+                  </NavLink>
                 ))}
-              </ul>
-            </nav>
+              </nav>
+            </div>
           </aside>
 
-          <section className="col-lg-10 support-content">
+          <section className="col-lg-10 dashboard-content support-content">
             <Outlet />
           </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

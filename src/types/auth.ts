@@ -1,28 +1,51 @@
-export type UserRole = "CUSTOMER" | "ADMIN" | "SELLER" | "SUPPORT";
-
+export type UserRole =
+  | "CUSTOMER"
+  | "ADMIN"
+  | "SELLER"
+  | "SUPPORT"
+  | "PICKUP_AGENT"
+  | "DELIVERY_AGENT"
+  | "LOGISTICS_AGENT"
+  | "WAREHOUSE_AGENT";
 export interface User {
   id: string;
   name: string;
   email: string;
   password: string;
-  mobile: string;
-  address: string;
+  mobile?: string;
+  phone?: string;
+  address?: string;
   role?: UserRole;
   supportTeamCode?: string;
   supportTeamRole?: string;
+  warehouseTeamCode?: string;
+  warehouseTeamRole?: string;
   isActive?: boolean;
+  partnerId?: string;
+  pickupPartnerId?: string;
+  deliveryPartnerId?: string;
+  partnerName?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AuthUser {
   id: string;
   name: string;
   email: string;
-  mobile: string;
-  address: string;
+  mobile?: string;
+  phone?: string;
+  address?: string;
   role: UserRole;
   supportTeamCode?: string;
   supportTeamRole?: string;
+  warehouseTeamCode?: string;
+  warehouseTeamRole?: string;
   isActive?: boolean;
+  partnerId?: string;
+  pickupPartnerId?: string;
+  deliveryPartnerId?: string;
+  partnerName?: string;
 }
 
 export interface RegisterPayload {

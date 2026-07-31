@@ -12,11 +12,9 @@ export const useAdminTablePagination = <T,>({
   resetDependencies = []
 }: UseAdminTablePaginationOptions<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] =
-    useState<number>(defaultItemsPerPage);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(defaultItemsPerPage);
 
   const totalPages = Math.max(1, Math.ceil(items.length / itemsPerPage));
-
   const safeCurrentPage = Math.min(currentPage, totalPages);
 
   const paginatedItems = useMemo(() => {
@@ -26,9 +24,12 @@ export const useAdminTablePagination = <T,>({
     return items.slice(startIndex, endIndex);
   }, [items, safeCurrentPage, itemsPerPage]);
 
+  // Serialize resetDependencies so object/array references don't trigger unnecessary re-renders
+  const serializedDependencies = JSON.stringify(resetDependencies);
+
   useEffect(() => {
     setCurrentPage(1);
-  }, [itemsPerPage, ...resetDependencies]);
+  }, [itemsPerPage, serializedDependencies]);
 
   return {
     currentPage: safeCurrentPage,

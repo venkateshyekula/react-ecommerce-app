@@ -1,0 +1,1027 @@
+/* ==========================================================================
+   Home Page
+   ========================================================================== */
+
+.home-page {
+  min-height: 100vh;
+  margin-top: -2px;
+  overflow-x: hidden;
+  background-color: #ffffff;
+}
+
+/* ==========================================================================
+   Home Page Carousel
+   ========================================================================== */
+
+.home-carousel-section {
+  position: relative;
+  color: #fff;
+  padding: 3.5rem;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.22),
+      transparent 34%
+    ),
+    linear-gradient(135deg, #0d6efd, #084298);
+  transition:
+    background-color 0.35s ease,
+    background-image 0.35s ease;
+}
+
+.home-carousel-section .container-fluid {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Carousel Themes
+   ========================================================================== */
+
+.home-carousel-slide-blue {
+  background:
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(255, 255, 255, 0.26),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 65% 92%,
+      rgba(87, 168, 255, 0.34),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #073b9a 0%, #075cd6 52%, #42a5f5 100%);
+}
+
+.home-carousel-slide-pink {
+  background:
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(255, 255, 255, 0.24),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 65% 92%,
+      rgba(255, 180, 208, 0.28),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #9f1239 0%, #e11d48 52%, #fb7185 100%);
+}
+
+.home-carousel-slide-green {
+  background:
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(255, 255, 255, 0.24),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 65% 92%,
+      rgba(110, 231, 183, 0.25),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #064e3b 0%, #047857 52%, #34d399 100%);
+}
+
+.home-carousel-slide-purple {
+  background:
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(255, 255, 255, 0.24),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 65% 92%,
+      rgba(196, 181, 253, 0.28),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #4c1d95 0%, #6d28d9 52%, #a78bfa 100%);
+}
+
+/* ==========================================================================
+   Carousel Card
+   ========================================================================== */
+
+.home-carousel-card {
+  position: relative;
+  min-height: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.75rem 4rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home-carousel-card::before {
+  content: "";
+  position: absolute;
+  top: -140px;
+  right: -100px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.home-carousel-card::after {
+  content: "";
+  position: absolute;
+  right: 24%;
+  bottom: -190px;
+  width: 390px;
+  height: 390px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.home-carousel-content {
+  position: relative;
+  z-index: 2;
+}
+
+.home-carousel-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 1rem;
+  padding: 0.48rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-carousel-title {
+  max-width: 720px;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: clamp(2.15rem, 4vw, 3.65rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+.home-carousel-description {
+  max-width: 650px;
+  margin-bottom: 1.6rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.home-carousel-primary-btn {
+  border-color: #fff;
+  color: #0752bf;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(3, 31, 87, 0.18);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.home-carousel-primary-btn:hover {
+  color: #063d8f;
+  background-color: #f8fbff;
+  border-color: #f8fbff;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(3, 31, 87, 0.24);
+}
+
+.home-carousel-section .btn-outline-light {
+  font-weight: 700;
+  border-width: 2px;
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.home-carousel-section .btn-outline-light:hover {
+  color: #111827;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Carousel Visual
+   ========================================================================== */
+
+.home-carousel-visual {
+  position: relative;
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 34px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.08)
+    );
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.home-carousel-visual::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.11);
+  filter: blur(2px);
+}
+
+.home-carousel-icon {
+  position: relative;
+  z-index: 2;
+  width: 140px;
+  height: 140px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.26),
+      rgba(255, 255, 255, 0.12)
+    );
+  color: #fff;
+  font-size: 4rem;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.16);
+  transform: rotate(-4deg);
+}
+
+.home-carousel-floating-card {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.62rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.96);
+  color: #111827;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.2);
+  animation: homeFloatingCard 4s ease-in-out infinite;
+}
+
+.home-carousel-floating-card.one {
+  top: 26px;
+  left: 22px;
+}
+
+.home-carousel-floating-card.two {
+  top: 116px;
+  right: 18px;
+  animation-delay: 0.6s;
+}
+
+.home-carousel-floating-card.three {
+  bottom: 26px;
+  left: 42px;
+  animation-delay: 1.2s;
+}
+
+@keyframes homeFloatingCard {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* ==========================================================================
+   Carousel Previous and Next Buttons
+   ========================================================================== */
+
+.home-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 8;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(15, 23, 42, 0.32);
+  color: #fff;
+  font-size: 1.25rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+  transform: translateY(-50%);
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    border-color 0.22s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-carousel-arrow:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(15, 23, 42, 0.58);
+  transform: translateY(-50%) scale(1.07);
+}
+
+.home-carousel-arrow:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+}
+
+.home-carousel-arrow-previous {
+  left: 0.25rem;
+}
+
+.home-carousel-arrow-next {
+  right: 0.25rem;
+}
+
+/* ==========================================================================
+   Carousel Indicators
+   ========================================================================== */
+
+.home-carousel-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 1.1rem;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  transform: translateX(-50%);
+}
+
+.home-carousel-controls button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background-color: transparent;
+  transition:
+    width 0.24s ease,
+    background-color 0.24s ease,
+    border-color 0.24s ease;
+}
+
+.home-carousel-controls button:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+.home-carousel-controls button.active {
+  width: 30px;
+  border-color: #fff;
+  background-color: #fff;
+}
+
+.home-carousel-controls button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Homepage Section Heading
+   ========================================================================== */
+
+.home-section-heading {
+  max-width: 760px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.home-section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-size: 0.77rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-section-title {
+  color: #111827;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.home-section-description {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   Shop By Category Cards
+   ========================================================================== */
+
+.home-shop-category-section {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 0 0,
+      rgba(219, 234, 254, 0.55),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(252, 231, 243, 0.55),
+      transparent 26%
+    ),
+    #ffffff;
+}
+
+.home-category-offer-card {
+  position: relative;
+  min-height: 248px;
+  height: 100%;
+  padding: 1.2rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #111827;
+  text-align: center;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.055);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.home-category-offer-card::before {
+  content: "";
+  position: absolute;
+  top: -44px;
+  right: -44px;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.07;
+  transition: transform 0.3s ease;
+}
+
+.home-category-offer-card::after {
+  content: "";
+  position: absolute;
+  left: -45px;
+  bottom: -48px;
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.045;
+}
+
+.home-category-offer-card:hover {
+  color: #111827;
+  text-decoration: none;
+  transform: translateY(-7px);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.13);
+}
+
+.home-category-offer-card:hover::before {
+  transform: scale(1.22);
+}
+
+.home-category-offer-card:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.3);
+  outline-offset: 3px;
+}
+
+.home-category-offer-icon {
+  position: relative;
+  z-index: 1;
+  width: 82px;
+  height: 82px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.86);
+  color: var(--category-card-accent, #2563eb);
+  font-size: 2.25rem;
+  box-shadow:
+    0 10px 22px rgba(15, 23, 42, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.home-category-offer-card:hover .home-category-offer-icon {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 15px 27px rgba(15, 23, 42, 0.13);
+}
+
+.home-category-offer-content {
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+}
+
+.home-category-offer-title {
+  margin-bottom: 0.35rem;
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.home-category-offer-subtitle {
+  min-height: 38px;
+  margin-bottom: 0.65rem;
+  color: #6b7280;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+
+.home-category-discount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--category-card-accent, #2563eb);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.home-category-offer-action {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.9rem;
+  color: var(--category-card-accent, #2563eb);
+  font-size: 0.78rem;
+  font-weight: 800;
+  transition: transform 0.22s ease;
+}
+
+.home-category-offer-card:hover .home-category-offer-action {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Shop By Category Card Themes
+   ========================================================================== */
+
+.category-offer-blue {
+  --category-card-accent: #2563eb;
+  background: linear-gradient(145deg, #eff6ff, #dbeafe);
+  border-color: #bfdbfe;
+}
+
+.category-offer-pink {
+  --category-card-accent: #db2777;
+  background: linear-gradient(145deg, #fdf2f8, #fce7f3);
+  border-color: #fbcfe8;
+}
+
+.category-offer-red {
+  --category-card-accent: #dc2626;
+  background: linear-gradient(145deg, #fef2f2, #fee2e2);
+  border-color: #fecaca;
+}
+
+.category-offer-purple {
+  --category-card-accent: #9333ea;
+  background: linear-gradient(145deg, #faf5ff, #f3e8ff);
+  border-color: #e9d5ff;
+}
+
+.category-offer-orange {
+  --category-card-accent: #ea580c;
+  background: linear-gradient(145deg, #fff7ed, #ffedd5);
+  border-color: #fed7aa;
+}
+
+.category-offer-teal {
+  --category-card-accent: #0f766e;
+  background: linear-gradient(145deg, #f0fdfa, #ccfbf1);
+  border-color: #99f6e4;
+}
+
+.category-offer-yellow {
+  --category-card-accent: #ca8a04;
+  background: linear-gradient(145deg, #fefce8, #fef9c3);
+  border-color: #fef08a;
+}
+
+.category-offer-rose {
+  --category-card-accent: #e11d48;
+  background: linear-gradient(145deg, #fff1f2, #ffe4e6);
+  border-color: #fecdd3;
+}
+
+.category-offer-green {
+  --category-card-accent: #15803d;
+  background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+  border-color: #bbf7d0;
+}
+
+.category-offer-indigo {
+  --category-card-accent: #4f46e5;
+  background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+  border-color: #c7d2fe;
+}
+
+/* ==========================================================================
+   Homepage Product Sections
+   ========================================================================== */
+
+.home-product-sections {
+  position: relative;
+}
+
+.category-scroll-block {
+  scroll-margin-top: calc(var(--main-navbar-height, 76px) + 20px);
+}
+
+.category-scroll-block:last-child {
+  border-bottom: 0 !important;
+}
+
+.home-category-section-icon {
+  width: 52px;
+  height: 52px;
+  border: 1px solid #dbeafe;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.1);
+}
+
+.home-product-sections .row > div {
+  display: flex;
+}
+
+.home-product-sections .product-card {
+  width: 100%;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.home-product-sections .product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
+}
+
+/*
+ * ProductCard continues to control actual product pricing and discount UI.
+ * These selectors provide optional visual support when ProductCard uses
+ * common discount class names.
+ */
+
+.home-product-sections .discount-badge,
+.home-product-sections .product-discount-badge,
+.home-product-sections .product-card-discount {
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  background-color: #16a34a;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 0 5px 12px rgba(22, 163, 74, 0.25);
+}
+
+.home-product-sections .original-price,
+.home-product-sections .product-original-price {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.home-product-sections .discount-percentage,
+.home-product-sections .product-discount-percentage {
+  color: #f97316;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 1199.98px) {
+  .home-carousel-section {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  .home-carousel-card {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+
+  .home-category-offer-card {
+    min-height: 238px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .home-carousel-section {
+    margin-right: 0.75rem;
+    margin-left: 0.75rem;
+    padding: 2rem 0;
+    border-radius: 16px;
+  }
+
+  .home-carousel-card {
+    min-height: auto;
+    padding: 2rem 3.25rem 3.5rem;
+  }
+
+  .home-carousel-visual {
+    min-height: 240px;
+    margin-top: 0.5rem;
+  }
+
+  .home-carousel-arrow-previous {
+    left: 0;
+  }
+
+  .home-carousel-arrow-next {
+    right: 0;
+  }
+
+  .home-category-offer-card {
+    min-height: 230px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .home-carousel-section {
+    margin-top: 1rem !important;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    padding: 0;
+  }
+
+  .home-carousel-card {
+    padding: 2rem 2.75rem 3.75rem;
+  }
+
+  .home-carousel-title {
+    font-size: 2.3rem;
+  }
+
+  .home-carousel-description {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .home-carousel-visual {
+    min-height: 215px;
+    border-radius: 24px;
+  }
+
+  .home-carousel-icon {
+    width: 112px;
+    height: 112px;
+    border-radius: 30px;
+    font-size: 3.1rem;
+  }
+
+  .home-carousel-floating-card {
+    padding: 0.5rem 0.72rem;
+    font-size: 0.72rem;
+  }
+
+  .home-carousel-floating-card.one {
+    top: 18px;
+    left: 14px;
+  }
+
+  .home-carousel-floating-card.two {
+    top: 91px;
+    right: 12px;
+  }
+
+  .home-carousel-floating-card.three {
+    bottom: 18px;
+    left: 20px;
+  }
+
+  .home-carousel-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .home-carousel-arrow-previous {
+    left: 0.15rem;
+  }
+
+  .home-carousel-arrow-next {
+    right: 0.15rem;
+  }
+
+  .home-category-offer-card {
+    min-height: 218px;
+    padding: 1rem 0.75rem;
+  }
+
+  .home-category-offer-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 19px;
+    font-size: 1.9rem;
+  }
+
+  .home-category-offer-subtitle {
+    display: none;
+  }
+
+  .home-category-discount {
+    font-size: 0.76rem;
+  }
+
+  .category-scroll-block {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .home-carousel-card {
+    padding: 1.65rem 1.15rem 3.5rem;
+  }
+
+  .home-carousel-content {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .home-carousel-title {
+    font-size: 1.9rem;
+    line-height: 1.1;
+  }
+
+  .home-carousel-description {
+    font-size: 0.94rem;
+  }
+
+  .home-carousel-section .btn-lg {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .home-carousel-visual {
+    display: none;
+  }
+
+  .home-carousel-arrow {
+    top: auto;
+    bottom: 0.74rem;
+    width: 34px;
+    height: 34px;
+    transform: none;
+  }
+
+  .home-carousel-arrow:hover {
+    transform: scale(1.06);
+  }
+
+  .home-carousel-arrow-previous {
+    left: 0.75rem;
+  }
+
+  .home-carousel-arrow-next {
+    right: 0.75rem;
+  }
+
+  .home-carousel-controls {
+    bottom: 1.05rem;
+  }
+
+  .home-carousel-controls button {
+    width: 8px;
+    height: 8px;
+  }
+
+  .home-carousel-controls button.active {
+    width: 24px;
+  }
+
+  .home-shop-category-section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .home-section-heading {
+    margin-bottom: 2rem !important;
+  }
+
+  .home-section-title {
+    font-size: 1.65rem;
+  }
+
+  .home-section-description {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .home-category-offer-card {
+    min-height: 196px;
+    border-radius: 14px;
+  }
+
+  .home-category-offer-icon {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 0.75rem;
+    border-radius: 17px;
+    font-size: 1.65rem;
+  }
+
+  .home-category-offer-title {
+    font-size: 0.9rem;
+  }
+
+  .home-category-offer-action {
+    margin-top: 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  .category-scroll-block > .d-flex {
+    align-items: flex-start !important;
+  }
+
+  .home-category-section-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.15rem !important;
+  }
+
+  .category-scroll-block h2 {
+    font-size: 1.1rem;
+  }
+
+  .category-scroll-block p {
+    display: none;
+  }
+
+  .category-scroll-block .btn-sm {
+    padding: 0.37rem 0.7rem !important;
+    font-size: 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-carousel-floating-card {
+    animation: none;
+  }
+
+  .home-carousel-section,
+  .home-carousel-primary-btn,
+  .home-carousel-arrow,
+  .home-carousel-controls button,
+  .home-category-offer-card,
+  .home-category-offer-card::before,
+  .home-category-offer-icon,
+  .home-category-offer-action,
+  .home-product-sections .product-card {
+    transition: none;
+  }
+}

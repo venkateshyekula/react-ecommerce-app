@@ -1,0 +1,78 @@
+/* Custom Accent & Glow Variables */
+:root {
+  --agent-primary-color: #4f46e5;
+  --agent-active-glow: rgba(79, 70, 229, 0.1);
+  --agent-border-color: #e5e7eb;
+}
+
+.extra-small {
+  font-size: 0.75rem;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+/* Sidebar Structural Styles */
+.agent-sidebar {
+  min-height: calc(100vh - 60px);
+  background-color: #ffffff;
+  border-right: 1px solid var(--agent-border-color);
+}
+
+.agent-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: calc(100vh - 60px);
+}
+
+/* Enhanced Tab Styles */
+.agent-vertical-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 0.35rem;
+  border-radius: 0.65rem;
+  color: #4b5563;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.agent-vertical-tab:hover {
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+.agent-vertical-tab.active {
+  color: var(--agent-primary-color) !important;
+  background-color: var(--agent-active-glow) !important;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--agent-primary-color);
+}
+
+.agent-vertical-tab .dashboard-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.agent-vertical-tab:hover .dashboard-tab-icon {
+  transform: translateX(2px);
+}
+
+/* Status Indicator Box */
+.agent-status-box {
+  border: 1px solid #f0f0f0;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}

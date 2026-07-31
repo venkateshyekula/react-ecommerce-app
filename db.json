@@ -1,4 +1,174 @@
 {
+  "returnQcInspections": [
+    {
+      "id": "return-qc-db-001",
+      "inspectionId": "QC-RET-20260720-001",
+      "returnRequestId": "RET-20260717-1784300001004",
+      "requestId": "RET-20260717-1784300001004",
+      "orderId": "ORD-20260716-1883",
+      "orderDbId": "order-db-1784209182140",
+      "userId": "user-001",
+      "productId": "prod-004",
+      "productName": "Dell Inspiron 15 Laptop",
+      "category": "Electronics",
+      "sellerId": "seller-004",
+      "sellerName": "Dell Official Store",
+      "conditionGrade": "SELLABLE",
+      "qcStatus": "IN_PROGRESS",
+      "checklistResults": [
+        {
+          "checkId": "serial-imei-match",
+          "label": "Serial / IMEI number matches",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "no-physical-damage",
+          "label": "No physical damage",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "accessories-present",
+          "label": "All accessories are present",
+          "passed": false,
+          "required": true
+        }
+      ],
+      "qcRemarks": "Warehouse QC started. Accessories verification is pending.",
+      "inspectedByUserId": "support-001",
+      "inspectedByName": "Support Agent",
+      "inspectedAt": "2026-07-20T10:00:00.000Z",
+      "createdAt": "2026-07-20T10:00:00.000Z",
+      "updatedAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "id": "return-qc-db-002",
+      "inspectionId": "QC-RET-20260721-002",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "requestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "orderDbId": "order-db-1784387563007",
+      "userId": "user-001",
+      "productId": "prod-004",
+      "productName": "Dell Inspiron 15 Laptop",
+      "category": "Electronics",
+      "sellerId": "seller-004",
+      "sellerName": "Dell Official Store",
+      "conditionGrade": "OPEN_BOX",
+      "qcStatus": "PASSED",
+      "checklistResults": [
+        {
+          "checkId": "serial-imei-match",
+          "label": "Serial / IMEI number matches",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "no-physical-damage",
+          "label": "No physical damage",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "accessories-present",
+          "label": "All accessories are present",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "device-powers-on",
+          "label": "Device powers on",
+          "passed": true,
+          "required": true
+        }
+      ],
+      "expectedBarcode": "SKU-DELL-INSP-15-001",
+      "scannedBarcode": "SKU-DELL-INSP-15-001",
+      "barcodeMatchStatus": "MATCHED",
+      "expectedSerialNumber": "DL-INS-20260718-001",
+      "scannedSerialNumber": "DL-INS-20260718-001",
+      "serialMatchStatus": "MATCHED",
+      "expectedPackageWeightKg": 2.4,
+      "packageWeightKg": 2.25,
+      "packageWeightVarianceNote": "Slight weight difference. Charger and laptop received, invoice copy missing.",
+      "qcPhotoDataUrl": null,
+      "qcPhotoFileName": null,
+      "evidenceNotes": "Barcode and serial verified. Accessories check Verified.",
+      "qcRemarks": "Laptop received in open-box condition. Accessories verification Verified.",
+      "inspectedByUserId": "warehouse-agent-user-001",
+      "inspectedByName": "Return Warehouse QC Agent",
+      "inspectedAt": "2026-07-23T14:20:57.020Z",
+      "createdAt": "2026-07-21T09:40:00.000Z",
+      "updatedAt": "2026-07-23T14:20:57.020Z"
+    },
+    {
+      "id": "return-qc-db-1784624228267-hrg4fo",
+      "inspectionId": "QC-RET-20260721-1784624228267",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "requestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "orderDbId": "order-db-1784387563007",
+      "userId": "user-001",
+      "productId": "prod-007",
+      "productName": "Nike Sports T-Shirt",
+      "category": "Clothing",
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "conditionGrade": "OPEN_BOX",
+      "qcStatus": "IN_PROGRESS",
+      "checklistResults": [
+        {
+          "checkId": "tag-attached",
+          "label": "Product tag is attached",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "no-stains",
+          "label": "No stains or marks",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "no-usage-signs",
+          "label": "No visible usage signs",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "correct-size",
+          "label": "Correct size returned",
+          "passed": true,
+          "required": true
+        },
+        {
+          "checkId": "original-packaging",
+          "label": "Original packaging available",
+          "passed": true,
+          "required": false
+        }
+      ],
+      "qcRemarks": null,
+      "expectedBarcode": null,
+      "scannedBarcode": null,
+      "barcodeMatchStatus": "NOT_CHECKED",
+      "expectedSerialNumber": null,
+      "scannedSerialNumber": null,
+      "serialMatchStatus": "NOT_CHECKED",
+      "expectedPackageWeightKg": null,
+      "packageWeightKg": null,
+      "packageWeightVarianceNote": null,
+      "qcPhotoDataUrl": null,
+      "qcPhotoFileName": null,
+      "evidenceNotes": null,
+      "inspectedByUserId": "warehouse-agent-user-001",
+      "inspectedByName": "Return Warehouse QC Agent",
+      "inspectedAt": "2026-07-21T08:57:40.233Z",
+      "createdAt": "2026-07-21T08:57:08.266Z",
+      "updatedAt": "2026-07-21T08:57:40.234Z"
+    }
+  ],
   "supportTeams": [
     {
       "id": "team-payment-finance",
@@ -406,7 +576,7 @@
       "type": "WARNING",
       "referenceId": "reward-expiry-alert-reward-db-expiring-001",
       "id": "notification-1784210607420-8s2vii",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-07-16T14:03:27.420Z",
       "route": "",
       "link": ""
@@ -418,10 +588,48 @@
       "type": "WARNING",
       "referenceId": "reward-expiry-alert-reward-db-expiring-001",
       "id": "notification-1784210607425-mn67ot",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-07-16T14:03:27.425Z",
       "route": "",
       "link": ""
+    },
+    {
+      "audienceRole": "SUPPORT",
+      "title": "New support ticket created",
+      "message": "Test User created ticket SUP-1784728267540.",
+      "type": "INFO",
+      "category": "SUPPORT",
+      "link": "/support/tickets",
+      "route": "/support/tickets",
+      "referenceId": "support-ticket-db-1784728267540",
+      "entityId": "support-ticket-db-1784728267540",
+      "entityType": "SUPPORT_TICKET",
+      "metadata": {
+        "ticketId": "SUP-1784728267540",
+        "customerName": "Test User",
+        "priority": "MEDIUM",
+        "status": "OPEN"
+      },
+      "id": "notification-1784728267684-0cokj5",
+      "isRead": false,
+      "createdAt": "2026-07-22T13:51:07.684Z"
+    },
+    {
+      "id": "notification-agent-db-001",
+      "notificationId": "AGT-NOTIF-20260724-001",
+      "recipientUserId": "pickup-agent-user-001",
+      "recipientRole": "PICKUP_AGENT",
+      "recipientPartnerId": "RPP-001",
+      "title": "New return pickup assigned",
+      "message": "Return pickup task RET-20260717-1784300001002 has been assigned to you.",
+      "severity": "info",
+      "entityType": "AGENT_ASSIGNMENT",
+      "entityId": "AGT-ASG-20260724-001",
+      "entityDbId": "agent-assignment-db-001",
+      "actionUrl": "/agent/returns",
+      "isRead": false,
+      "createdAt": "2026-07-24T10:00:00.000Z",
+      "updatedAt": "2026-07-24T10:00:00.000Z"
     }
   ],
   "reviews": [
@@ -611,6 +819,174 @@
   ],
   "products": [
     {
+      "id": "prod-101",
+      "name": "Men's Printed Casual Shirt",
+      "category": "Clothing",
+      "brand": "Roadster",
+      "price": 699,
+      "originalPrice": 1399,
+      "discount": 50,
+      "rating": 4.2,
+      "stock": 25,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Casual+Wear",
+      "description": "Pure cotton casual shirt with slim fit styling.",
+      "sellerId": "seller-roadster",
+      "sellerName": "Roadster Store",
+      "specifications": {},
+      "sellerRating": 4.6,
+      "sellerRatingCount": 2281,
+      "sellerSince": "2018-11-14",
+      "sellerReturnRate": 3.3,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-101-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Casual+Wear",
+          "alt": "Men's Printed Casual Shirt",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
+    },
+    {
+      "id": "prod-102",
+      "name": "Women's Ethnic Kurta Set",
+      "category": "Women",
+      "brand": "Anouk",
+      "price": 1199,
+      "originalPrice": 2999,
+      "discount": 60,
+      "rating": 4.5,
+      "stock": 18,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Ethnic+Wear",
+      "description": "Designer printed fusion wear kurta set with dupatta.",
+      "sellerId": "seller-anouk",
+      "sellerName": "Anouk Store",
+      "specifications": {},
+      "sellerRating": 4.1,
+      "sellerRatingCount": 1288,
+      "sellerSince": "2024-11-26",
+      "sellerReturnRate": 3.9,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-102-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Ethnic+Wear",
+          "alt": "Women's Ethnic Kurta Set",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
+    },
+    {
+      "id": "prod-103",
+      "name": "Men's Lightweight Running Shoes",
+      "category": "Footwear",
+      "brand": "Nike",
+      "price": 2499,
+      "originalPrice": 4999,
+      "discount": 50,
+      "rating": 4.6,
+      "stock": 12,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Activewear",
+      "description": "Breathable running shoes with soft cushion support.",
+      "sellerId": "seller-nike",
+      "sellerName": "Nike Store",
+      "specifications": {},
+      "sellerRating": 4.8,
+      "sellerRatingCount": 4463,
+      "sellerSince": "2023-12-04",
+      "sellerReturnRate": 5.7,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-103-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Activewear",
+          "alt": "Men's Lightweight Running Shoes",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
+    },
+    {
+      "id": "prod-104",
+      "name": "Analog Stainless Steel Watch",
+      "category": "Accessories",
+      "brand": "Fossil",
+      "price": 3599,
+      "originalPrice": 5999,
+      "discount": 40,
+      "rating": 4.4,
+      "stock": 8,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Watches",
+      "description": "Premium metallic design analog wristwatch.",
+      "sellerId": "seller-fossil",
+      "sellerName": "Fossil Store",
+      "specifications": {},
+      "sellerRating": 4.3,
+      "sellerRatingCount": 1235,
+      "sellerSince": "2024-02-03",
+      "sellerReturnRate": 5.9,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-104-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Watches",
+          "alt": "Analog Stainless Steel Watch",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
+    },
+    {
+      "id": "prod-105",
+      "name": "Women's Floral Western Dress",
+      "category": "Women",
+      "brand": "DressBerry",
+      "price": 899,
+      "originalPrice": 1799,
+      "discount": 50,
+      "rating": 4.1,
+      "stock": 30,
+      "image": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Westren+Wear",
+      "description": "A-line floral print casual midi dress.",
+      "sellerId": "seller-dressberry",
+      "sellerName": "DressBerry Store",
+      "specifications": {},
+      "sellerRating": 4.1,
+      "sellerRatingCount": 1071,
+      "sellerSince": "2021-10-07",
+      "sellerReturnRate": 1.5,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-105-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Westren+Wear",
+          "alt": "Women's Floral Western Dress",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
+    },
+    {
       "id": "prod-001",
       "name": "Samsung Galaxy S24",
       "description": "Premium Android smartphone with AMOLED display, powerful processor, and pro-grade camera system.",
@@ -638,7 +1014,27 @@
       "taxCategory": "Mobile Phones",
       "sellerGstin": "29SAMS1234A1Z5",
       "sellerPan": "SAMS1234A",
-      "sellerAddress": "Samsung Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Samsung Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.2,
+      "sellerRatingCount": 4238,
+      "sellerSince": "2020-11-23",
+      "sellerReturnRate": 5.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-001-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=Samsung+Galaxy+S24",
+          "alt": "Samsung Galaxy S24",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-002",
@@ -668,7 +1064,27 @@
       "taxCategory": "Mobile Phones",
       "sellerGstin": "29APPL1234A1Z5",
       "sellerPan": "APPL1234A",
-      "sellerAddress": "Apple Authorized Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Apple Authorized Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.2,
+      "sellerRatingCount": 2415,
+      "sellerSince": "2019-04-18",
+      "sellerReturnRate": 6,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-002-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fce8e6/d93025?text=Apple+iPhone+15",
+          "alt": "Apple iPhone 15",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-003",
@@ -698,7 +1114,28 @@
       "taxCategory": "Audio Electronics",
       "sellerGstin": "29SONY1234A1Z5",
       "sellerPan": "SONY1234A",
-      "sellerAddress": "Sony Electronics Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Sony Electronics Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 3403,
+      "sellerSince": "2023-04-24",
+      "sellerReturnRate": 2.8,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-003-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e6f4ea/188038?text=Sony+Headphones",
+          "alt": "Sony WH-1000XM5 Headphones",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      },
+      "warranty": "1 Year"
     },
     {
       "id": "prod-004",
@@ -728,7 +1165,27 @@
       "taxCategory": "Laptops",
       "sellerGstin": "29DELL1234A1Z5",
       "sellerPan": "DELL1234A",
-      "sellerAddress": "Dell Official Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Dell Official Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 2005,
+      "sellerSince": "2022-08-26",
+      "sellerReturnRate": 4.8,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-004-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "alt": "Dell Inspiron 15 Laptop",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-005",
@@ -758,7 +1215,27 @@
       "taxCategory": "Laptops",
       "sellerGstin": "29HPLP1234A1Z5",
       "sellerPan": "HPLP1234A",
-      "sellerAddress": "HP Laptop Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "HP Laptop Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 3839,
+      "sellerSince": "2019-05-05",
+      "sellerReturnRate": 4.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-005-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/f3e8fd/9334e6?text=HP+Gaming+Laptop",
+          "alt": "HP Pavilion Gaming Laptop",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-006",
@@ -841,7 +1318,27 @@
       "taxCategory": "Apparel",
       "sellerGstin": "29LEVI1234A1Z5",
       "sellerPan": "LEVI1234A",
-      "sellerAddress": "Levi's Fashion Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Levi's Fashion Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.8,
+      "sellerRatingCount": 4008,
+      "sellerSince": "2018-11-06",
+      "sellerReturnRate": 4.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-006-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8eaed/3c4043?text=Levis+Jeans",
+          "alt": "Levi's Slim Fit Jeans",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-007",
@@ -924,7 +1421,27 @@
       "taxCategory": "Apparel",
       "sellerGstin": "29NIKE1234A1Z5",
       "sellerPan": "NIKE1234A",
-      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 4498,
+      "sellerSince": "2024-11-15",
+      "sellerReturnRate": 5.9,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-007-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+          "alt": "Nike Sports T-Shirt",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-008",
@@ -1007,7 +1524,27 @@
       "taxCategory": "Apparel",
       "sellerGstin": "29ADID1234A1Z5",
       "sellerPan": "ADID1234A",
-      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 2622,
+      "sellerSince": "2020-04-10",
+      "sellerReturnRate": 3.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-008-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fef7e0/ea8600?text=Adidas+Jacket",
+          "alt": "Adidas Running Jacket",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-009",
@@ -1090,7 +1627,27 @@
       "taxCategory": "Apparel",
       "sellerGstin": "29PUMA1234A1Z5",
       "sellerPan": "PUMA1234A",
-      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.6,
+      "sellerRatingCount": 1239,
+      "sellerSince": "2023-07-23",
+      "sellerReturnRate": 5.7,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-009-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/f1f3f4/5f6368?text=Puma+Hoodie",
+          "alt": "Puma Casual Hoodie",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-010",
@@ -1120,7 +1677,27 @@
       "taxCategory": "Printed Books",
       "sellerGstin": "29PENG1234A1Z5",
       "sellerPan": "PENG1234A",
-      "sellerAddress": "Penguin Books Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Penguin Books Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.2,
+      "sellerRatingCount": 3329,
+      "sellerSince": "2021-04-20",
+      "sellerReturnRate": 6,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-010-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e6f4ea/137333?text=Atomic+Habits",
+          "alt": "Atomic Habits",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 5,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-011",
@@ -1150,7 +1727,27 @@
       "taxCategory": "Printed Books",
       "sellerGstin": "29JAIC1234A1Z5",
       "sellerPan": "JAIC1234A",
-      "sellerAddress": "Jaico Books Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Jaico Books Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 2582,
+      "sellerSince": "2024-06-11",
+      "sellerReturnRate": 3.9,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-011-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fce8e6/a50e0e?text=Psychology+of+Money",
+          "alt": "The Psychology of Money",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 5,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-012",
@@ -1180,7 +1777,27 @@
       "taxCategory": "Printed Books",
       "sellerGstin": "29PEAR1234A1Z5",
       "sellerPan": "PEAR1234A",
-      "sellerAddress": "Pearson Books Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Pearson Books Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 1029,
+      "sellerSince": "2024-01-19",
+      "sellerReturnRate": 2.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-012-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1967d2?text=Clean+Code",
+          "alt": "Clean Code",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 5,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-013",
@@ -1210,7 +1827,27 @@
       "taxCategory": "Printed Books",
       "sellerGstin": "29RAND1234A1Z5",
       "sellerPan": "RAND1234A",
-      "sellerAddress": "Random House Books Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Random House Books Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 2696,
+      "sellerSince": "2022-04-05",
+      "sellerReturnRate": 1.8,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-013-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fef7e0/f9ab00?text=Ikigai",
+          "alt": "Ikigai",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 5,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-014",
@@ -1302,7 +1939,27 @@
       "taxCategory": "Footwear",
       "sellerGstin": "29NIKE1234A1Z5",
       "sellerPan": "NIKE1234A",
-      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Nike Sports Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 4498,
+      "sellerSince": "2024-11-15",
+      "sellerReturnRate": 5.9,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-014-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/eaf4ff/185abc?text=Nike+Pegasus",
+          "alt": "Nike Air Zoom Pegasus",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-015",
@@ -1394,7 +2051,27 @@
       "taxCategory": "Footwear",
       "sellerGstin": "29ADID1234A1Z5",
       "sellerPan": "ADID1234A",
-      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Adidas Official Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 2622,
+      "sellerSince": "2020-04-10",
+      "sellerReturnRate": 3.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-015-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/f3e8fd/9334e6?text=Adidas+Ultraboost",
+          "alt": "Adidas Ultraboost",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-016",
@@ -1486,7 +2163,27 @@
       "taxCategory": "Footwear",
       "sellerGstin": "29PUMA1234A1Z5",
       "sellerPan": "PUMA1234A",
-      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Puma Sports Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.6,
+      "sellerRatingCount": 1239,
+      "sellerSince": "2023-07-23",
+      "sellerReturnRate": 5.7,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-016-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8eaed/3c4043?text=Puma+Sneakers",
+          "alt": "Puma Smash Sneakers",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-017",
@@ -1578,7 +2275,27 @@
       "taxCategory": "Footwear",
       "sellerGstin": "29BATA1234A1Z5",
       "sellerPan": "BATA1234A",
-      "sellerAddress": "Bata Footwear Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Bata Footwear Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 2601,
+      "sellerSince": "2020-11-23",
+      "sellerReturnRate": 3.2,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-017-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fff4e5/e8710a?text=Bata+Formal+Shoes",
+          "alt": "Bata Formal Shoes",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 14,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-018",
@@ -1641,7 +2358,24 @@
       "taxCategory": "Watches",
       "sellerGstin": "29FAST1234A1Z5",
       "sellerPan": "FAST1234A",
-      "sellerAddress": "Fastrack Accessories Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Fastrack Accessories Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 1176,
+      "sellerSince": "2024-06-23",
+      "sellerReturnRate": 5.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-018-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fce8e6/c5221f?text=Fastrack+Watch",
+          "alt": "Fastrack Analog Watch",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "warranty": "1 Year"
     },
     {
       "id": "prod-019",
@@ -1704,7 +2438,24 @@
       "taxCategory": "Audio Electronics",
       "sellerGstin": "29BOAT1234A1Z5",
       "sellerPan": "BOAT1234A",
-      "sellerAddress": "Boat Lifestyle Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Boat Lifestyle Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.3,
+      "sellerRatingCount": 4364,
+      "sellerSince": "2018-05-20",
+      "sellerReturnRate": 3.7,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-019-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e6f4ea/188038?text=Boat+Airdopes",
+          "alt": "Boat Airdopes 141",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "warranty": "1 Year"
     },
     {
       "id": "prod-020",
@@ -1767,7 +2518,23 @@
       "taxCategory": "Audio Electronics",
       "sellerGstin": "29JBLA1234A1Z5",
       "sellerPan": "JBLA1234A",
-      "sellerAddress": "JBL Audio Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "JBL Audio Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 4316,
+      "sellerSince": "2022-01-28",
+      "sellerReturnRate": 2.6,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-020-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=JBL+Speaker",
+          "alt": "JBL Bluetooth Speaker",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-104",
@@ -1803,7 +2570,23 @@
       "taxCategory": "Leather Accessories",
       "sellerGstin": "29APPA1234A1Z5",
       "sellerPan": "APPA1234A",
-      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.4,
+      "sellerRatingCount": 3126,
+      "sellerSince": "2024-09-07",
+      "sellerReturnRate": 5.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-104-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/f1f5f9/334155?text=Mens+Leather+Belt",
+          "alt": "Men's Premium Textured Leather Belt",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-105",
@@ -1832,7 +2615,23 @@
       "taxCategory": "Leather Wallets",
       "sellerGstin": "29APPA1234A1Z5",
       "sellerPan": "APPA1234A",
-      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.4,
+      "sellerRatingCount": 3126,
+      "sellerSince": "2024-09-07",
+      "sellerReturnRate": 5.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-105-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/faf7f2/b45309?text=Mens+Leather+Wallet",
+          "alt": "Classic Tan Leather Bi-Fold Wallet",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-204",
@@ -1862,7 +2661,23 @@
       "taxCategory": "Silver Jewellery",
       "sellerGstin": "29BLIN1234A1Z5",
       "sellerPan": "BLIN1234A",
-      "sellerAddress": "Bling & Bloom Luxe, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Bling & Bloom Luxe, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 928,
+      "sellerSince": "2020-04-07",
+      "sellerReturnRate": 3.7,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-204-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fdf2f8/be185d?text=Silver+Hoop+Earrings",
+          "alt": "925 Sterling Silver Hoop Earrings",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-205",
@@ -1891,7 +2706,23 @@
       "taxCategory": "Scarves",
       "sellerGstin": "29APPA1234A1Z5",
       "sellerPan": "APPA1234A",
-      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Apparel Trendz, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.4,
+      "sellerRatingCount": 3126,
+      "sellerSince": "2024-09-07",
+      "sellerReturnRate": 5.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-205-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fff1f2/f43f5e?text=Womens+Silk+Scarf",
+          "alt": "Printed Silk Luxury Neck Scarf",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-304",
@@ -1921,7 +2752,23 @@
       "taxCategory": "Bags and Backpacks",
       "sellerGstin": "29TINY1234A1Z5",
       "sellerPan": "TINY1234A",
-      "sellerAddress": "TinyTots Retail, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "TinyTots Retail, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.7,
+      "sellerRatingCount": 4235,
+      "sellerSince": "2020-12-11",
+      "sellerReturnRate": 3.2,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-304-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/eff6ff/2563eb?text=Kids+Superhero+Bag",
+          "alt": "Kids Ergonomic Superhero School Backpack",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-403",
@@ -1950,7 +2797,27 @@
       "taxCategory": "Candles",
       "sellerGstin": "29LUXE1234A1Z5",
       "sellerPan": "LUXE1234A",
-      "sellerAddress": "Luxe Home Furnishings, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Luxe Home Furnishings, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 3830,
+      "sellerSince": "2024-03-15",
+      "sellerReturnRate": 4.5,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-403-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fdfaf2/ca8a04?text=Scented+Candles+Set",
+          "alt": "Luxury Soy Wax Scented Candle Set",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      }
     },
     {
       "id": "prod-503",
@@ -1980,7 +2847,27 @@
       "taxCategory": "Cosmetics",
       "sellerGstin": "29GLAM1234A1Z5",
       "sellerPan": "GLAM1234A",
-      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.6,
+      "sellerRatingCount": 1393,
+      "sellerSince": "2018-09-27",
+      "sellerReturnRate": 4.3,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-503-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fafafa/18181b?text=Matte+Liquid+Eyeliner",
+          "alt": "Waterproof Ultra-Black Matte Liquid Eyeliner",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 0,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-601",
@@ -2011,7 +2898,28 @@
       "taxCategory": "Air Conditioner",
       "sellerGstin": "29LGHA1234A1Z5",
       "sellerPan": "LGHA1234A",
-      "sellerAddress": "LG Home Appliances, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "LG Home Appliances, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.6,
+      "sellerRatingCount": 741,
+      "sellerSince": "2018-10-18",
+      "sellerReturnRate": 4.2,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-601-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1a73e8?text=LG+Split+AC",
+          "alt": "LG 1.5 Ton Split Air Conditioner",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      },
+      "warranty": "1 Year Comprehensive"
     },
     {
       "id": "prod-602",
@@ -2042,7 +2950,28 @@
       "taxCategory": "Kitchen Appliance",
       "sellerGstin": "29PRES1234A1Z5",
       "sellerPan": "PRES1234A",
-      "sellerAddress": "Prestige Kitchen Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Prestige Kitchen Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.3,
+      "sellerRatingCount": 2777,
+      "sellerSince": "2019-08-08",
+      "sellerReturnRate": 3.3,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-602-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fef7e0/f29900?text=Electric+Kettle",
+          "alt": "Prestige Electric Kettle 1.5L",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      },
+      "warranty": "1 Year"
     },
     {
       "id": "prod-603",
@@ -2072,7 +3001,23 @@
       "taxCategory": "Packaged Food",
       "sellerGstin": "29GROC1234A1Z5",
       "sellerPan": "GROC1234A",
-      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 2827,
+      "sellerSince": "2018-06-25",
+      "sellerReturnRate": 6,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-603-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e6f4ea/137333?text=Wheat+Atta",
+          "alt": "Aashirvaad Whole Wheat Atta 5kg",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-604",
@@ -2102,7 +3047,23 @@
       "taxCategory": "Chocolate",
       "sellerGstin": "29GROC1234A1Z5",
       "sellerPan": "GROC1234A",
-      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Daily Grocery Mart, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 2827,
+      "sellerSince": "2018-06-25",
+      "sellerReturnRate": 6,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-604-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/f3e8fd/9334e6?text=Chocolate",
+          "alt": "Cadbury Dairy Milk Silk Chocolate",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-605",
@@ -2132,7 +3093,23 @@
       "taxCategory": "Gold Jewellery",
       "sellerGstin": "29GOLD1234A1Z5",
       "sellerPan": "GOLD1234A",
-      "sellerAddress": "Tanishq Jewellery Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Tanishq Jewellery Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.1,
+      "sellerRatingCount": 3784,
+      "sellerSince": "2020-12-21",
+      "sellerReturnRate": 5.3,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-605-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fff7ed/c2410c?text=Gold+Ring",
+          "alt": "Tanishq 22K Gold Ring",
+          "label": "Main Image"
+        }
+      ],
+      "offers": []
     },
     {
       "id": "prod-606",
@@ -2162,7 +3139,28 @@
       "taxCategory": "Furniture",
       "sellerGstin": "29URBN1234A1Z5",
       "sellerPan": "URBN1234A",
-      "sellerAddress": "Urban Home Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Urban Home Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.8,
+      "sellerRatingCount": 1047,
+      "sellerSince": "2020-07-19",
+      "sellerReturnRate": 3.1,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-606-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/fdfaf2/92400e?text=Coffee+Table",
+          "alt": "Urban Ladder Wooden Coffee Table",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 7,
+        "exchangeAvailable": true
+      },
+      "warranty": "1 Year"
     },
     {
       "id": "prod-607",
@@ -2192,7 +3190,27 @@
       "taxCategory": "Cosmetics",
       "sellerGstin": "29GLAM1234A1Z5",
       "sellerPan": "GLAM1234A",
-      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "GlamGloss Cosmetics, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.6,
+      "sellerRatingCount": 1393,
+      "sellerSince": "2018-09-27",
+      "sellerReturnRate": 4.3,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-607-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e6f4ea/188038?text=Face+Wash",
+          "alt": "Himalaya Neem Face Wash",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 0,
+        "exchangeAvailable": false
+      }
     },
     {
       "id": "prod-608",
@@ -2222,7 +3240,27 @@
       "taxCategory": "Stationery",
       "sellerGstin": "29CLAS1234A1Z5",
       "sellerPan": "CLAS1234A",
-      "sellerAddress": "Classmate Stationery Store, Bengaluru, Karnataka - 560001"
+      "sellerAddress": "Classmate Stationery Store, Bengaluru, Karnataka - 560001",
+      "sellerRating": 4.5,
+      "sellerRatingCount": 3114,
+      "sellerSince": "2019-06-28",
+      "sellerReturnRate": 5.4,
+      "sellerVerified": true,
+      "qualityVerified": true,
+      "media": [
+        {
+          "id": "prod-608-main-image",
+          "type": "IMAGE",
+          "url": "https://placehold.co/600x400/e8f0fe/1967d2?text=Notebook+Pack",
+          "alt": "Classmate Spiral Notebook Pack of 6",
+          "label": "Main Image"
+        }
+      ],
+      "offers": [],
+      "deliveryInformation": {
+        "returnPeriodDays": 5,
+        "exchangeAvailable": false
+      }
     }
   ],
   "users": [
@@ -2544,6 +3582,113 @@
       "supportTeamRole": "CUSTOMER_OPERATIONS_ANALYST",
       "createdAt": "2026-07-15T10:00:00.000Z",
       "updatedAt": "2026-07-15T10:00:00.000Z"
+    },
+    {
+      "id": "pickup-agent-user-001",
+      "name": "Naveen Pickup Services",
+      "email": "pickup.agent1@shopease.demo",
+      "password": "Pickup@123",
+      "mobile": "9876500101",
+      "phone": "9876500101",
+      "address": "Naveen Pickup Services Hub, Bengaluru, Karnataka",
+      "role": "PICKUP_AGENT",
+      "partnerId": "RPP-001",
+      "pickupPartnerId": "RPP-001",
+      "partnerName": "Naveen Pickup Services",
+      "isActive": true,
+      "createdAt": "2026-07-18T09:00:00.000Z",
+      "updatedAt": "2026-07-18T09:00:00.000Z"
+    },
+    {
+      "id": "pickup-agent-user-002",
+      "name": "QuickReturn Logistics",
+      "email": "pickup.agent2@shopease.demo",
+      "password": "Pickup@123",
+      "mobile": "9876500102",
+      "phone": "9876500102",
+      "address": "QuickReturn Logistics Hub, Bengaluru, Karnataka",
+      "role": "PICKUP_AGENT",
+      "partnerId": "RPP-002",
+      "pickupPartnerId": "RPP-002",
+      "partnerName": "QuickReturn Logistics",
+      "isActive": true,
+      "createdAt": "2026-07-18T09:00:00.000Z",
+      "updatedAt": "2026-07-18T09:00:00.000Z"
+    },
+    {
+      "id": "pickup-agent-user-003",
+      "name": "Metro Reverse Pickup",
+      "email": "pickup.agent3@shopease.demo",
+      "password": "Pickup@123",
+      "mobile": "9876500103",
+      "phone": "9876500103",
+      "address": "Metro Reverse Pickup Hub, Bengaluru, Karnataka",
+      "role": "PICKUP_AGENT",
+      "partnerId": "RPP-003",
+      "pickupPartnerId": "RPP-003",
+      "partnerName": "Metro Reverse Pickup",
+      "isActive": true,
+      "createdAt": "2026-07-18T09:00:00.000Z",
+      "updatedAt": "2026-07-18T09:00:00.000Z"
+    },
+    {
+      "id": "warehouse-agent-user-001",
+      "name": "Return Warehouse QC Agent",
+      "email": "warehouse.agent1@shopease.demo",
+      "password": "Warehouse@123",
+      "mobile": "9876500301",
+      "phone": "9876500301",
+      "address": "ShopEase Return Warehouse, Bengaluru, Karnataka",
+      "role": "WAREHOUSE_AGENT",
+      "warehouseTeamCode": "RETURN_QC",
+      "warehouseTeamRole": "QC_AGENT",
+      "isActive": true,
+      "createdAt": "2026-07-20T10:00:00.000Z",
+      "updatedAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "id": "warehouse-agent-user-002",
+      "name": "Warehouse Inventory Agent",
+      "email": "warehouse.agent2@shopease.demo",
+      "password": "Warehouse@123",
+      "mobile": "9876500302",
+      "phone": "9876500302",
+      "address": "ShopEase Return Warehouse, Bengaluru, Karnataka",
+      "role": "WAREHOUSE_AGENT",
+      "warehouseTeamCode": "RETURN_QC",
+      "warehouseTeamRole": "INVENTORY_AGENT",
+      "isActive": true,
+      "createdAt": "2026-07-20T10:05:00.000Z",
+      "updatedAt": "2026-07-20T10:05:00.000Z"
+    },
+    {
+      "id": "delivery-agent-user-001",
+      "name": "FastShip Delivery Partner",
+      "email": "delivery.agent1@shopease.demo",
+      "password": "Delivery@123",
+      "role": "DELIVERY_AGENT",
+      "partnerId": "DLA-001",
+      "deliveryPartnerId": "DLA-001",
+      "phone": "9876500201",
+      "isActive": true,
+      "createdAt": "2026-07-24T09:00:00.000Z",
+      "updatedAt": "2026-07-24T09:00:00.000Z"
+    },
+    {
+      "id": "delivery-agent-user-002",
+      "name": "QuickDrop Logistics",
+      "email": "delivery.agent2@shopease.demo",
+      "password": "Delivery@123",
+      "mobile": "9876500202",
+      "phone": "9876500202",
+      "address": "QuickDrop Logistics Hub, Bengaluru, Karnataka",
+      "role": "DELIVERY_AGENT",
+      "partnerId": "DLA-002",
+      "deliveryPartnerId": "DLA-002",
+      "partnerName": "QuickDrop Logistics",
+      "isActive": true,
+      "createdAt": "2026-07-24T09:00:00.000Z",
+      "updatedAt": "2026-07-24T09:00:00.000Z"
     }
   ],
   "orders": [
@@ -2597,8 +3742,8 @@
       },
       "rewardRedemption": null,
       "walletRedemption": null,
-      "orderStatus": "Order Placed",
-      "fulfillmentStatus": "PENDING",
+      "orderStatus": "Delivered",
+      "fulfillmentStatus": "DELIVERED",
       "trackingSteps": [
         {
           "label": "Order Placed",
@@ -2606,19 +3751,19 @@
         },
         {
           "label": "Packed",
-          "isCompleted": false
+          "isCompleted": true
         },
         {
           "label": "Shipped",
-          "isCompleted": false
+          "isCompleted": true
         },
         {
           "label": "Out for Delivery",
-          "isCompleted": false
+          "isCompleted": true
         },
         {
           "label": "Delivered",
-          "isCompleted": false
+          "isCompleted": true
         }
       ],
       "trackingEvents": [
@@ -2666,13 +3811,34 @@
           "location": "Customer Address",
           "timestamp": "",
           "isCompleted": false
+        },
+        {
+          "id": "track-delivery-1784883061886-1kj2l2",
+          "status": "Out for Delivery",
+          "title": "Package is out for delivery",
+          "description": "Delivery agent started the delivery task.",
+          "location": "Delivery Partner",
+          "timestamp": "2026-07-24T08:51:01.886Z",
+          "isCompleted": true
+        },
+        {
+          "id": "track-delivery-1784883142333-h3n4kd",
+          "status": "Delivered",
+          "title": "Package delivered successfully",
+          "description": "Product Delivered to customer.",
+          "location": "Delivery Partner",
+          "timestamp": "2026-07-24T08:52:22.333Z",
+          "isCompleted": true
         }
       ],
       "subtotalAmount": 79900,
       "discountAmount": 500,
       "deliveryFee": 0,
       "couponCode": "SAVE500",
-      "couponId": "coupon-002"
+      "couponId": "coupon-002",
+      "updatedAt": "2026-07-24T08:52:22.276Z",
+      "deliveryStatus": "DELIVERED",
+      "deliveredAt": "2026-07-24T08:52:22.276Z"
     },
     {
       "id": "order-db-1783970261132",
@@ -2868,7 +4034,7 @@
       },
       "walletRedemption": null,
       "orderStatus": "Order Placed",
-      "fulfillmentStatus": "PENDING",
+      "fulfillmentStatus": "DELIVERY_ASSIGNED",
       "trackingSteps": [
         {
           "label": "Order Placed",
@@ -2940,7 +4106,9 @@
       ],
       "subtotalAmount": 154899,
       "discountAmount": 0,
-      "deliveryFee": 0
+      "deliveryFee": 0,
+      "deliveryStatus": "ASSIGNED",
+      "updatedAt": "2026-07-24T11:44:59.049Z"
     },
     {
       "id": "order-db-1784209182140",
@@ -3693,7 +4861,9 @@
       "sellerName": "Samsung Store",
       "warehouseIds": [
         1,
-        3
+        3,
+        4,
+        2
       ],
       "preferredWarehouseId": 1,
       "active": true
@@ -3716,7 +4886,8 @@
       "sellerName": "Levi's Fashion Store",
       "warehouseIds": [
         2,
-        4
+        4,
+        3
       ],
       "preferredWarehouseId": 2,
       "active": true
@@ -3727,7 +4898,8 @@
       "sellerName": "Nike Sports Store",
       "warehouseIds": [
         2,
-        3
+        3,
+        4
       ],
       "preferredWarehouseId": 2,
       "active": true
@@ -3738,7 +4910,8 @@
       "sellerName": "Penguin Books Store",
       "warehouseIds": [
         4,
-        5
+        5,
+        1
       ],
       "preferredWarehouseId": 5,
       "active": true
@@ -4126,38 +5299,173 @@
       "refundedAt": "2026-07-17T18:00:54.520Z",
       "refundCompletedAt": "2026-07-17T18:00:54.520Z",
       "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001006",
+      "requestId": "RET-20260720-1784300001006",
+      "returnRequestId": "RET-20260720-1784300001006",
+      "orderId": "ORD-20260718-6398",
+      "orderDbId": "order-db-1784387563006",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-20T08:30:00.000Z",
+      "createdAt": "2026-07-20T08:30:00.000Z",
+      "updatedAt": "2026-07-20T11:45:00.000Z",
+      "reason": "Product received with missing accessory",
+      "returnReason": "Product received with missing accessory",
+      "comments": "Customer reported that the wireless earbuds charging cable is missing from the package.",
+      "customerComment": "Customer reported that the wireless earbuds charging cable is missing from the package.",
+      "status": "QUALITY_CHECK_PENDING",
+      "pickupStatus": "PICKED_UP",
+      "qualityCheckStatus": "PENDING",
+      "refundStatus": "PENDING",
+      "refundId": null,
+      "refundAmount": 3999,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-20T00:00:00.000Z",
+      "pickupSlot": "10 AM - 1 PM",
+      "pickupPartnerId": "RPP-001",
+      "pickupPartnerName": "Naveen Pickup Services",
+      "pickupPartnerPhone": "9876500101",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260720-004",
+      "nextPickupAttemptAt": null,
+      "items": [
+        {
+          "productId": "prod-009",
+          "name": "boAt Airdopes 141 Bluetooth Earbuds",
+          "brand": "boAt",
+          "price": 3999,
+          "image": "https://placehold.co/600x400/e0f7fa/00838f?text=boAt+Airdopes+141",
+          "quantity": 1,
+          "subtotal": 3999,
+          "category": "Electronics",
+          "sellerId": "seller-009",
+          "sellerName": "boAt Official Store"
+        }
+      ],
+      "adminRemarks": "Return package picked up and received for warehouse QC.",
+      "qualityCheckRemarks": "Warehouse QC pending. Verify missing accessory claim before refund approval.",
+      "approvedAt": "2026-07-20T08:45:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-20T09:00:00.000Z",
+      "pickedUpAt": "2026-07-20T11:15:00.000Z",
+      "pickupCompletedAt": "2026-07-20T11:15:00.000Z",
+      "receivedAtWarehouseAt": "2026-07-20T11:45:00.000Z",
+      "qualityCheckedAt": null,
+      "refundInitiatedAt": null,
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "return-db-1784300001007",
+      "requestId": "RET-20260720-1784300001007",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "orderDbId": "order-db-1784387563007",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "requestedAt": "2026-07-20T09:10:00.000Z",
+      "createdAt": "2026-07-20T09:10:00.000Z",
+      "updatedAt": "2026-07-23T14:20:57.132Z",
+      "reason": "Multiple items returned for quality verification",
+      "returnReason": "Multiple items returned for quality verification",
+      "comments": "Customer returned multiple items from the same order. Warehouse team must verify each item condition separately.",
+      "customerComment": "Customer reported that one product has quality issue and another product has missing accessory.",
+      "status": "REFUND_INITIATED",
+      "pickupStatus": "PICKED_UP",
+      "qualityCheckStatus": "PASSED",
+      "refundStatus": "PENDING_REVIEW",
+      "refundId": "RFND-20260723-1784816457094",
+      "refundAmount": 67998,
+      "refundPreference": "ORIGINAL_PAYMENT_MODE",
+      "pickupAddress": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pickupDate": "2026-07-20T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "pickupPartnerId": "RPP-002",
+      "pickupPartnerName": "QuickReturn Logistics",
+      "pickupPartnerPhone": "9876500102",
+      "pickupAttemptCount": 1,
+      "lastPickupAttemptId": "PKUP-20260720-005",
+      "nextPickupAttemptAt": null,
+      "items": [
+        {
+          "productId": "prod-004",
+          "name": "Dell Inspiron 15 Laptop",
+          "brand": "Dell",
+          "price": 58999,
+          "image": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "quantity": 1,
+          "subtotal": 58999,
+          "category": "Electronics",
+          "sellerId": "seller-004",
+          "sellerName": "Dell Official Store"
+        },
+        {
+          "productId": "prod-009",
+          "name": "boAt Airdopes 141 Bluetooth Earbuds",
+          "brand": "boAt",
+          "price": 3999,
+          "image": "https://placehold.co/600x400/e0f7fa/00838f?text=boAt+Airdopes+141",
+          "quantity": 1,
+          "subtotal": 3999,
+          "category": "Electronics",
+          "sellerId": "seller-009",
+          "sellerName": "boAt Official Store"
+        },
+        {
+          "productId": "prod-007",
+          "name": "Nike Sports T-Shirt",
+          "brand": "Nike",
+          "price": 4999,
+          "image": "https://placehold.co/600x400/eaf4ff/0b57d0?text=Nike+T-Shirt",
+          "quantity": 1,
+          "subtotal": 4999,
+          "selectedSize": "L",
+          "category": "Clothing",
+          "sellerId": "seller-007",
+          "sellerName": "Nike Sports Store"
+        }
+      ],
+      "adminRemarks": "Return package picked up and received at warehouse. Multiple items require individual QC inspection.",
+      "qualityCheckRemarks": "Laptop received in open-box condition. Accessories verification Verified.",
+      "approvedAt": "2026-07-20T09:25:00.000Z",
+      "rejectedAt": null,
+      "pickupScheduledAt": "2026-07-20T09:45:00.000Z",
+      "pickedUpAt": "2026-07-20T12:00:00.000Z",
+      "pickupCompletedAt": "2026-07-20T12:00:00.000Z",
+      "receivedAtWarehouseAt": "2026-07-20T12:20:00.000Z",
+      "qualityCheckedAt": "2026-07-23T14:20:57.054Z",
+      "refundInitiatedAt": "2026-07-23T14:20:57.054Z",
+      "refundedAt": null,
+      "refundCompletedAt": null,
+      "cancelledAt": null
     }
   ],
   "returnPickupPartners": [
     {
       "id": "return-pickup-partner-db-001",
-      "partnerId": "RPP-001",
       "name": "Naveen Pickup Services",
-      "phone": "9876500101",
-      "email": "naveen.pickup@shopease.demo",
-      "city": "Bengaluru",
-      "zoneName": "Karnataka",
-      "status": "ACTIVE",
-      "activePickupCount": 2,
-      "maxDailyCapacity": 8,
-      "rating": 4.7,
-      "createdAt": "2026-07-17T08:00:00.000Z",
-      "updatedAt": "2026-07-17T18:27:51.518Z"
+      "email": "pickup.agent1@shopease.demo",
+      "password": "Pickup@123",
+      "role": "PICKUP_AGENT",
+      "partnerId": "RPP-001",
+      "pickupPartnerId": "RPP-001",
+      "phone": "9876500101"
     },
     {
       "id": "return-pickup-partner-db-002",
-      "partnerId": "RPP-002",
       "name": "QuickReturn Logistics",
-      "phone": "9876500102",
-      "email": "quickreturn@shopease.demo",
-      "city": "Bengaluru",
-      "zoneName": "Karnataka",
-      "status": "ACTIVE",
-      "activePickupCount": 0,
-      "maxDailyCapacity": 10,
-      "rating": 4.5,
-      "createdAt": "2026-07-17T08:00:00.000Z",
-      "updatedAt": "2026-07-17T08:00:00.000Z"
+      "email": "pickup.agent2@shopease.demo",
+      "password": "Pickup@123",
+      "role": "PICKUP_AGENT",
+      "partnerId": "RPP-002",
+      "pickupPartnerId": "RPP-002",
+      "phone": "9876500102"
     },
     {
       "id": "return-pickup-partner-db-003",
@@ -4165,14 +5473,9 @@
       "name": "Metro Reverse Pickup",
       "phone": "9876500103",
       "email": "metro.reverse@shopease.demo",
-      "city": "Bengaluru",
-      "zoneName": "Karnataka",
-      "status": "BUSY",
-      "activePickupCount": 10,
-      "maxDailyCapacity": 10,
-      "rating": 4.2,
-      "createdAt": "2026-07-17T08:00:00.000Z",
-      "updatedAt": "2026-07-17T08:00:00.000Z"
+      "password": "Pickup@123",
+      "role": "PICKUP_AGENT",
+      "pickupPartnerId": "RPP-003"
     }
   ],
   "returnPickupAttempts": [
@@ -4275,6 +5578,148 @@
       "pickupProofCode": null,
       "createdAt": "2026-07-17T18:27:51.480Z",
       "updatedAt": "2026-07-17T18:27:51.480Z"
+    },
+    {
+      "id": "return-pickup-attempt-db-005",
+      "attemptId": "PKUP-20260720-005",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "requestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "userId": "user-001",
+      "partnerId": "RPP-002",
+      "partnerName": "QuickReturn Logistics",
+      "partnerPhone": "9876500102",
+      "attemptNumber": 1,
+      "status": "PICKED_UP",
+      "scheduledPickupDate": "2026-07-20T00:00:00.000Z",
+      "pickupSlot": "1 PM - 4 PM",
+      "outForPickupAt": "2026-07-20T11:25:00.000Z",
+      "pickedUpAt": "2026-07-20T12:00:00.000Z",
+      "failedAt": null,
+      "rescheduledAt": null,
+      "cancelledAt": null,
+      "failureReason": null,
+      "pickupProofCode": "POP-1784387563007",
+      "remarks": "Multiple return items picked up successfully and sent to warehouse.",
+      "createdAt": "2026-07-20T09:45:00.000Z",
+      "updatedAt": "2026-07-20T12:00:00.000Z"
+    }
+  ],
+  "returnPackageTrackingEvents": [
+    {
+      "id": "return-tracking-event-db-001",
+      "trackingEventId": "RTE-20260718-001",
+      "returnRequestId": "return-request-db-001",
+      "orderId": "ORD-20260713-7542",
+      "status": "PICKUP_SCHEDULED",
+      "title": "Pickup Scheduled",
+      "description": "Return pickup has been scheduled.",
+      "location": "Customer Address",
+      "handledByUserId": "support-001",
+      "handledByName": "Support Agent",
+      "createdAt": "2026-07-18T09:00:00.000Z"
+    },
+    {
+      "id": "return-tracking-event-db-002",
+      "trackingEventId": "RTE-20260718-002",
+      "returnRequestId": "return-request-db-001",
+      "orderId": "ORD-20260713-7542",
+      "status": "PICKUP_COMPLETED",
+      "title": "Pickup Completed",
+      "description": "Return package was picked up successfully and proof is pending verification.",
+      "location": "Bengaluru",
+      "handledByUserId": "support-001",
+      "handledByName": "Support Agent",
+      "createdAt": "2026-07-18T10:15:00.000Z"
+    },
+    {
+      "id": "return-tracking-event-db-1784391222264-vtxkeu",
+      "trackingEventId": "RTE-20260718-1784391222264",
+      "returnRequestId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "status": "PICKUP_SCHEDULED",
+      "title": "Pickup Scheduled",
+      "description": "Return pickup has been scheduled.",
+      "location": "Bangalore",
+      "handledByUserId": "support-001",
+      "handledByName": "Support Agent",
+      "createdAt": "2026-07-18T16:13:42.264Z"
+    },
+    {
+      "id": "return-tracking-event-db-1784391261200-ovpguz",
+      "trackingEventId": "RTE-20260718-1784391261200",
+      "returnRequestId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "status": "PICKUP_ASSIGNED",
+      "title": "Pickup Assigned",
+      "description": "Pickup partner or pickup agent has been assigned.",
+      "location": "Bangalore",
+      "handledByUserId": "support-001",
+      "handledByName": "Support Agent",
+      "createdAt": "2026-07-18T16:14:21.200Z"
+    },
+    {
+      "id": "return-tracking-event-db-004",
+      "trackingEventId": "RTE-20260720-004",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "status": "DELIVERED_TO_RETURN_WAREHOUSE",
+      "title": "Delivered to Return Warehouse",
+      "description": "Multiple returned items were delivered to the warehouse and are ready for QC inspection.",
+      "location": "ShopEase Return Warehouse, Bengaluru",
+      "handledByUserId": "warehouse-agent-user-001",
+      "handledByName": "Return Warehouse QC Agent",
+      "createdAt": "2026-07-20T12:20:00.000Z"
+    }
+  ],
+  "returnPickupProofs": [
+    {
+      "id": "return-pickup-proof-db-001",
+      "proofId": "RPP-20260718-001",
+      "returnRequestId": "RET-20260717-1784300001004",
+      "orderId": "ORD-20260716-1883",
+      "pickupPartnerId": "RPP-002",
+      "pickupAgentName": "QuickReturn Logistics",
+      "packageCondition": "SEALED",
+      "packagePhotoDataUrl": null,
+      "packagePhotoFileName": null,
+      "otpVerified": true,
+      "customerSignatureCaptured": true,
+      "customerRemarks": "Package handed over in sealed condition.",
+      "agentRemarks": "Package collected successfully.",
+      "pickupLocation": "Bengaluru",
+      "uploadedByUserId": "support-001",
+      "uploadedByName": "Support Agent",
+      "uploadedAt": "2026-07-18T10:16:00.000Z",
+      "verificationStatus": "PENDING_VERIFICATION",
+      "verifiedByUserId": null,
+      "verifiedByName": null,
+      "verifiedAt": null,
+      "rejectionReason": null
+    },
+    {
+      "id": "return-pickup-proof-db-002",
+      "proofId": "RPP-20260718-002",
+      "returnRequestId": "RET-20260717-1784300001005",
+      "orderId": "ORD-20260716-5454",
+      "pickupPartnerId": "RPP-001",
+      "pickupAgentName": "Naveen Pickup Services",
+      "packageCondition": "SEALED",
+      "packagePhotoDataUrl": null,
+      "packagePhotoFileName": null,
+      "otpVerified": true,
+      "customerSignatureCaptured": true,
+      "customerRemarks": "Return package handed over.",
+      "agentRemarks": "Package collected and verified at pickup.",
+      "pickupLocation": "Bengaluru",
+      "uploadedByUserId": "support-001",
+      "uploadedByName": "Support Agent",
+      "uploadedAt": "2026-07-18T10:20:00.000Z",
+      "verificationStatus": "VERIFIED",
+      "verifiedByUserId": "support-001",
+      "verifiedByName": "Support Agent",
+      "verifiedAt": "2026-07-18T10:30:00.000Z",
+      "rejectionReason": null
     }
   ],
   "refunds": [
@@ -4404,6 +5849,26 @@
       "assignedTeam": "REFUND_TEAM",
       "createdAt": "2026-07-17T14:25:00.000Z",
       "updatedAt": "2026-07-17T14:25:00.000Z",
+      "completedAt": null,
+      "failedAt": null,
+      "gatewayRefundReferenceId": null,
+      "resolutionNote": null
+    },
+    {
+      "id": "refund-request-db-1784816457093-h783jo",
+      "refundId": "RFND-20260723-1784816457094",
+      "paymentId": "RETURN-RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "userId": "user-001",
+      "userName": "Test User",
+      "amount": 67998,
+      "refundMode": "ORIGINAL_PAYMENT_MODE",
+      "reason": "Return quality check passed for RET-20260720-1784300001007.",
+      "createdBy": "SYSTEM",
+      "assignedTeam": "REFUND_TEAM",
+      "status": "PENDING_REVIEW",
+      "createdAt": "2026-07-23T14:20:57.093Z",
+      "updatedAt": "2026-07-23T14:20:57.093Z",
       "completedAt": null,
       "failedAt": null,
       "gatewayRefundReferenceId": null,
@@ -5710,6 +7175,701 @@
           "createdByRole": "SUPPORT"
         }
       ]
+    },
+    {
+      "id": "support-ticket-db-1784728267540",
+      "ticketId": "SUP-1784728267540",
+      "userId": "user-001",
+      "userName": "Test User",
+      "userEmail": "test@example.com",
+      "category": "RETURN_REFUND",
+      "priority": "MEDIUM",
+      "subject": "Return / Refund issue for order ORD-20260718-7821",
+      "message": "I need support for my return/refund.\nOrder ID: ORD-20260718-7821\nReturn Request ID: RET-20260720-1784300001007\nIssue details:",
+      "orderId": "ORD-20260718-7821",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "relatedReturnRequestId": "RET-20260720-1784300001007",
+      "issueType": "GENERAL",
+      "attachments": [],
+      "unreadForSupport": true,
+      "unreadForCustomer": false,
+      "status": "OPEN",
+      "createdAt": "2026-07-22T13:51:07.539Z",
+      "updatedAt": "2026-07-22T13:51:07.539Z",
+      "messages": [
+        {
+          "id": "ticket-message-1784728267540",
+          "authorId": "user-001",
+          "authorName": "Test User",
+          "authorRole": "CUSTOMER",
+          "message": "I need support for my return/refund.\nOrder ID: ORD-20260718-7821\nReturn Request ID: RET-20260720-1784300001007\nIssue details:",
+          "createdAt": "2026-07-22T13:51:07.539Z",
+          "attachments": []
+        }
+      ],
+      "activities": [
+        {
+          "id": "ticket-activity-1784728267540",
+          "label": "Ticket Created",
+          "description": "Ticket was created by Test User.",
+          "createdAt": "2026-07-22T13:51:07.539Z",
+          "createdByRole": "CUSTOMER"
+        }
+      ]
     }
-  ]
+  ],
+  "returnRefundSettlements": [
+    {
+      "id": "return-settlement-db-001",
+      "settlementId": "RSET-20260721-001",
+      "returnRequestDbId": "return-db-1784300001007",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "requestId": "RET-20260720-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "orderDbId": "order-db-1784387563007",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerEmail": "test@example.com",
+      "refundAmount": 67998,
+      "settlementAmount": 67998,
+      "walletCreditAmount": 0,
+      "couponAmount": 0,
+      "settlementMode": "ORIGINAL_PAYMENT_MODE",
+      "settlementStatus": "QUEUED",
+      "gatewayReferenceId": null,
+      "walletTransactionId": null,
+      "couponCode": null,
+      "failureReason": null,
+      "failureRemarks": null,
+      "settlementRemarks": "Refund queued after warehouse QC passed.",
+      "queuedByUserId": "support-001",
+      "queuedByName": "Support Agent",
+      "queuedAt": "2026-07-21T10:00:00.000Z",
+      "processedByUserId": null,
+      "processedByName": null,
+      "processedAt": null,
+      "settledAt": null,
+      "failedAt": null,
+      "createdAt": "2026-07-21T10:00:00.000Z",
+      "updatedAt": "2026-07-21T10:00:00.000Z"
+    }
+  ],
+  "returnCompensationCoupons": [],
+  "sellerReturnDisputes": [
+    {
+      "id": "seller-dispute-db-1001",
+      "disputeId": "SRD-20260723-1001",
+      "returnRequestId": "RET-20260720-1784300001007",
+      "returnRequestDbId": "return-db-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "sellerId": "seller-004",
+      "sellerName": "Dell Official Store",
+      "productId": "prod-004",
+      "productName": "Dell Inspiron 15 Laptop",
+      "disputeReason": "PRODUCT_DAMAGED_BY_CUSTOMER",
+      "disputeDescription": "Seller claims the laptop was shipped in good condition and damage happened after delivery.",
+      "priority": "HIGH",
+      "status": "APPROVED",
+      "qcStatus": "FAILED",
+      "qcRemarks": "Warehouse found item damage and accessory mismatch.",
+      "sellerEvidence": [
+        {
+          "id": "seller-evidence-1784832496772-1605sp",
+          "fileName": "Dispatched",
+          "fileUrl": "https://placehold.co/600x400/fff4e5/f29900?text=Dell+Inspiron+15",
+          "fileType": "URL",
+          "uploadedAt": "2026-07-23T18:48:16.772Z"
+        },
+        {
+          "id": "seller-evidence-1784832466275-5v19jz",
+          "fileName": "Designer.png",
+          "fileUrl": "",
+          "fileType": "image/png",
+          "uploadedAt": "2026-07-23T18:47:46.275Z"
+        }
+      ],
+      "createdAt": "2026-07-23T10:00:00.000Z",
+      "updatedAt": "2026-07-23T19:19:46.638Z",
+      "adminDecision": "SELLER_APPROVED",
+      "adminRemarks": "Approved.",
+      "reviewedByUserId": "admin-001",
+      "reviewedByName": "Administrator",
+      "reviewedAt": "2026-07-23T19:19:46.637Z",
+      "sellerAdditionalRemarks": "Added Evidence URL please check",
+      "sellerRespondedAt": "2026-07-23T18:48:16.773Z",
+      "sellerResponseCount": 1,
+      "activities": [
+        {
+          "id": "seller-dispute-activity-1784834386637-oq7gij",
+          "label": "Dispute Approved",
+          "description": "Approved.",
+          "createdAt": "2026-07-23T19:19:46.637Z",
+          "createdByRole": "ADMIN",
+          "createdByName": "Administrator"
+        }
+      ]
+    }
+  ],
+  "inventoryRestockLogs": [
+    {
+      "id": "restock-log-db-1001",
+      "restockId": "RSTK-20260723-1001",
+      "returnRequestId": "RET-20260717-1784300001005",
+      "returnRequestDbId": "return-db-1784300001005",
+      "orderId": "ORD-20260716-5454",
+      "productId": "prod-007",
+      "productName": "Nike Sports T-Shirt",
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "quantity": 1,
+      "restockStatus": "RESTOCKED",
+      "restockType": "SELLABLE",
+      "qcStatus": "PASSED",
+      "conditionGrade": "A",
+      "previousStock": 25,
+      "newStock": 26,
+      "remarks": "Product received in sellable condition. Stock restored.",
+      "createdAt": "2026-07-23T10:15:00.000Z",
+      "updatedAt": "2026-07-23T10:15:00.000Z"
+    },
+    {
+      "returnRequestId": "RET-20260720-1784300001007",
+      "returnRequestDbId": "return-db-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "productId": "prod-004",
+      "productName": "Dell Inspiron 15 Laptop",
+      "sellerId": "seller-004",
+      "sellerName": "Dell Official Store",
+      "quantity": 1,
+      "restockStatus": "RESTOCKED",
+      "restockType": "SELLABLE",
+      "qcStatus": "PASSED",
+      "conditionGrade": "A",
+      "previousStock": 8,
+      "newStock": 9,
+      "remarks": "QC passed. Product can be added back to sellable stock.",
+      "id": "restock-log-db-1784835634858-l51v6q",
+      "restockId": "RSTK-20260723-1784835634858",
+      "createdAt": "2026-07-23T19:40:34.858Z",
+      "updatedAt": "2026-07-23T19:40:34.858Z"
+    },
+    {
+      "returnRequestId": "RET-20260720-1784300001007",
+      "returnRequestDbId": "return-db-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "productId": "prod-009",
+      "productName": "boAt Airdopes 141 Bluetooth Earbuds",
+      "sellerId": "seller-009",
+      "sellerName": "boAt Official Store",
+      "quantity": 1,
+      "restockStatus": "RESTOCKED",
+      "restockType": "SELLABLE",
+      "qcStatus": "PASSED",
+      "conditionGrade": "A",
+      "previousStock": 18,
+      "newStock": 19,
+      "remarks": "QC passed. Product can be added back to sellable stock.",
+      "id": "restock-log-db-1784835643838-uff9vr",
+      "restockId": "RSTK-20260723-1784835643838",
+      "createdAt": "2026-07-23T19:40:43.838Z",
+      "updatedAt": "2026-07-23T19:40:43.838Z"
+    },
+    {
+      "returnRequestId": "RET-20260720-1784300001007",
+      "returnRequestDbId": "return-db-1784300001007",
+      "orderId": "ORD-20260718-7821",
+      "productId": "prod-007",
+      "productName": "Nike Sports T-Shirt",
+      "sellerId": "seller-007",
+      "sellerName": "Nike Sports Store",
+      "quantity": 1,
+      "restockStatus": "RESTOCKED",
+      "restockType": "SELLABLE",
+      "qcStatus": "PASSED",
+      "conditionGrade": "A",
+      "previousStock": 30,
+      "newStock": 31,
+      "remarks": "QC passed. Product can be added back to sellable stock.",
+      "id": "restock-log-db-1784835645287-yca9kw",
+      "restockId": "RSTK-20260723-1784835645287",
+      "createdAt": "2026-07-23T19:40:45.287Z",
+      "updatedAt": "2026-07-23T19:40:45.287Z"
+    }
+  ],
+  "openBoxInventory": [],
+  "damagedReturnInventory": [],
+  "deliveryProofs": [
+    {
+      "assignmentId": "AGT-ASG-20260724-DLY-001",
+      "taskId": "ORD-20260713-7927",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "agentId": "DLA-001",
+      "agentName": "FastShip Delivery Partner",
+      "proofType": "MANUAL",
+      "otpVerified": true,
+      "customerRemarks": "Product Delivered by Delivery Agent.",
+      "agentRemarks": "Product Delivered to customer.",
+      "id": "delivery-proof-db-1784883142161-z24i86",
+      "proofId": "DLY-PRF-20260724-1784883142161",
+      "deliveredAt": "2026-07-24T08:52:22.161Z",
+      "createdAt": "2026-07-24T08:52:22.161Z"
+    }
+  ],
+  "pickupProofs": [
+    {
+      "id": "pickup-proof-db-1001",
+      "proofId": "PKP-PRF-20260723-1001",
+      "returnRequestId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "agentId": "RPP-001",
+      "agentName": "Naveen Pickup Services",
+      "proofType": "PHOTO",
+      "proofUrl": "data:image/png;base64,...",
+      "otpVerified": true,
+      "customerRemarks": "Package handed over.",
+      "agentRemarks": "Product picked up in sealed package.",
+      "capturedAt": "2026-07-23T12:30:00.000Z"
+    }
+  ],
+  "agentTaskLogs": [
+    {
+      "id": "agent-task-log-db-1001",
+      "assignmentId": "AGT-ASG-20260723-1001",
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001002",
+      "agentId": "RPP-001",
+      "status": "PICKUP_COMPLETED",
+      "remarks": "Package picked up successfully.",
+      "createdAt": "2026-07-23T12:30:00.000Z"
+    },
+    {
+      "id": "agent-task-log-db-1784879028579-czcvpl",
+      "assignmentId": "AGT-ASG-20260723-1001",
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001002",
+      "agentId": "RPP-001",
+      "status": "OUT_FOR_PICKUP",
+      "remarks": "Pickup agent started the return pickup.",
+      "createdByUserId": "RPP-001",
+      "createdByName": "Naveen Pickup Services",
+      "createdAt": "2026-07-24T07:43:48.579Z"
+    },
+    {
+      "id": "agent-task-log-db-1784881061272-thtys1",
+      "assignmentId": "AGT-ASG-20260723-1001",
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001002",
+      "agentId": "RPP-001",
+      "status": "PICKUP_ATTEMPTED",
+      "remarks": "Customer requested reschedule",
+      "createdByUserId": "RPP-001",
+      "createdByName": "Naveen Pickup Services",
+      "createdAt": "2026-07-24T08:17:41.272Z"
+    },
+    {
+      "id": "agent-task-log-db-1784883061812-qk1gjr",
+      "assignmentId": "AGT-ASG-20260724-DLY-001",
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260713-7927",
+      "agentId": "DLA-001",
+      "status": "OUT_FOR_DELIVERY",
+      "remarks": "Delivery agent started the delivery task.",
+      "createdByUserId": "DLA-001",
+      "createdByName": "FastShip Delivery Partner",
+      "createdAt": "2026-07-24T08:51:01.812Z"
+    },
+    {
+      "id": "agent-task-log-db-1784883142228-qdkho2",
+      "assignmentId": "AGT-ASG-20260724-DLY-001",
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260713-7927",
+      "agentId": "DLA-001",
+      "status": "DELIVERED",
+      "remarks": "Product Delivered to customer.",
+      "createdByUserId": "DLA-001",
+      "createdByName": "FastShip Delivery Partner",
+      "createdAt": "2026-07-24T08:52:22.228Z"
+    },
+    {
+      "id": "agent-task-log-db-1784893499335-2bl3r2",
+      "assignmentId": "AGT-ASG-20260724-1784893489325",
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260714-9446",
+      "agentId": "DLA-001",
+      "status": "ASSIGNED",
+      "remarks": "Assigned to FastShip Delivery Partner.",
+      "createdByUserId": "admin-001",
+      "createdByName": "Administrator",
+      "createdAt": "2026-07-24T11:44:59.335Z"
+    }
+  ],
+  "agentAssignments": [
+    {
+      "id": "agent-assignment-db-1001",
+      "assignmentId": "AGT-ASG-20260723-1001",
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001002",
+      "orderId": "ORD-20260713-7542",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerPhone": "9876543210",
+      "address": "MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pincode": "560001",
+      "agentId": "RPP-001",
+      "agentName": "Naveen Pickup Services",
+      "agentPhone": "9876500101",
+      "status": "PICKUP_ATTEMPTED",
+      "priority": "MEDIUM",
+      "scheduledDate": "2026-07-20T00:00:00.000Z",
+      "scheduledSlot": "1 PM - 4 PM",
+      "attemptCount": 1,
+      "createdAt": "2026-07-23T10:00:00.000Z",
+      "updatedAt": "2026-07-24T08:17:41.238Z",
+      "remarks": "Customer requested reschedule",
+      "lastAttemptAt": "2026-07-24T08:17:41.238Z"
+    },
+    {
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001001",
+      "returnRequestId": "RET-20260717-1784300001001",
+      "returnRequestDbId": "return-db-1784300001001",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerEmail": "test@example.com",
+      "address": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pincode": "560001",
+      "priority": "HIGH",
+      "id": "agent-assignment-db-1784874527138-0vpf9j",
+      "assignmentId": "AGT-ASG-20260724-1784874527138",
+      "status": "UNASSIGNED",
+      "attemptCount": 0,
+      "createdAt": "2026-07-24T06:28:47.137Z",
+      "updatedAt": "2026-07-24T06:28:47.137Z"
+    },
+    {
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001003",
+      "returnRequestId": "RET-20260717-1784300001003",
+      "returnRequestDbId": "return-db-1784300001003",
+      "orderId": "ORD-20260714-9446",
+      "orderDbId": "order-db-1784045498557",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerEmail": "test@example.com",
+      "address": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pincode": "560001",
+      "priority": "HIGH",
+      "scheduledDate": "2026-07-19T00:00:00.000Z",
+      "scheduledSlot": "10 AM - 1 PM",
+      "remarks": "Pickup scheduled with Naveen Pickup Services.",
+      "id": "agent-assignment-db-1784875015199-ixoc92",
+      "assignmentId": "AGT-ASG-20260724-1784875015200",
+      "status": "UNASSIGNED",
+      "attemptCount": 0,
+      "createdAt": "2026-07-24T06:36:55.199Z",
+      "updatedAt": "2026-07-24T06:36:55.199Z"
+    },
+    {
+      "id": "agent-assignment-db-delivery-001",
+      "assignmentId": "AGT-ASG-20260724-DLY-001",
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260713-7927",
+      "orderId": "ORD-20260713-7927",
+      "orderDbId": "order-db-1783929762269",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerPhone": "9876543210",
+      "customerEmail": "test@example.com",
+      "address": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka - 560001",
+      "pincode": "560001",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "agentId": "DLA-001",
+      "agentName": "FastShip Delivery Partner",
+      "agentPhone": "9876500201",
+      "agentType": "DELIVERY_AGENT",
+      "status": "DELIVERED",
+      "priority": "MEDIUM",
+      "scheduledDate": "2026-07-24T00:00:00.000Z",
+      "scheduledSlot": "10 AM - 1 PM",
+      "attemptCount": 0,
+      "remarks": "Product Delivered to customer.",
+      "assignedByUserId": "admin-001",
+      "assignedByName": "Admin",
+      "assignedAt": "2026-07-24T09:30:00.000Z",
+      "createdAt": "2026-07-24T09:30:00.000Z",
+      "updatedAt": "2026-07-24T08:52:22.195Z"
+    },
+    {
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260713-7542",
+      "orderId": "ORD-20260713-7542",
+      "orderDbId": "order-db-1783970261132",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerPhone": "9876543210",
+      "address": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka, 560001",
+      "pincode": "560001",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "priority": "MEDIUM",
+      "id": "agent-assignment-db-1784893253171-wbhds1",
+      "assignmentId": "AGT-ASG-20260724-1784893253171",
+      "status": "UNASSIGNED",
+      "attemptCount": 0,
+      "createdAt": "2026-07-24T11:40:53.171Z",
+      "updatedAt": "2026-07-24T11:40:53.171Z"
+    },
+    {
+      "taskType": "ORDER_DELIVERY",
+      "taskId": "ORD-20260714-9446",
+      "orderId": "ORD-20260714-9446",
+      "orderDbId": "order-db-1784045498557",
+      "userId": "user-001",
+      "customerName": "Test User",
+      "customerPhone": "9876543210",
+      "address": "Test User, 9876543210, MG Road, Near Metro Station, Bengaluru, Karnataka, 560001",
+      "pincode": "560001",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "priority": "MEDIUM",
+      "id": "agent-assignment-db-1784893489325-888jya",
+      "assignmentId": "AGT-ASG-20260724-1784893489325",
+      "status": "ASSIGNED",
+      "attemptCount": 0,
+      "createdAt": "2026-07-24T11:44:49.325Z",
+      "updatedAt": "2026-07-24T11:44:59.249Z",
+      "agentId": "DLA-001",
+      "agentName": "FastShip Delivery Partner",
+      "agentPhone": "9876500201",
+      "agentType": "DELIVERY_AGENT",
+      "assignedByUserId": "admin-001",
+      "assignedByName": "Administrator",
+      "assignedAt": "2026-07-24T11:44:59.049Z",
+      "scheduledDate": "2026-07-24T00:00:00.000Z"
+    }
+  ],
+  "agentProfiles": [
+    {
+      "id": "agent-profile-db-001",
+      "agentId": "RPP-001",
+      "name": "Naveen Pickup Services",
+      "phone": "9876500101",
+      "email": "naveen.pickup@example.com",
+      "agentType": "PICKUP_AGENT",
+      "servicePincodes": [
+        "560001",
+        "560002"
+      ],
+      "city": "Bengaluru",
+      "status": "ACTIVE",
+      "maxDailyTasks": 25,
+      "createdAt": "2026-07-23T10:00:00.000Z",
+      "updatedAt": "2026-07-23T10:00:00.000Z"
+    },
+    {
+      "id": "agent-profile-db-002",
+      "agentId": "DLA-001",
+      "name": "FastShip Delivery Partner",
+      "phone": "9876500201",
+      "email": "fastship.delivery@example.com",
+      "agentType": "DELIVERY_AGENT",
+      "servicePincodes": [
+        "560001",
+        "560003"
+      ],
+      "city": "Bengaluru",
+      "status": "ACTIVE",
+      "maxDailyTasks": 1,
+      "createdAt": "2026-07-23T10:00:00.000Z",
+      "updatedAt": "2026-07-23T10:00:00.000Z"
+    },
+    {
+      "id": "agent-profile-db-003",
+      "agentId": "HYB-OPS-001",
+      "name": "Hyderabad Ops Partner",
+      "phone": "9876500301",
+      "email": "hyd.ops@example.com",
+      "agentType": "BOTH",
+      "servicePincodes": [
+        "500001",
+        "500081",
+        "500032"
+      ],
+      "city": "Hyderabad",
+      "status": "ACTIVE",
+      "maxDailyTasks": 30,
+      "createdAt": "2026-07-23T10:00:00.000Z",
+      "updatedAt": "2026-07-23T10:00:00.000Z"
+    },
+    {
+      "id": "agent-profile-db-delivery-001",
+      "agentId": "DLA-001",
+      "name": "FastShip Delivery Partner",
+      "phone": "9876500201",
+      "email": "delivery.agent1@shopease.demo",
+      "agentType": "DELIVERY_AGENT",
+      "servicePincodes": [
+        "560001",
+        "560002",
+        "560003"
+      ],
+      "city": "Bengaluru",
+      "status": "ACTIVE",
+      "maxDailyTasks": 1,
+      "createdAt": "2026-07-24T09:00:00.000Z",
+      "updatedAt": "2026-07-24T09:00:00.000Z"
+    },
+    {
+      "id": "agent-profile-db-delivery-002",
+      "agentId": "DLA-002",
+      "name": "QuickDrop Logistics",
+      "phone": "9876500202",
+      "email": "delivery.agent2@shopease.demo",
+      "agentType": "DELIVERY_AGENT",
+      "servicePincodes": [
+        "560001",
+        "560004",
+        "560005"
+      ],
+      "city": "Bengaluru",
+      "status": "ACTIVE",
+      "maxDailyTasks": 25,
+      "createdAt": "2026-07-24T09:00:00.000Z",
+      "updatedAt": "2026-07-24T09:00:00.000Z"
+    },
+    {
+      "id": "agent-profile-db-both-001",
+      "agentId": "OPS-001",
+      "name": "Bengaluru Field Ops Partner",
+      "phone": "9876500999",
+      "email": "blr.ops@example.com",
+      "agentType": "BOTH",
+      "servicePincodes": [
+        "560001",
+        "560002",
+        "560003"
+      ],
+      "city": "Bengaluru",
+      "status": "ACTIVE",
+      "maxDailyTasks": 30,
+      "createdAt": "2026-07-24T09:00:00.000Z",
+      "updatedAt": "2026-07-24T09:00:00.000Z"
+    }
+  ],
+  "agentIncentiveRules": [
+    {
+      "id": "agent-incentive-rule-default",
+      "ruleId": "AGT-RULE-DEFAULT",
+      "name": "Default Agent Incentive Rule",
+      "isActive": true,
+      "pickupCompletionAmount": 35,
+      "deliveryCompletionAmount": 45,
+      "failedAttemptAllowance": 10,
+      "slaBonusAmount": 15,
+      "proofVerifiedBonusAmount": 10,
+      "proofRejectedPenaltyAmount": 20,
+      "maxFailedAttemptAllowancePerPeriod": 10,
+      "createdAt": "2026-07-25T00:00:00.000Z",
+      "updatedAt": "2026-07-25T00:00:00.000Z"
+    }
+  ],
+  "agentPayouts": [
+    {
+      "id": "agent-payout-db-1785147384725-6k6dym",
+      "payoutId": "AGT-PAYOUT-20260727-1785147384725",
+      "agentId": "DLA-001",
+      "agentName": "FastShip Delivery Partner",
+      "agentType": "DELIVERY_AGENT",
+      "periodStart": "2026-06-30T18:30:00.000Z",
+      "periodEnd": "2026-07-30T18:30:00.000Z",
+      "completedPickups": 0,
+      "completedDeliveries": 1,
+      "failedAttempts": 0,
+      "slaEligibleTasks": 1,
+      "verifiedProofs": 0,
+      "rejectedProofs": 0,
+      "grossAmount": 60,
+      "deductions": 0,
+      "netPayableAmount": 60,
+      "status": "READY_FOR_APPROVAL",
+      "remarks": "Generated from Phase 12O.9 agent payout dashboard.",
+      "createdAt": "2026-07-27T10:16:24.724Z",
+      "updatedAt": "2026-07-27T10:16:24.724Z"
+    }
+  ],
+  "returnAutomationRules": [
+    {
+      "id": "RULE-1785505042869-3hagx7",
+      "ruleId": "RAR-1785505042869-s7pm22",
+      "ruleName": "Hold high fraud refunds",
+      "description": "Hold refund if fraud pattern is detected",
+      "trigger": "FRAUD_PATTERN_DETECTED",
+      "action": "HOLD_REFUND",
+      "priority": "HIGH",
+      "status": "ACTIVE",
+      "conditions": [
+        {
+          "field": "riskLevel",
+          "operator": "EQUALS",
+          "value": "HIGH"
+        },
+        {
+          "field": "refundAmount",
+          "operator": "GREATER_THAN",
+          "value": 10000
+        }
+      ],
+      "stopFurtherRules": true,
+      "requiresAudit": true,
+      "createdBy": "Admin",
+      "createdAt": "2026-07-31T13:37:22.869Z",
+      "updatedAt": "2026-07-31T13:37:22.869Z"
+    }
+  ],
+  "returnAutomationRuleAuditLogs": [
+    {
+      "id": "AUDIT-1785505042997-uek0sc",
+      "auditId": "RAUD-1785505042997-4eoq0l",
+      "ruleId": "RAR-1785505042869-s7pm22",
+      "ruleName": "Hold high fraud refunds",
+      "action": "BULK_IMPORTED",
+      "changedBy": "Admin",
+      "changedAt": "2026-07-31T13:37:22.997Z",
+      "details": "Rule \"Hold high fraud refunds\" was imported through bulk import.",
+      "afterSnapshot": {
+        "id": "RULE-1785505042869-3hagx7",
+        "ruleId": "RAR-1785505042869-s7pm22",
+        "ruleName": "Hold high fraud refunds",
+        "description": "Hold refund if fraud pattern is detected",
+        "trigger": "FRAUD_PATTERN_DETECTED",
+        "action": "HOLD_REFUND",
+        "priority": "HIGH",
+        "status": "ACTIVE",
+        "conditions": [
+          {
+            "field": "riskLevel",
+            "operator": "EQUALS",
+            "value": "HIGH"
+          },
+          {
+            "field": "refundAmount",
+            "operator": "GREATER_THAN",
+            "value": 10000
+          }
+        ],
+        "stopFurtherRules": true,
+        "requiresAudit": true,
+        "createdBy": "Admin",
+        "createdAt": "2026-07-31T13:37:22.869Z",
+        "updatedAt": "2026-07-31T13:37:22.869Z"
+      }
+    }
+  ],
+  "sellerPayoutAdjustments": [],
+  "returnOperationsAuditExports": [],
+  "sellers": []
 }

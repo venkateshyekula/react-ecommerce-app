@@ -4,13 +4,13 @@ import type {
   AuthContextValue,
   AuthUser,
   RegisterPayload,
-  UserRole
+  UserRole,
 } from "../types/auth";
 import {
   getFromStorage,
   removeFromStorage,
   setToStorage,
-  STORAGE_KEYS
+  STORAGE_KEYS,
 } from "../utils/storage";
 import { AuthContext } from "./AuthContextObject";
 
@@ -31,9 +31,18 @@ const normalizeStoredUser = (user: StoredAuthUser): AuthUser | null => {
     id: user.id,
     name: user.name,
     email: user.email,
-    mobile: user.mobile ?? "",
-    address: user.address ?? "",
-    role: user.role ?? DEFAULT_CUSTOMER_ROLE
+    mobile: user.mobile,
+    phone: user.phone,
+    address: user.address,
+    role: user.role ?? DEFAULT_CUSTOMER_ROLE,
+    supportTeamCode: user.supportTeamCode,
+    supportTeamRole: user.supportTeamRole,
+    warehouseTeamCode: user.warehouseTeamCode,
+    warehouseTeamRole: user.warehouseTeamRole,
+    isActive: user.isActive,
+    partnerId: user.partnerId,
+    pickupPartnerId: user.pickupPartnerId,
+    partnerName: user.partnerName,
   };
 };
 
@@ -41,7 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
     const storedUser = getFromStorage<StoredAuthUser>(
       STORAGE_KEYS.CURRENT_USER,
-      null
+      null,
     );
 
     return normalizeStoredUser(storedUser);
@@ -49,7 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (
     email: string,
-    password: string
+    password: string,
   ): Promise<AuthUser> => {
     const loggedInUser = await authService.loginUser(email, password);
 
@@ -60,7 +69,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const register = async (
-    payload: RegisterPayload
+    payload: RegisterPayload,
   ): Promise<AuthUser> => {
     const registeredUser = await authService.registerUser(payload);
 
@@ -81,9 +90,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       isAuthenticated: Boolean(currentUser),
       login,
       register,
-      logout
+      logout,
     }),
-    [currentUser]
+    [currentUser],
   );
 
   return (

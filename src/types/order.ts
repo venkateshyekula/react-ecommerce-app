@@ -30,6 +30,7 @@ export interface DeliveryAddress {
 }
 
 export interface OrderItem {
+  id: string;
   productId: string;
   name: string;
   brand: string;

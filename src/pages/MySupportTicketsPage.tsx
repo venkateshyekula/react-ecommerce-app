@@ -2,10 +2,11 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
-  type ChangeEvent,
+  type ChangeEvent
 } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import EmptyState from "../components/common/EmptyState";
 import Loader from "../components/common/Loader";
 import SupportAttachmentPreview from "../components/support/SupportAttachmentPreview";
@@ -18,19 +19,19 @@ import type {
   CustomerSupportTicket,
   SupportTicketAttachment,
   SupportTicketPriority,
-  SupportTicketStatus,
+  SupportTicketStatus
 } from "../types/customerSupport";
 import {
   createSupportTicketActivity,
   createSupportTicketMessage,
   getNextStatusAfterCustomerReply,
   getTicketActivities,
-  getTicketMessages,
+  getTicketMessages
 } from "../utils/supportTicketUtils";
 import { createSupportTeamCustomerReplyNotification } from "../utils/supportNotificationUtils";
 import {
   convertFileToSupportAttachment,
-  SUPPORT_ATTACHMENT_MAX_COUNT,
+  SUPPORT_ATTACHMENT_MAX_COUNT
 } from "../utils/supportAttachmentUtils";
 
 type SupportTimelineItemType =
@@ -53,19 +54,14 @@ const getStatusBadgeClass = (status: SupportTicketStatus): string => {
   switch (status) {
     case "OPEN":
       return "text-bg-warning";
-
     case "IN_PROGRESS":
       return "text-bg-info";
-
     case "ON_HOLD":
       return "text-bg-purple";
-
     case "RESOLVED":
       return "text-bg-success";
-
     case "CLOSED":
       return "text-bg-secondary";
-
     default:
       return "text-bg-light";
   }
@@ -75,13 +71,10 @@ const getPriorityBadgeClass = (priority: SupportTicketPriority): string => {
   switch (priority) {
     case "URGENT":
       return "text-bg-danger";
-
     case "HIGH":
       return "text-bg-warning";
-
     case "MEDIUM":
       return "text-bg-info";
-
     case "LOW":
     default:
       return "text-bg-light border";
@@ -99,6 +92,27 @@ const formatLabel = (value: string): string => {
     .replace(/\b\w/g, (character) => character.toUpperCase());
 };
 
+const getTicketOptionalValue = (
+  ticket: CustomerSupportTicket,
+  keys: string[]
+): string => {
+  const source = ticket as unknown as Record<string, unknown>;
+
+  for (const key of keys) {
+    const value = source[key];
+
+    if (typeof value === "string" && value.trim().length > 0) {
+      return value.trim();
+    }
+
+    if (typeof value === "number") {
+      return String(value);
+    }
+  }
+
+  return "";
+};
+
 const isMessageLikeActivity = (label: string): boolean => {
   const normalizedLabel = label.toLowerCase();
 
@@ -109,7 +123,7 @@ const isMessageLikeActivity = (label: string): boolean => {
 };
 
 const getSupportTimelineItems = (
-  ticket: CustomerSupportTicket,
+  ticket: CustomerSupportTicket
 ): SupportTimelineItem[] => {
   const activityItems: SupportTimelineItem[] = getTicketActivities(ticket)
     .filter((activity) => !isMessageLikeActivity(activity.label))
@@ -119,7 +133,7 @@ const getSupportTimelineItems = (
       description: activity.description,
       actorName:
         activity.createdByRole === "SUPPORT"
-          ? (ticket.assignedToSupportName ?? "Support Team")
+          ? ticket.assignedToSupportName ?? "Support Team"
           : activity.createdByRole === "CUSTOMER"
             ? ticket.userName
             : "ShopEase System",
@@ -129,7 +143,7 @@ const getSupportTimelineItems = (
         : activity.label.toLowerCase().includes("status") ||
             activity.label.toLowerCase().includes("updated")
           ? "STATUS_UPDATE"
-          : "SYSTEM",
+          : "SYSTEM"
     }));
 
   const messageItems: SupportTimelineItem[] = getTicketMessages(ticket).map(
@@ -149,14 +163,14 @@ const getSupportTimelineItems = (
           ? "SUPPORT_MESSAGE"
           : message.authorRole === "CUSTOMER"
             ? "CUSTOMER_MESSAGE"
-            : "SYSTEM",
-    }),
+            : "SYSTEM"
+    })
   );
 
   const timelineItems = [...activityItems, ...messageItems].sort(
     (firstItem, secondItem) =>
       new Date(firstItem.createdAt).getTime() -
-      new Date(secondItem.createdAt).getTime(),
+      new Date(secondItem.createdAt).getTime()
   );
 
   const uniqueTimelineItems = new Map<string, SupportTimelineItem>();
@@ -176,16 +190,12 @@ const getTimelineIconClass = (type: SupportTimelineItemType): string => {
   switch (type) {
     case "TICKET_CREATED":
       return "bi bi-ticket-detailed";
-
     case "CUSTOMER_MESSAGE":
       return "bi bi-person-lines-fill";
-
     case "SUPPORT_MESSAGE":
       return "bi bi-headset";
-
     case "STATUS_UPDATE":
       return "bi bi-arrow-repeat";
-
     case "SYSTEM":
     default:
       return "bi bi-info-circle";
@@ -195,23 +205,19 @@ const getTimelineIconClass = (type: SupportTimelineItemType): string => {
 const getTimelineStepClass = (
   type: SupportTimelineItemType,
   index: number,
-  totalItems: number,
+  totalItems: number
 ): string => {
   const stateClass = index === totalItems - 1 ? "active" : "completed";
 
   switch (type) {
     case "SUPPORT_MESSAGE":
       return `${stateClass} support`;
-
     case "CUSTOMER_MESSAGE":
       return `${stateClass} customer`;
-
     case "STATUS_UPDATE":
       return `${stateClass} status`;
-
     case "TICKET_CREATED":
       return `${stateClass} created`;
-
     case "SYSTEM":
     default:
       return `${stateClass} system`;
@@ -222,16 +228,12 @@ const getTimelineStepDescription = (type: SupportTimelineItemType): string => {
   switch (type) {
     case "TICKET_CREATED":
       return "Support ticket has been created and is waiting for review.";
-
     case "SUPPORT_MESSAGE":
       return "Support team added a reply for the customer.";
-
     case "CUSTOMER_MESSAGE":
       return "Customer added more information to the ticket.";
-
     case "STATUS_UPDATE":
       return "Ticket status was updated by the support workflow.";
-
     case "SYSTEM":
     default:
       return "Ticket activity was recorded.";
@@ -244,7 +246,7 @@ const MAX_CUSTOMER_REPLY_LENGTH = 1000;
 const validateCustomerReply = ({
   ticket,
   replyText,
-  attachmentCount,
+  attachmentCount
 }: {
   ticket: CustomerSupportTicket;
   replyText: string;
@@ -274,10 +276,49 @@ const validateCustomerReply = ({
   return null;
 };
 
+const buildContactSupportUrl = ({
+  orderId,
+  returnRequestId
+}: {
+  orderId?: string;
+  returnRequestId?: string;
+}): string => {
+  const params = new URLSearchParams();
+
+  if (orderId || returnRequestId) {
+    params.set("category", "RETURN_REFUND");
+  }
+
+  if (orderId) {
+    params.set("orderId", orderId);
+  }
+
+  if (returnRequestId) {
+    params.set("returnRequestId", returnRequestId);
+  }
+
+  if (orderId) {
+    params.set("subject", `Return / Refund issue for order ${orderId}`);
+  }
+
+  return params.toString()
+    ? `/contact-support?${params.toString()}`
+    : "/contact-support";
+};
+
 const MySupportTicketsPage = () => {
   const { currentUser } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const orderIdFilter = searchParams.get("orderId")?.trim() ?? "";
+  const returnRequestIdFilter =
+    searchParams.get("returnRequestId")?.trim() ?? "";
+  const supportRequestIdFilter =
+    searchParams.get("supportRequestId")?.trim() ??
+    searchParams.get("ticketId")?.trim() ??
+    "";
 
   const [tickets, setTickets] = useState<CustomerSupportTicket[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -290,10 +331,12 @@ const MySupportTicketsPage = () => {
   >({});
   const [replyingTicketId, setReplyingTicketId] = useState<string>("");
 
+  const ticketRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   const loadTickets = useCallback(async (): Promise<void> => {
     if (!currentUser) {
       navigate("/login", {
-        replace: true,
+        replace: true
       });
       return;
     }
@@ -303,19 +346,19 @@ const MySupportTicketsPage = () => {
       setErrorMessage("");
 
       const data = await customerSupportService.getTicketsByUserId(
-        currentUser.id,
+        currentUser.id
       );
 
       setTickets(
         [...data].sort(
           (first, second) =>
             new Date(second.createdAt).getTime() -
-            new Date(first.createdAt).getTime(),
-        ),
+            new Date(first.createdAt).getTime()
+        )
       );
     } catch {
       setErrorMessage(
-        "Unable to load support tickets. Please make sure JSON Server is running.",
+        "Unable to load support tickets. Please make sure JSON Server is running."
       );
     } finally {
       setIsLoading(false);
@@ -334,13 +377,98 @@ const MySupportTicketsPage = () => {
         .length,
       onHold: tickets.filter((ticket) => ticket.status === "ON_HOLD").length,
       resolved: tickets.filter((ticket) => ticket.status === "RESOLVED").length,
-      closed: tickets.filter((ticket) => ticket.status === "CLOSED").length,
+      closed: tickets.filter((ticket) => ticket.status === "CLOSED").length
     };
   }, [tickets]);
 
+  const filteredTickets = useMemo(() => {
+    const hasOrderFilter = orderIdFilter.length > 0;
+    const hasReturnRequestFilter = returnRequestIdFilter.length > 0;
+    const hasSupportRequestFilter = supportRequestIdFilter.length > 0;
+
+    if (!hasOrderFilter && !hasReturnRequestFilter && !hasSupportRequestFilter) {
+      return tickets;
+    }
+
+    return tickets.filter((ticket) => {
+      const ticketOrderId = ticket.orderId ?? "";
+
+      const ticketReturnRequestId = getTicketOptionalValue(ticket, [
+        "returnRequestId",
+        "relatedReturnRequestId",
+        "returnId"
+      ]);
+
+      const ticketSupportRequestId = getTicketOptionalValue(ticket, [
+        "ticketId",
+        "supportRequestId",
+        "id"
+      ]);
+
+      const matchesOrder = !hasOrderFilter || ticketOrderId === orderIdFilter;
+
+      const matchesReturnRequest =
+        !hasReturnRequestFilter ||
+        ticketReturnRequestId === returnRequestIdFilter ||
+        ticket.message.includes(returnRequestIdFilter) ||
+        ticket.subject.includes(returnRequestIdFilter);
+
+      const matchesSupportRequest =
+        !hasSupportRequestFilter ||
+        ticketSupportRequestId === supportRequestIdFilter;
+
+      return matchesOrder && matchesReturnRequest && matchesSupportRequest;
+    });
+  }, [tickets, orderIdFilter, returnRequestIdFilter, supportRequestIdFilter]);
+
+  const hasContextFilter =
+    orderIdFilter.length > 0 ||
+    returnRequestIdFilter.length > 0 ||
+    supportRequestIdFilter.length > 0;
+
+  const highlightedTicketId = useMemo(() => {
+    if (filteredTickets.length === 0) {
+      return "";
+    }
+
+    if (supportRequestIdFilter) {
+      const ticketBySupportId = filteredTickets.find((ticket) => {
+        return (
+          ticket.ticketId === supportRequestIdFilter ||
+          ticket.id === supportRequestIdFilter
+        );
+      });
+
+      if (ticketBySupportId) {
+        return ticketBySupportId.id;
+      }
+    }
+
+    if (hasContextFilter) {
+      return filteredTickets[0].id;
+    }
+
+    return "";
+  }, [filteredTickets, hasContextFilter, supportRequestIdFilter]);
+
+  useEffect(() => {
+    if (!highlightedTicketId) {
+      return;
+    }
+
+    const scrollTimer = window.setTimeout(() => {
+      ticketRefs.current[highlightedTicketId]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 300);
+
+    return () => window.clearTimeout(scrollTimer);
+  }, [highlightedTicketId]);
+
   const handleReplyAttachmentChange = async (
     ticketId: string,
-    event: ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     if (!currentUser || !event.target.files) {
       return;
@@ -356,9 +484,8 @@ const MySupportTicketsPage = () => {
       showToast(
         "Attachment limit reached",
         `You can upload up to ${SUPPORT_ATTACHMENT_MAX_COUNT} files.`,
-        "warning",
+        "warning"
       );
-
       event.target.value = "";
       return;
     }
@@ -370,14 +497,14 @@ const MySupportTicketsPage = () => {
             file,
             uploadedByUserId: currentUser.id,
             uploadedByName: currentUser.name,
-            uploadedByRole: "CUSTOMER",
-          }),
-        ),
+            uploadedByRole: "CUSTOMER"
+          })
+        )
       );
 
       setAttachmentsByTicketId((previousValues) => ({
         ...previousValues,
-        [ticketId]: [...existingAttachments, ...convertedAttachments],
+        [ticketId]: [...existingAttachments, ...convertedAttachments]
       }));
     } catch (error) {
       const message =
@@ -393,18 +520,18 @@ const MySupportTicketsPage = () => {
 
   const handleRemoveReplyAttachment = (
     ticketId: string,
-    attachmentId: string,
+    attachmentId: string
   ): void => {
     setAttachmentsByTicketId((previousValues) => ({
       ...previousValues,
       [ticketId]: (previousValues[ticketId] ?? []).filter(
-        (attachment) => attachment.id !== attachmentId,
-      ),
+        (attachment) => attachment.id !== attachmentId
+      )
     }));
   };
 
   const handleCustomerReply = async (
-    ticket: CustomerSupportTicket,
+    ticket: CustomerSupportTicket
   ): Promise<void> => {
     if (!currentUser) {
       return;
@@ -416,7 +543,7 @@ const MySupportTicketsPage = () => {
     const validationMessage = validateCustomerReply({
       ticket,
       replyText,
-      attachmentCount: replyAttachments.length,
+      attachmentCount: replyAttachments.length
     });
 
     if (validationMessage) {
@@ -437,7 +564,7 @@ const MySupportTicketsPage = () => {
         authorName: currentUser.name,
         authorRole: "CUSTOMER",
         message: replyMessage,
-        attachments: replyAttachments,
+        attachments: replyAttachments
       });
 
       const nextActivity = createSupportTicketActivity({
@@ -445,7 +572,7 @@ const MySupportTicketsPage = () => {
         description: willReopenTicket
           ? `${currentUser.name} reopened the ticket by adding a reply.`
           : `${currentUser.name} added a reply.`,
-        createdByRole: "CUSTOMER",
+        createdByRole: "CUSTOMER"
       });
 
       const updatedTicket = await customerSupportService.updateTicket(
@@ -455,30 +582,30 @@ const MySupportTicketsPage = () => {
           messages: [...existingMessages, nextMessage],
           activities: [...existingActivities, nextActivity],
           unreadForSupport: true,
-          unreadForCustomer: false,
-        },
+          unreadForCustomer: false
+        }
       );
 
       await notificationService.createNotification(
-        createSupportTeamCustomerReplyNotification(updatedTicket),
+        createSupportTeamCustomerReplyNotification(updatedTicket)
       );
 
       setTickets((previousTickets) =>
         previousTickets.map((existingTicket) =>
           existingTicket.id === updatedTicket.id
             ? updatedTicket
-            : existingTicket,
-        ),
+            : existingTicket
+        )
       );
 
       setReplyByTicketId((previousValues) => ({
         ...previousValues,
-        [ticket.id]: "",
+        [ticket.id]: ""
       }));
 
       setAttachmentsByTicketId((previousValues) => ({
         ...previousValues,
-        [ticket.id]: [],
+        [ticket.id]: []
       }));
 
       showToast(
@@ -486,7 +613,7 @@ const MySupportTicketsPage = () => {
         willReopenTicket
           ? `Your reply reopened ticket ${updatedTicket.ticketId}.`
           : `Your reply was added to ticket ${updatedTicket.ticketId}.`,
-        "success",
+        "success"
       );
     } catch (error) {
       const message =
@@ -585,28 +712,106 @@ const MySupportTicketsPage = () => {
           </div>
         </div>
 
-        {tickets.length === 0 ? (
+        {hasContextFilter ? (
+          <div className="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+              <strong>Return support context</strong>
+              <div className="small">
+                {orderIdFilter ? (
+                  <>
+                    Order ID: <strong>{orderIdFilter}</strong>{" "}
+                  </>
+                ) : null}
+
+                {returnRequestIdFilter ? (
+                  <>
+                    Return ID: <strong>{returnRequestIdFilter}</strong>{" "}
+                  </>
+                ) : null}
+
+                {supportRequestIdFilter ? (
+                  <>
+                    Ticket ID: <strong>{supportRequestIdFilter}</strong>
+                  </>
+                ) : null}
+              </div>
+              <div className="small text-muted mt-1">
+                Showing tickets linked to the selected return/order. The matched
+                ticket will be highlighted automatically.
+              </div>
+            </div>
+
+            <div className="d-flex flex-wrap gap-2">
+              <Link
+                to={buildContactSupportUrl({
+                  orderId: orderIdFilter,
+                  returnRequestId: returnRequestIdFilter
+                })}
+                className="btn btn-sm btn-outline-dark"
+              >
+                <i className="bi bi-plus-lg me-2" />
+                Create Ticket
+              </Link>
+
+              <Link
+                to="/support-tickets"
+                className="btn btn-sm btn-outline-primary"
+              >
+                View All Tickets
+              </Link>
+            </div>
+          </div>
+        ) : null}
+
+        {filteredTickets.length === 0 ? (
           <EmptyState
             title="No Support Tickets Found"
-            message="You have not created any customer support tickets yet."
+            message="You haven't submitted any support requests matching this criteria."
             action={
-              <Link to="/contact-support" className="btn btn-primary">
+              <Link
+                to={buildContactSupportUrl({
+                  orderId: orderIdFilter,
+                  returnRequestId: returnRequestIdFilter
+                })}
+                className="btn btn-primary"
+              >
                 Create Ticket
               </Link>
             }
           />
         ) : (
           <div className="support-ticket-list d-flex flex-column gap-3">
-            {tickets.map((ticket) => {
+            {filteredTickets.map((ticket) => {
               const ticketMessages = getTicketMessages(ticket);
               const timelineItems = getSupportTimelineItems(ticket);
               const isClosed = ticket.status === "CLOSED";
+              const returnRequestId = getTicketOptionalValue(ticket, [
+                "returnRequestId",
+                "relatedReturnRequestId",
+                "returnId"
+              ]);
+              const isHighlighted = highlightedTicketId === ticket.id;
 
               return (
                 <div
-                  className="support-ticket-card bg-white border p-4"
+                  ref={(node) => {
+                    ticketRefs.current[ticket.id] = node;
+                  }}
+                  className={`support-ticket-card bg-white border p-4 rounded-3 ${
+                    isHighlighted
+                      ? "border-primary shadow support-ticket-highlighted"
+                      : ""
+                  }`}
                   key={ticket.id}
                 >
+                  {isHighlighted ? (
+                    <div className="alert alert-primary py-2 px-3 small mb-3">
+                      <i className="bi bi-link-45deg me-2" />
+                      You are viewing the related support ticket for the
+                      selected order or return.
+                    </div>
+                  ) : null}
+
                   <div className="d-flex flex-column flex-lg-row justify-content-between gap-3">
                     <div>
                       <div className="d-flex flex-wrap gap-2 mb-2">
@@ -616,7 +821,7 @@ const MySupportTicketsPage = () => {
 
                         <span
                           className={`badge ${getStatusBadgeClass(
-                            ticket.status,
+                            ticket.status
                           )}`}
                         >
                           {formatLabel(ticket.status)}
@@ -624,7 +829,7 @@ const MySupportTicketsPage = () => {
 
                         <span
                           className={`badge ${getPriorityBadgeClass(
-                            ticket.priority,
+                            ticket.priority
                           )}`}
                         >
                           {formatLabel(ticket.priority)}
@@ -634,6 +839,12 @@ const MySupportTicketsPage = () => {
                           {formatLabel(ticket.category)}
                         </span>
 
+                        {returnRequestId ? (
+                          <span className="badge text-bg-primary">
+                            Return Linked
+                          </span>
+                        ) : null}
+
                         {ticket.unreadForCustomer ? (
                           <span className="badge text-bg-primary">
                             New Update
@@ -642,12 +853,17 @@ const MySupportTicketsPage = () => {
                       </div>
 
                       <h5 className="fw-bold mb-2">{ticket.subject}</h5>
-
                       <p className="text-muted mb-2">{ticket.message}</p>
 
                       {ticket.orderId ? (
                         <p className="small text-muted mb-0">
                           Order ID: <strong>{ticket.orderId}</strong>
+                        </p>
+                      ) : null}
+
+                      {returnRequestId ? (
+                        <p className="small text-muted mb-0">
+                          Return ID: <strong>{returnRequestId}</strong>
                         </p>
                       ) : null}
                     </div>
@@ -657,7 +873,6 @@ const MySupportTicketsPage = () => {
                         Created:{" "}
                         {new Date(ticket.createdAt).toLocaleString("en-IN")}
                       </div>
-
                       <div>
                         Updated:{" "}
                         {new Date(ticket.updatedAt).toLocaleString("en-IN")}
@@ -676,7 +891,6 @@ const MySupportTicketsPage = () => {
                     <div className="support-ticket-progress-header">
                       <div>
                         <h5 className="fw-bold mb-1">Ticket Activity</h5>
-
                         <p className="mb-0 text-muted">
                           Current Status:{" "}
                           <strong>{formatLabel(ticket.status)}</strong>
@@ -696,7 +910,7 @@ const MySupportTicketsPage = () => {
                           className={`support-ticket-progress-step ${getTimelineStepClass(
                             timelineItem.type,
                             index,
-                            timelineItems.length,
+                            timelineItems.length
                           )}`}
                           key={timelineItem.id}
                         >
@@ -704,7 +918,7 @@ const MySupportTicketsPage = () => {
                             <span className="support-ticket-progress-icon">
                               <i
                                 className={getTimelineIconClass(
-                                  timelineItem.type,
+                                  timelineItem.type
                                 )}
                               />
                             </span>
@@ -712,29 +926,24 @@ const MySupportTicketsPage = () => {
 
                           <div className="support-ticket-progress-content">
                             <h6>{timelineItem.label}</h6>
-
                             <p className="support-ticket-progress-description">
                               {getTimelineStepDescription(timelineItem.type)}
                             </p>
 
                             <div className="support-ticket-progress-event">
                               <span className="support-ticket-event-dot" />
-
                               <div className="support-ticket-event-card">
                                 <strong>{timelineItem.label}</strong>
-
                                 <p>{timelineItem.description}</p>
-
                                 <div className="support-ticket-event-meta">
                                   <span>
                                     <i className="bi bi-person-badge" />
                                     {timelineItem.actorName}
                                   </span>
-
                                   <span>
                                     <i className="bi bi-clock" />
                                     {new Date(
-                                      timelineItem.createdAt,
+                                      timelineItem.createdAt
                                     ).toLocaleString("en-IN")}
                                   </span>
                                 </div>
@@ -761,14 +970,14 @@ const MySupportTicketsPage = () => {
                         onChange={(event) =>
                           setReplyByTicketId((previousValues) => ({
                             ...previousValues,
-                            [ticket.id]: event.target.value,
+                            [ticket.id]: event.target.value
                           }))
                         }
                       />
 
                       <div className="file-upload mt-3">
                         <input
-                          id="supportAttachments"
+                          id={`supportAttachments-${ticket.id}`}
                           type="file"
                           className="form-control"
                           multiple

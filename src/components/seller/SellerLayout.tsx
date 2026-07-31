@@ -10,23 +10,33 @@ const sellerNavItems: SellerNavItem[] = [
   {
     label: "Dashboard",
     path: "/seller/dashboard",
-    icon: "bi bi-speedometer2"
+    icon: "bi bi-speedometer2",
   },
   {
     label: "Products",
     path: "/seller/products",
-    icon: "bi bi-box-seam"
+    icon: "bi bi-box-seam",
   },
   {
     label: "Orders",
     path: "/seller/orders",
-    icon: "bi bi-receipt"
+    icon: "bi bi-receipt",
+  },
+  {
+    label: "Returns",
+    path: "/seller/returns",
+    icon: "bi bi-arrow-return-left",
+  },
+  {
+    label: "Return Disputes",
+    path: "/seller/return-disputes",
+    icon: "bi bi-shield-exclamation",
   },
   {
     label: "Questions",
     path: "/seller/questions",
-    icon: "bi bi-question-circle"
-  }
+    icon: "bi bi-question-circle",
+  },
 ];
 
 const SellerLayout = () => {

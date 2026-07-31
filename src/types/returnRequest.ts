@@ -24,13 +24,14 @@ export type ReturnPickupStatus =
   | "OUT_FOR_PICKUP"
   | "PICKED_UP"
   | "FAILED_ATTEMPT"
-  | "CANCELLED";
+  | "CANCELLED"
+  | "FAILED";
 
 export type ReturnQualityCheckStatus =
+  | "IN_PROGRESS"
   | "NOT_STARTED"
   | "PENDING"
-  | "PASSED"
-  | "FAILED";
+  | "PASSED";
 
 export type ReturnRefundPreference =
   | "ORIGINAL_PAYMENT_MODE"
@@ -39,7 +40,7 @@ export type ReturnRefundPreference =
 
 export type ReturnStatusFilter = "ALL" | ReturnRequestStatus;
 
-  export interface ReturnRequest {
+export interface ReturnRequest {
   id: string;
   requestId: string;
   returnRequestId?: string;
@@ -80,11 +81,11 @@ export type ReturnStatusFilter = "ALL" | ReturnRequestStatus;
   refundCompletedAt?: string | null;
   cancelledAt?: string | null;
   pickupPartnerId?: string | null;
-pickupPartnerName?: string | null;
-pickupPartnerPhone?: string | null;
-pickupAttemptCount?: number;
-lastPickupAttemptId?: string | null;
-nextPickupAttemptAt?: string | null;
+  pickupPartnerName?: string | null;
+  pickupPartnerPhone?: string | null;
+  pickupAttemptCount?: number;
+  lastPickupAttemptId?: string | null;
+  nextPickupAttemptAt?: string | null;
 }
 
 export interface CreateReturnRequestPayload {
@@ -142,9 +143,9 @@ export interface UpdateReturnRequestPayload {
   cancelledAt?: string | null;
   updatedAt?: string;
   pickupPartnerId?: string | null;
-pickupPartnerName?: string | null;
-pickupPartnerPhone?: string | null;
-pickupAttemptCount?: number;
-lastPickupAttemptId?: string | null;
-nextPickupAttemptAt?: string | null;
+  pickupPartnerName?: string | null;
+  pickupPartnerPhone?: string | null;
+  pickupAttemptCount?: number;
+  lastPickupAttemptId?: string | null;
+  nextPickupAttemptAt?: string | null;
 }

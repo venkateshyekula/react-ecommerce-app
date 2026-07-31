@@ -20,10 +20,16 @@ const removePassword = (user: User): AuthUser => {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
+    phone: user.phone,
     address: user.address,
     role: normalizeRole(user.role),
     supportTeamCode: user.supportTeamCode,
     supportTeamRole: user.supportTeamRole,
+    warehouseTeamCode: user.warehouseTeamCode,
+    warehouseTeamRole: user.warehouseTeamRole,
+    partnerId: user.partnerId,
+    pickupPartnerId: user.pickupPartnerId,
+    partnerName: user.partnerName,
     isActive: user.isActive
   };
 };

@@ -428,13 +428,13 @@ const SupportEscalationEvidencePanel = ({
                   </div>
                   <div className="d-flex flex-wrap gap-2">
                     <span
-                      className={`badge ${getRefundStatusBadgeClass(
+                      className={`badge align-self-start ${getRefundStatusBadgeClass(
                         refund.status
                       )}`}
                     >
                       {formatLabel(refund.status)}
                     </span>
-                    <span className="badge text-bg-light border refund-request-mode-badge">
+                    <span className="badge text-bg-light align-self-start border refund-request-mode-badge">
                       {formatLabel(refund.refundMode)}
                     </span>
                   </div>

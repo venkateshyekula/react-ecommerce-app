@@ -6,7 +6,7 @@ export interface ProductReview {
   userId: string;
   userName: string;
   rating: number;
-  title: string;
+  title?: string;
   comment: string;
   status: ReviewStatus;
   createdAt: string;

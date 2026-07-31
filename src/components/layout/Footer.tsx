@@ -128,7 +128,7 @@ const Footer = () => {
 
   return (
     <footer className="footer border-top mt-auto">
-      <div className="container-fluid py-5">
+      <div className="container py-5">
         <div className="row g-4">
           <div className="col-6 col-md-3 col-xl-2">
             <h6 className="footer-heading">Online Shopping</h6>

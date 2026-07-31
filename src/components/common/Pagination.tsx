@@ -1,13 +1,15 @@
-interface PaginationProps {
+export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   totalItems: number;
-  startItem: number;
-  endItem: number;
-  itemsPerPage: number;
+  startItem?: number;
+  endItem?: number;
+  itemsPerPage?: number;
   itemsPerPageOptions?: number[];
   onPageChange: (page: number) => void;
-  onItemsPerPageChange: (itemsPerPage: number) => void;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
+  className?: string;
+  pageSize?: number;
 }
 
 const getPaginationItems = (
@@ -49,54 +51,62 @@ const Pagination = ({
   currentPage,
   totalPages,
   totalItems,
-  startItem,
-  endItem,
-  itemsPerPage,
-  itemsPerPageOptions = [8, 12, 16],
+  pageSize,
+  itemsPerPage = pageSize ?? 10,
+  itemsPerPageOptions = [10, 20, 50],
+  startItem = (currentPage - 1) * itemsPerPage + 1,
+  endItem = Math.min(currentPage * itemsPerPage, totalItems),
   onPageChange,
-  onItemsPerPageChange
+  onItemsPerPageChange,
+  className = ""
 }: PaginationProps) => {
   const paginationItems = getPaginationItems(currentPage, totalPages);
 
-  if (totalItems === 0) {
+  if (totalItems === 0 || totalPages <= 1) {
     return null;
   }
 
   return (
-    <div className="pagination-wrapper bg-white rounded-4 shadow-sm p-3 mt-4">
+    <div
+      className={`pagination-wrapper bg-white rounded-4 shadow-sm p-3 mt-4 ${className}`.trim()}
+    >
       <div className="d-flex flex-column flex-xl-row justify-content-between align-items-xl-center gap-3">
-        <div className="pagination-summary text-muted">
+        <div className="pagination-summary text-muted small">
           Showing <strong>{startItem}</strong> - <strong>{endItem}</strong> of{" "}
-          <strong>{totalItems}</strong> products
+          <strong>{totalItems}</strong> items
         </div>
 
         <div className="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
-          <div className="d-flex align-items-center gap-2">
-            <label
-              htmlFor="itemsPerPage"
-              className="small fw-semibold text-muted mb-0"
-            >
-              Items per page
-            </label>
+          {/* Items Per Page Selector (Only rendered if callback is provided) */}
+          {onItemsPerPageChange && (
+            <div className="d-flex align-items-center gap-2">
+              <label
+                htmlFor="itemsPerPage"
+                className="small fw-semibold text-muted mb-0"
+              >
+                Items per page
+              </label>
 
-            <select
-              id="itemsPerPage"
-              className="form-select form-select-sm pagination-page-size"
-              value={itemsPerPage}
-              onChange={(event) =>
-                onItemsPerPageChange(Number(event.target.value))
-              }
-            >
-              {itemsPerPageOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+              <select
+                id="itemsPerPage"
+                className="form-select form-select-sm pagination-page-size"
+                value={itemsPerPage}
+                onChange={(event) =>
+                  onItemsPerPageChange(Number(event.target.value))
+                }
+              >
+                {itemsPerPageOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-          <nav aria-label="Products pagination">
+          <nav aria-label="Table pagination">
             <ul className="pagination pagination-sm mb-0 flex-wrap">
+              {/* Previous Button */}
               <li
                 className={`page-item ${
                   currentPage === 1 ? "disabled" : ""
@@ -112,6 +122,7 @@ const Pagination = ({
                 </button>
               </li>
 
+              {/* Page Number Buttons */}
               {paginationItems.map((item, index) => {
                 if (item === "...") {
                   return (
@@ -142,6 +153,7 @@ const Pagination = ({
                 );
               })}
 
+              {/* Next Button */}
               <li
                 className={`page-item ${
                   currentPage === totalPages ? "disabled" : ""

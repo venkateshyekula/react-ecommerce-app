@@ -1,0 +1,337 @@
+/* ==========================================================================
+   Product Size Selector
+   ========================================================================== */
+
+:root {
+  --product-size-primary: var(--app-primary, #0d6efd);
+  --product-size-danger: var(--app-danger, #dc3545);
+  --product-size-warning: #f59e0b;
+  --product-size-warning-bg: #fffbeb;
+  --product-size-warning-text: #92400e;
+  --product-size-success: #198754;
+  --product-size-border: #cbd5e1;
+  --product-size-border-disabled: #e2e8f0;
+  --product-size-text: #334155;
+  --product-size-text-muted: #64748b;
+  --product-size-bg-disabled: #f8fafc;
+}
+
+.product-size-selector {
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+/* Header & Titles */
+.product-size-selector-header {
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.product-size-selector-heading {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.product-size-selector-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.product-size-required {
+  margin-left: 0.2rem;
+  color: var(--product-size-danger);
+}
+
+.product-selected-size-label {
+  color: var(--product-size-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.product-selected-size-label strong {
+  color: var(--product-size-primary);
+}
+
+.product-size-guide-button {
+  flex-shrink: 0;
+  border: 0;
+  padding: 0.25rem 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: transparent;
+  color: var(--product-size-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.product-size-guide-button:hover {
+  color: #084298;
+  text-decoration: underline;
+}
+
+.product-size-guide-button:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.product-size-guide-button:focus-visible {
+  outline: 3px solid rgba(13, 110, 253, 0.25);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Size Options & Pills
+   ========================================================================== */
+
+.product-size-options {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.product-size-option-wrapper {
+  position: relative;
+  min-width: 48px;
+  padding-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-size-option {
+  position: relative;
+  min-width: 48px;
+  height: 48px;
+  border: 1px solid var(--product-size-border);
+  border-radius: 50%;
+  padding: 0 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--product-size-text);
+  background-color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Hover state for normal available options */
+.product-size-option:hover {
+  border-color: var(--product-size-primary);
+  color: var(--product-size-primary);
+  background-color: #eff6ff;
+  transform: translateY(-2px);
+}
+
+/* Radio Keyboard Focus Ring */
+.product-size-input:focus-visible + .product-size-option {
+  outline: 3px solid rgba(13, 110, 253, 0.35);
+  outline-offset: 3px;
+}
+
+/* Selected state */
+.product-size-option.selected {
+  border-color: var(--product-size-primary);
+  color: #ffffff;
+  background-color: var(--product-size-primary);
+  box-shadow: 0 7px 16px rgba(13, 110, 253, 0.24);
+}
+
+/* Low Stock state (When NOT selected) */
+.product-size-option.low-stock:not(.selected) {
+  border-color: var(--product-size-warning);
+  color: var(--product-size-warning-text);
+  background-color: var(--product-size-warning-bg);
+}
+
+/* Disabled / Unavailable state */
+.product-size-option.unavailable {
+  border-color: var(--product-size-border-disabled);
+  color: #94a3b8;
+  background-color: var(--product-size-bg-disabled);
+  cursor: not-allowed;
+  opacity: 0.75;
+  transform: none;
+}
+
+.product-size-value {
+  position: relative;
+  z-index: 1;
+}
+
+/* Selection Badge */
+.product-size-selected-icon {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background-color: var(--product-size-success);
+  font-size: 0.7rem;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.18);
+}
+
+/* Unavailable Slash Line */
+.product-size-unavailable-line {
+  position: absolute;
+  width: 70%;
+  height: 1.5px;
+  background-color: #94a3b8;
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+
+/* Low Stock Counter */
+.product-size-stock-message {
+  position: absolute;
+  bottom: 0;
+  color: #d97706;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Size Feedback & Validation
+   ========================================================================== */
+
+.product-size-help-text,
+.product-size-error-message {
+  margin: 0.35rem 0 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.product-size-help-text {
+  color: var(--product-size-text-muted);
+}
+
+.product-size-error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--product-size-danger);
+  font-weight: 700;
+}
+
+.product-size-selector-invalid .product-size-options {
+  padding: 0.6rem;
+  border: 1px solid rgba(220, 53, 69, 0.35);
+  border-radius: 12px;
+  background-color: rgba(220, 53, 69, 0.025);
+}
+
+.product-size-empty-state {
+  min-height: 52px;
+  border: 1px dashed var(--product-size-border);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--product-size-text-muted);
+  background-color: var(--product-size-bg-disabled);
+  font-size: 0.8rem;
+}
+
+/* Component Disabled State */
+.product-size-selector-disabled {
+  opacity: 0.65;
+}
+
+.product-size-selector-disabled .product-size-option {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Utility for radio hiding */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 575.98px) {
+  .product-size-selector-header {
+    align-items: flex-start;
+  }
+
+  .product-size-selector-heading {
+    display: block;
+  }
+
+  .product-selected-size-label {
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .product-size-options {
+    gap: 0.55rem;
+  }
+
+  .product-size-option-wrapper {
+    min-width: 44px;
+  }
+
+  .product-size-option {
+    min-width: 44px;
+    height: 44px;
+    padding: 0 0.55rem;
+    font-size: 0.73rem;
+  }
+
+  .product-size-guide-button {
+    font-size: 0.74rem;
+  }
+}
+
+/* ==========================================================================
+   Accessibility & Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .product-size-option,
+  .product-size-guide-button {
+    transition: none;
+  }
+}

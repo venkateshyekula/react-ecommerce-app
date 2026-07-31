@@ -1,25 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+
 import EmptyState from "../components/common/EmptyState";
 import Loader from "../components/common/Loader";
-import ProductCard from "../components/products/ProductCard";
+
 import { productService } from "../services/productService";
+
 import type { Product, ProductCategory } from "../types/product";
 
-const categories: ProductCategory[] = [
-  "Electronics",
-  "Clothing",
-  "Books",
-  "Footwear",
-  "Accessories",
-  "Men",
-  "Women",
-  "Kids",
-  "Home",
-  "Beauty",
-];
+import "./HomePage.css";
 
-const carouselSlides: Array<{
+/* ==========================================================================
+   Types
+   ========================================================================== */
+
+interface CarouselSlide {
   id: string;
   eyebrow: string;
   title: string;
@@ -30,7 +25,22 @@ const carouselSlides: Array<{
   secondaryLink: string;
   icon: string;
   themeClass: string;
-}> = [
+}
+
+interface CategoryOffer {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: ProductCategory;
+  icon: string;
+  themeClass: string;
+}
+
+/* ==========================================================================
+   Carousel Configuration
+   ========================================================================== */
+
+const carouselSlides: CarouselSlide[] = [
   {
     id: "electronics-sale",
     eyebrow: "Big Tech Deals",
@@ -42,7 +52,7 @@ const carouselSlides: Array<{
     secondaryLabel: "View All Products",
     secondaryLink: "/products",
     icon: "bi bi-phone",
-    themeClass: "home-carousel-slide-blue",
+    themeClass: "home-carousel-slide-blue"
   },
   {
     id: "fashion-sale",
@@ -55,7 +65,7 @@ const carouselSlides: Array<{
     secondaryLabel: "Explore Footwear",
     secondaryLink: "/categories/Footwear",
     icon: "bi bi-bag-heart",
-    themeClass: "home-carousel-slide-pink",
+    themeClass: "home-carousel-slide-pink"
   },
   {
     id: "home-beauty-sale",
@@ -68,60 +78,154 @@ const carouselSlides: Array<{
     secondaryLabel: "Shop Home",
     secondaryLink: "/categories/Home",
     icon: "bi bi-stars",
-    themeClass: "home-carousel-slide-green",
+    themeClass: "home-carousel-slide-green"
   },
+  {
+    id: "book-sale",
+    eyebrow: "Reading Festival",
+    title: "Discover stories, knowledge, and inspiration",
+    description:
+      "Browse fiction, educational books, business titles, and inspiring reads at attractive prices.",
+    primaryLabel: "Shop Books",
+    primaryLink: "/categories/Books",
+    secondaryLabel: "Explore All",
+    secondaryLink: "/products",
+    icon: "bi bi-book",
+    themeClass: "home-carousel-slide-purple"
+  }
 ];
 
-const getCategoryIcon = (category: ProductCategory): string => {
-  switch (category) {
-    case "Electronics":
-      return "bi bi-phone";
+/* ==========================================================================
+   Marketplace Category Cards
+   ========================================================================== */
 
-    case "Clothing":
-      return "bi bi-bag-heart";
-
-    case "Books":
-      return "bi bi-book";
-
-    case "Footwear":
-      return "bi bi-bootstrap-reboot";
-
-    case "Accessories":
-      return "bi bi-watch";
-
-    case "Men":
-      return "bi bi-person-standing";
-
-    case "Women":
-      return "bi bi-person";
-
-    case "Kids":
-      return "bi bi-emoji-smile";
-
-    case "Home":
-      return "bi bi-house-heart";
-
-    case "Beauty":
-      return "bi bi-stars";
-
-    default:
-      return "bi bi-grid";
+const categoryOffers: CategoryOffer[] = [
+  {
+    id: "electronics",
+    title: "Electronics",
+    subtitle: "Smartphones, laptops and audio",
+    category: "Electronics",
+    icon: "bi bi-phone",
+    themeClass: "category-offer-blue"
+  },
+  {
+    id: "clothing",
+    title: "Fashion",
+    subtitle: "Latest everyday fashion styles",
+    category: "Clothing",
+    icon: "bi bi-bag-heart",
+    themeClass: "category-offer-pink"
+  },
+  {
+    id: "men",
+    title: "Men's Wear",
+    subtitle: "Casual, formal and ethnic wear",
+    category: "Men",
+    icon: "bi bi-person-standing",
+    themeClass: "category-offer-red"
+  },
+  {
+    id: "women",
+    title: "Women's Wear",
+    subtitle: "Indian and western collections",
+    category: "Women",
+    icon: "bi bi-person",
+    themeClass: "category-offer-purple"
+  },
+  {
+    id: "kids",
+    title: "Kid's Fashion",
+    subtitle: "Clothing, footwear and accessories",
+    category: "Kids",
+    icon: "bi bi-emoji-smile",
+    themeClass: "category-offer-orange"
+  },
+  {
+    id: "footwear",
+    title: "Footwear",
+    subtitle: "Casual, sports and formal shoes",
+    category: "Footwear",
+    icon: "bi bi-bootstrap-reboot",
+    themeClass: "category-offer-teal"
+  },
+  {
+    id: "accessories",
+    title: "Accessories",
+    subtitle: "Watches, bags and daily essentials",
+    category: "Accessories",
+    icon: "bi bi-watch",
+    themeClass: "category-offer-yellow"
+  },
+  {
+    id: "beauty",
+    title: "Beauty",
+    subtitle: "Makeup, skincare and fragrance",
+    category: "Beauty",
+    icon: "bi bi-stars",
+    themeClass: "category-offer-rose"
+  },
+  {
+    id: "home",
+    title: "Home & Living",
+    subtitle: "Decor, furnishing and essentials",
+    category: "Home",
+    icon: "bi bi-house-heart",
+    themeClass: "category-offer-green"
+  },
+  {
+    id: "books",
+    title: "Books",
+    subtitle: "Popular stories and educational reads",
+    category: "Books",
+    icon: "bi bi-book",
+    themeClass: "category-offer-indigo"
   }
+];
+
+/*
+ * This helper supports the common discount field names without changing
+ * Product or ProductCard. ProductCard still receives the original Product,
+ * so its existing product.ts-based discount behavior remains unchanged.
+ */
+const getProductDiscount = (product: Product): number => {
+  const discountProduct = product as Product & {
+    discount?: number;
+    discountPercentage?: number;
+    discountPercent?: number;
+  };
+
+  const possibleDiscount =
+    discountProduct.discountPercentage ??
+    discountProduct.discountPercent ??
+    discountProduct.discount ??
+    0;
+
+  const numericDiscount = Number(possibleDiscount);
+
+  if (!Number.isFinite(numericDiscount) || numericDiscount <= 0) {
+    return 0;
+  }
+
+  return Math.min(100, Math.round(numericDiscount));
 };
+
+/* ==========================================================================
+   Home Page
+   ========================================================================== */
 
 const HomePage = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [activeCategory, setActiveCategory] =
-    useState<ProductCategory>("Electronics");
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
 
-  const sectionRefs = useRef<
-    Partial<Record<ProductCategory, HTMLElement | null>>
-  >({});
+  /* ==========================================================================
+     Load Products
+     ========================================================================== */
 
   useEffect(() => {
+    let isMounted = true;
+
     const loadProducts = async (): Promise<void> => {
       try {
         setIsLoading(true);
@@ -129,27 +233,48 @@ const HomePage = () => {
 
         const products = await productService.getProducts();
 
+        if (!isMounted) {
+          return;
+        }
+
         const availableProducts = products.filter(
-          (product) => product.stock > 0,
+          (product) => product.stock > 0
         );
 
         setAllProducts(availableProducts);
       } catch {
+        if (!isMounted) {
+          return;
+        }
+
+        setAllProducts([]);
         setErrorMessage(
-          "Unable to load products. Please make sure JSON Server is running.",
+          "Unable to load products. Please make sure JSON Server is running."
         );
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     void loadProducts();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  /* ==========================================================================
+     Carousel Auto Rotation
+     ========================================================================== */
 
   useEffect(() => {
     const timerId = window.setInterval(() => {
       setActiveSlideIndex((previousIndex) =>
-        previousIndex === carouselSlides.length - 1 ? 0 : previousIndex + 1,
+        previousIndex === carouselSlides.length - 1
+          ? 0
+          : previousIndex + 1
       );
     }, 5000);
 
@@ -158,335 +283,361 @@ const HomePage = () => {
     };
   }, []);
 
-  const visibleCategories = useMemo(() => {
+  /* ==========================================================================
+     Derived Values
+     ========================================================================== */
+
+  const visibleCategoryOffers = useMemo<CategoryOffer[]>(() => {
     if (allProducts.length === 0) {
-      return categories;
+      return categoryOffers;
     }
 
-    return categories.filter((category) =>
+    return categoryOffers.filter((offer) =>
       allProducts.some(
-        (product) => product.category.toLowerCase() === category.toLowerCase(),
-      ),
+        (product) =>
+          product.category.toLowerCase() === offer.category.toLowerCase()
+      )
     );
   }, [allProducts]);
 
-  useEffect(() => {
-    if (isLoading || allProducts.length === 0) {
-      return;
-    }
+  const categoryDiscounts = useMemo<Record<string, number>>(() => {
+    return categoryOffers.reduce<Record<string, number>>(
+      (discountResult, offer) => {
+        const highestDiscount = allProducts
+          .filter(
+            (product) =>
+              product.category.toLowerCase() ===
+              offer.category.toLowerCase()
+          )
+          .reduce(
+            (currentHighestDiscount, product) =>
+              Math.max(
+                currentHighestDiscount,
+                getProductDiscount(product)
+              ),
+            0
+          );
 
-    const observerOptions: IntersectionObserverInit = {
-      root: null,
-      rootMargin: "-145px 0px -60% 0px",
-      threshold: 0,
-    };
+        discountResult[offer.category] = highestDiscount;
 
-    const observerCallback = (entries: IntersectionObserverEntry[]): void => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const categoryName = entry.target.getAttribute(
-          "data-category",
-        ) as ProductCategory | null;
-
-        if (categoryName && visibleCategories.includes(categoryName)) {
-          setActiveCategory(categoryName);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
+        return discountResult;
+      },
+      {}
     );
-
-    visibleCategories.forEach((category) => {
-      const section = sectionRefs.current[category];
-
-      if (section) {
-        observer.observe(section);
-      }
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [isLoading, allProducts, visibleCategories]);
-
-  const scrollToSection = (category: ProductCategory): void => {
-    const element = sectionRefs.current[category];
-
-    if (!element) {
-      return;
-    }
-
-    const navbarOffset = 145;
-    const elementPosition =
-      element.getBoundingClientRect().top + window.scrollY;
-    const offsetPosition = elementPosition - navbarOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
-
-    setActiveCategory(category);
-  };
+  }, [allProducts]);
 
   const activeSlide = carouselSlides[activeSlideIndex];
 
-  const getCategoryAccentColor = (category: string): string => {
-    switch (category.toLowerCase()) {
-      case "men":
-        return "#ee5f73";
-
-      case "women":
-        return "#fb56c1";
-
-      case "kids":
-        return "#f26a10";
-
-      case "home":
-        return "#f2c210";
-
-      case "beauty":
-        return "#0db7af";
-
-      case "electronics":
-        return "#2563eb";
-
-      case "clothing":
-        return "#ff6b35";
-
-      case "books":
-        return "#7c3aed";
-
-      case "footwear":
-        return "#14b8a6";
-
-      case "accessories":
-        return "#f97316";
-
-      case "sports":
-        return "#10b981";
-
-      case "grocery":
-        return "#22c55e";
-
-      case "furniture":
-        return "#a16207";
-
-      case "appliances":
-        return "#0ea5e9";
-
-      default:
-        return "#2563eb";
-    }
+  const showPreviousSlide = (): void => {
+    setActiveSlideIndex((previousIndex) =>
+      previousIndex === 0
+        ? carouselSlides.length - 1
+        : previousIndex - 1
+    );
   };
+
+  const showNextSlide = (): void => {
+    setActiveSlideIndex((previousIndex) =>
+      previousIndex === carouselSlides.length - 1
+        ? 0
+        : previousIndex + 1
+    );
+  };
+
+  /* ==========================================================================
+     Render
+     ========================================================================== */
 
   return (
     <main className="home-page">
-      <section className={`home-carousel-section ${activeSlide.themeClass}`}>
-        <div className="container">
-          <div className="home-carousel-card">
+      {/* ================================================================
+          Promotional Carousel
+          ================================================================ */}
+
+      <section
+        className={`home-carousel-section mt-4 py-4 ${activeSlide.themeClass}`}
+        aria-label="ShopEase featured promotions"
+      >
+        <div className="container-fluid px-lg-4">
+          <div className="home-carousel-card position-relative overflow-hidden">
             <div className="row align-items-center g-4">
-              <div className="col-lg-7">
-                <span className="home-carousel-eyebrow">
-                  {activeSlide.eyebrow}
-                </span>
+              <div className="col-12 col-lg-7">
+                <div className="home-carousel-content">
+                  <span className="home-carousel-eyebrow">
+                    <i
+                      className={`${activeSlide.icon} me-2`}
+                      aria-hidden="true"
+                    />
+                    {activeSlide.eyebrow}
+                  </span>
 
-                <h1 className="home-carousel-title">{activeSlide.title}</h1>
+                  <h1 className="home-carousel-title">
+                    {activeSlide.title}
+                  </h1>
 
-                <p className="home-carousel-description">
-                  {activeSlide.description}
-                </p>
+                  <p className="home-carousel-description">
+                    {activeSlide.description}
+                  </p>
 
-                <div className="d-flex flex-column flex-sm-row gap-3">
-                  <Link
-                    to={activeSlide.primaryLink}
-                    className="btn btn-light btn-lg px-4 home-carousel-primary-btn"
-                  >
-                    <i className="bi bi-bag me-2" />
-                    {activeSlide.primaryLabel}
-                  </Link>
+                  <div className="d-flex flex-column flex-sm-row gap-3">
+                    <Link
+                      to={activeSlide.primaryLink}
+                      className="btn btn-light btn-lg px-4 home-carousel-primary-btn"
+                    >
+                      <i
+                        className="bi bi-bag me-2"
+                        aria-hidden="true"
+                      />
+                      {activeSlide.primaryLabel}
+                    </Link>
 
-                  <Link
-                    to={activeSlide.secondaryLink}
-                    className="btn btn-outline-light btn-lg px-4"
-                  >
-                    {activeSlide.secondaryLabel}
-                  </Link>
+                    <Link
+                      to={activeSlide.secondaryLink}
+                      className="btn btn-outline-light btn-lg px-4"
+                    >
+                      {activeSlide.secondaryLabel}
+                      <i
+                        className="bi bi-arrow-right ms-2"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </div>
                 </div>
               </div>
 
-              <div className="col-lg-5">
+              <div className="col-12 col-lg-5">
                 <div className="home-carousel-visual">
                   <div className="home-carousel-icon">
-                    <i className={activeSlide.icon} />
+                    <i
+                      className={activeSlide.icon}
+                      aria-hidden="true"
+                    />
                   </div>
 
                   <div className="home-carousel-floating-card one">
-                    <i className="bi bi-heart-fill text-danger" />
+                    <i
+                      className="bi bi-heart-fill text-danger"
+                      aria-hidden="true"
+                    />
                     Wishlist ready
                   </div>
 
                   <div className="home-carousel-floating-card two">
-                    <i className="bi bi-stars text-warning" />
+                    <i
+                      className="bi bi-stars text-warning"
+                      aria-hidden="true"
+                    />
                     Smart recommendations
                   </div>
 
                   <div className="home-carousel-floating-card three">
-                    <i className="bi bi-truck text-success" />
+                    <i
+                      className="bi bi-truck text-success"
+                      aria-hidden="true"
+                    />
                     Track orders easily
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="home-carousel-controls">
-              {carouselSlides.map((slide, index) => (
-                <button
-                  key={slide.id}
-                  type="button"
-                  className={activeSlideIndex === index ? "active" : ""}
-                  onClick={() => setActiveSlideIndex(index)}
-                  aria-label={`Show slide ${index + 1}`}
-                />
-              ))}
+            <button
+              type="button"
+              className="home-carousel-arrow home-carousel-arrow-previous"
+              aria-label="Show previous promotion"
+              onClick={showPreviousSlide}
+            >
+              <i className="bi bi-chevron-left" aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              className="home-carousel-arrow home-carousel-arrow-next"
+              aria-label="Show next promotion"
+              onClick={showNextSlide}
+            >
+              <i className="bi bi-chevron-right" aria-hidden="true" />
+            </button>
+
+            <div
+              className="home-carousel-controls"
+              role="group"
+              aria-label="Featured promotion slides"
+            >
+              {carouselSlides.map((slide, index) => {
+                const isActive = activeSlideIndex === index;
+
+                return (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    className={isActive ? "active" : ""}
+                    aria-label={`Show slide ${index + 1}: ${
+                      slide.eyebrow
+                    }`}
+                    aria-pressed={isActive}
+                    onClick={() => setActiveSlideIndex(index)}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      <nav
-        className="home-category-navbar bg-white"
-        aria-label="Home categories"
-      >
-        <div className="container-fluid h-100">
-          <div className="home-category-navbar-inner">
-            <span className="home-category-title">Categories:</span>
-            <ul className="home-category-list no-scrollbar">
-              {visibleCategories.map((category) => {
-                const isActive = activeCategory === category;
+      {/* ================================================================
+          Loading State
+          ================================================================ */}
 
-                return (
-                  /* 1. Outermost element now correctly holds the key prop */
-                  <li className="home-category-list-item" key={category}>
-                    <a
-                      href={`#${category.toLowerCase().replace(/\s+/g, "-")}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection(category);
-                      }}
-                      /* 2. Added 'fw-bold' utility class here to handle font styling natively */
-                      className={`home-category-link fw-bold ${isActive ? "active" : ""}`}
-                      style={
-                        {
-                          "--category-accent": getCategoryAccentColor(category),
-                        } as React.CSSProperties
-                      }
-                    >
-                      <i className={getCategoryIcon(category)} />
-                      <span>{category}</span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+      {isLoading ? (
+        <div className="container-fluid py-5">
+          <div className="d-flex align-items-center justify-content-center py-5">
+            <Loader />
           </div>
         </div>
-      </nav>
+      ) : null}
 
-      <div className="container-fluid py-5">
-        {isLoading ? (
-          <Loader message="Assembling custom curated shopping catalogs..." />
-        ) : null}
+      {/* ================================================================
+          Error State
+          ================================================================ */}
 
-        {!isLoading && errorMessage ? (
-          <div className="text-center py-5">
-            <p className="text-danger mb-3">{errorMessage}</p>
+      {!isLoading && errorMessage ? (
+        <div className="container-fluid py-5">
+          <EmptyState
+            title="Unable to load products"
+            message={errorMessage}
+            icon="bi bi-exclamation-triangle"
+          />
 
-            <Link to="/products" className="btn btn-primary">
+          <div className="text-center mt-4">
+            <Link
+              to="/products"
+              className="btn btn-primary rounded-pill px-4"
+            >
               Try Products Page
+              <i
+                className="bi bi-arrow-right ms-2"
+                aria-hidden="true"
+              />
             </Link>
           </div>
-        ) : null}
+        </div>
+      ) : null}
 
-        {!isLoading && !errorMessage && allProducts.length === 0 ? (
+      {/* ================================================================
+          Empty State
+          ================================================================ */}
+
+      {!isLoading && !errorMessage && allProducts.length === 0 ? (
+        <div className="container-fluid py-5">
           <EmptyState
-            title="Warehouse Inventory Empty"
-            message="No products are ready for delivery right now."
+            title="No products available"
+            message="There are currently no in-stock products available. Please check again later."
+            icon="bi bi-box-seam"
           />
-        ) : null}
 
-        {!isLoading && !errorMessage && allProducts.length > 0 ? (
-          <div className="d-flex flex-column gap-5">
-            {visibleCategories.map((category) => {
-              const targetedProducts = allProducts
-                .filter(
-                  (product) =>
-                    product.category.toLowerCase() === category.toLowerCase(),
-                )
-                .slice(0, 4);
-
-              if (targetedProducts.length === 0) {
-                return null;
-              }
-
-              return (
-                <section
-                  key={category}
-                  data-category={category}
-                  ref={(element) => {
-                    sectionRefs.current[category] = element;
-                  }}
-                  className="category-scroll-block py-3 border-bottom"
-                >
-                  <div className="d-flex align-items-center justify-content-between mb-4 gap-3">
-                    <div className="d-flex align-items-center gap-3">
-                      <div className="home-category-section-icon bg-primary-subtle text-primary rounded-3 fs-4 d-flex align-items-center justify-content-center">
-                        <i className={getCategoryIcon(category)} />
-                      </div>
-
-                      <div>
-                        <h3 className="fw-bold mb-0 text-dark h4">
-                          {category}
-                        </h3>
-
-                        <p className="text-muted small mb-0">
-                          Trending picks from our {category.toLowerCase()}{" "}
-                          shelf.
-                        </p>
-                      </div>
-                    </div>
-
-                    <Link
-                      to={`/categories/${encodeURIComponent(category)}`}
-                      className="btn btn-sm btn-outline-primary rounded-pill px-3 flex-shrink-0"
-                    >
-                      Explore All
-                      <i className="bi bi-arrow-right ms-1" />
-                    </Link>
-                  </div>
-
-                  <div className="row g-4">
-                    {targetedProducts.map((product) => (
-                      <div
-                        className="col-sm-6 col-md-4 col-lg-3"
-                        key={product.id}
-                      >
-                        <ProductCard product={product} />
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
+          <div className="text-center mt-4">
+            <Link
+              to="/products"
+              className="btn btn-outline-primary rounded-pill px-4"
+            >
+              Browse All Products
+              <i
+                className="bi bi-arrow-right ms-2"
+                aria-hidden="true"
+              />
+            </Link>
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
+
+      {!isLoading && !errorMessage && allProducts.length > 0 ? (
+        <>
+          {/* ============================================================
+              Shop By Category
+              This is a content grid, not a navigation menu.
+              ============================================================ */}
+
+          <section className="home-shop-category-section py-5">
+            <div className="container-fluid px-lg-4">
+              <div className="home-section-heading text-center mb-5">
+                <span className="home-section-eyebrow">
+                  Explore the marketplace
+                </span>
+
+                <h2 className="home-section-title mb-2">
+                  Shop By Category
+                </h2>
+
+                <p className="home-section-description text-muted mb-0">
+                  Discover popular products and the best available
+                  discounts across ShopEase.
+                </p>
+              </div>
+
+              <div className="row g-3 g-lg-4">
+                {visibleCategoryOffers.map((offer) => {
+                  const discount = categoryDiscounts[offer.category] ?? 0;
+
+                  return (
+                    <div
+                      className="col-6 col-md-4 col-lg-3 col-xl-2"
+                      key={offer.id}
+                    >
+                      <Link
+                        to={`/categories/${encodeURIComponent(
+                          offer.category
+                        )}`}
+                        className={`home-category-offer-card ${offer.themeClass}`}
+                        aria-label={`Shop ${offer.title}${
+                          discount > 0
+                            ? ` with discounts up to ${discount} percent`
+                            : ""
+                        }`}
+                      >
+                        <div className="home-category-offer-icon">
+                          <i
+                            className={offer.icon}
+                            aria-hidden="true"
+                          />
+                        </div>
+
+                        <div className="home-category-offer-content">
+                          <h3 className="home-category-offer-title">
+                            {offer.title}
+                          </h3>
+
+                          <p className="home-category-offer-subtitle">
+                            {offer.subtitle}
+                          </p>
+
+                          {discount > 0 ? (
+                            <span className="home-category-discount">
+                              Up to {discount}% OFF
+                            </span>
+                          ) : (
+                            <span className="home-category-discount">
+                              Explore Collection
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="home-category-offer-action">
+                          Shop Now
+                          <i
+                            className="bi bi-arrow-right ms-1"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </>
+      ) : null}
     </main>
   );
 };

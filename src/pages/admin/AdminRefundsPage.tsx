@@ -6,55 +6,92 @@ import { useAdminTablePagination } from "../../hooks/useAdminTablePagination";
 import { orderService } from "../../services/orderService";
 import { refundService } from "../../services/refundService";
 import { returnRequestService } from "../../services/returnRequestService";
+import { walletService } from "../../services/walletService";
 import type {
   RefundMethod,
   RefundRecord,
-  RefundStatus,
+  RefundStatus
 } from "../../types/refund";
 import type { ReturnRequest } from "../../types/returnRequest";
 import { formatCurrency } from "../../utils/currencyFormatter";
-import { walletService } from "../../services/walletService";
 
 const refundStatuses: RefundStatus[] = [
   "PENDING",
+  "PENDING_REVIEW",
   "INITIATED",
   "PROCESSING",
   "COMPLETED",
   "FAILED",
+  "CANCELLED"
 ];
 
-const refundMethods: RefundMethod[] = ["ORIGINAL_PAYMENT", "WALLET", "COUPON"];
+const refundMethods: RefundMethod[] = [
+  "ORIGINAL_PAYMENT",
+  "ORIGINAL_PAYMENT_MODE",
+  "WALLET",
+  "COUPON",
+  "MANUAL_BANK_TRANSFER"
+];
 
 const statusLabels: Record<RefundStatus, string> = {
   PENDING: "Pending",
+  PENDING_REVIEW: "Pending Review",
   INITIATED: "Initiated",
   PROCESSING: "Processing",
   COMPLETED: "Completed",
   FAILED: "Failed",
+  CANCELLED: "Cancelled"
 };
 
 const methodLabels: Record<RefundMethod, string> = {
   ORIGINAL_PAYMENT: "Original Payment",
+  ORIGINAL_PAYMENT_MODE: "Original Payment Mode",
   WALLET: "Wallet Credit",
   COUPON: "Coupon",
+  MANUAL_BANK_TRANSFER: "Manual Bank Transfer"
 };
+
+const refundableReturnStatuses = [
+  "APPROVED",
+  "PICKED_UP",
+  "PICKUP_COMPLETED",
+  "QUALITY_CHECK_PENDING",
+  "QUALITY_CHECK_COMPLETED",
+  "REFUND_INITIATED"
+];
 
 const getBadgeClass = (status: RefundStatus): string => {
   switch (status) {
     case "COMPLETED":
       return "bg-success";
-
     case "FAILED":
+    case "CANCELLED":
       return "bg-danger";
-
+    case "PENDING_REVIEW":
+      return "bg-warning text-dark";
     case "INITIATED":
     case "PROCESSING":
       return "bg-primary";
-
     case "PENDING":
     default:
       return "bg-secondary";
   }
+};
+
+const getReturnRequestDisplayId = (request: ReturnRequest): string => {
+  return request.returnRequestId ?? request.requestId ?? request.id;
+};
+
+const getReturnRefundAmount = (request: ReturnRequest): number => {
+  if (typeof request.refundAmount === "number") {
+    return request.refundAmount;
+  }
+
+  if (Array.isArray(request.items)) {
+    return request.items.reduce((sum, item) => sum + (item.subtotal ?? 0), 0);
+  }
+
+  return 0;
 };
 
 const AdminRefundsPage = () => {
@@ -76,23 +113,21 @@ const AdminRefundsPage = () => {
 
       const [refundList, requestList] = await Promise.all([
         refundService.getRefunds(),
-        returnRequestService.getRequests(),
+        returnRequestService.getRequests()
       ]);
 
       setRefunds(
-        refundList.sort(
+        [...refundList].sort(
           (first, second) =>
             new Date(second.initiatedAt).getTime() -
-            new Date(first.initiatedAt).getTime(),
-        ),
+            new Date(first.initiatedAt).getTime()
+        )
       );
 
       setReturnRequests(
         requestList.filter((request) =>
-          ["APPROVED", "PICKED_UP", "REFUND_INITIATED"].includes(
-            request.status,
-          ),
-        ),
+          refundableReturnStatuses.includes(request.status)
+        )
       );
     } catch {
       setErrorMessage("Unable to load refund dashboard.");
@@ -107,11 +142,13 @@ const AdminRefundsPage = () => {
 
   const refundableRequests = useMemo(() => {
     const refundedReturnIds = new Set(
-      refunds.map((refund) => refund.returnRequestId),
+      refunds.map((refund) => refund.returnRequestId)
     );
 
     return returnRequests.filter(
-      (request) => !refundedReturnIds.has(request.id),
+      (request) =>
+        !refundedReturnIds.has(request.id) &&
+        !refundedReturnIds.has(getReturnRequestDisplayId(request))
     );
   }, [returnRequests, refunds]);
 
@@ -128,7 +165,7 @@ const AdminRefundsPage = () => {
         refund.method,
         refund.status,
         refund.reason,
-        refund.compensationCouponCode,
+        refund.compensationCouponCode
       ]
         .filter(Boolean)
         .join(" ")
@@ -143,26 +180,24 @@ const AdminRefundsPage = () => {
     itemsPerPage,
     paginatedItems: paginatedRefunds,
     setCurrentPage,
-    setItemsPerPage,
+    setItemsPerPage
   } = useAdminTablePagination({
     items: filteredRefunds,
     defaultItemsPerPage: 10,
-    resetDependencies: [searchText, statusFilter],
+    resetDependencies: [searchText, statusFilter]
   });
 
   const createRefundFromReturnRequest = async (
     request: ReturnRequest,
-    method: RefundMethod,
+    method: RefundMethod
   ): Promise<void> => {
     try {
       setCreatingReturnRequestId(request.id);
       setErrorMessage("");
       setSuccessMessage("");
 
-      const refundAmount = request.items.reduce(
-        (sum, item) => sum + item.subtotal,
-        0,
-      );
+      const refundAmount = getReturnRefundAmount(request);
+      const now = new Date().toISOString();
 
       const createdRefund = await refundService.createRefund({
         refundId: `REF-${Date.now()}`,
@@ -174,24 +209,32 @@ const AdminRefundsPage = () => {
         method,
         status: "INITIATED",
         reason: request.reason,
-        initiatedAt: new Date().toISOString(),
+        initiatedAt: now,
         compensationCouponCode:
           method === "COUPON" ? `COMP-${Date.now()}` : undefined,
-        walletCreditAmount: method === "WALLET" ? refundAmount : undefined,
+        walletCreditAmount: method === "WALLET" ? refundAmount : undefined
       });
 
-      await returnRequestService.updateRequest(request.id, {
-        status: "REFUND_INITIATED",
-        refundInitiatedAt: new Date().toISOString(),
-      });
+      const updatePromises: Promise<unknown>[] = [
+        returnRequestService.updateRequest(request.id, {
+          status: "REFUND_INITIATED",
+          refundInitiatedAt: now,
+          updatedAt: now
+        })
+      ];
 
-      await orderService.updateOrder(request.orderDbId, {
-        orderStatus: "Returned",
-      });
+      if (request.orderDbId) {
+        updatePromises.push(
+          orderService.updateOrder(request.orderDbId, {
+            orderStatus: "Returned"
+          })
+        );
+      }
+
+      await Promise.all(updatePromises);
 
       setRefunds((previousRefunds) => [createdRefund, ...previousRefunds]);
-
-      setSuccessMessage(`Refund ${createdRefund.refundId} initiated.`);
+      setSuccessMessage(`Refund ${createdRefund.refundId} initiated successfully.`);
     } catch {
       setErrorMessage("Unable to initiate refund.");
     } finally {
@@ -201,40 +244,37 @@ const AdminRefundsPage = () => {
 
   const updateRefundStatus = async (
     refund: RefundRecord,
-    status: RefundStatus,
+    status: RefundStatus
   ): Promise<void> => {
     try {
       setUpdatingId(refund.id);
       setErrorMessage("");
       setSuccessMessage("");
 
+      const now = new Date().toISOString();
+
       const patchPayload: Partial<RefundRecord> = {
-        status,
+        status
       };
 
       if (status === "COMPLETED") {
-        patchPayload.completedAt = new Date().toISOString();
+        patchPayload.completedAt = now;
       }
 
-      if (status === "FAILED") {
-        patchPayload.failedAt = new Date().toISOString();
+      if (status === "FAILED" || status === "CANCELLED") {
+        patchPayload.failedAt = now;
       }
 
       const updatedRefund = await refundService.updateRefund(
         refund.id,
-        patchPayload,
-      );
-
-      setRefunds((previousRefunds) =>
-        previousRefunds.map((item) =>
-          item.id === updatedRefund.id ? updatedRefund : item,
-        ),
+        patchPayload
       );
 
       if (status === "COMPLETED") {
         await returnRequestService.updateRequest(refund.returnRequestId, {
-          status: "REFUNDED",
-          refundedAt: new Date().toISOString(),
+          status: "REFUND_COMPLETED",
+          refundedAt: now,
+          updatedAt: now
         });
 
         if (refund.method === "WALLET") {
@@ -244,7 +284,7 @@ const AdminRefundsPage = () => {
           const alreadyCredited = existingWalletTransactions.some(
             (transaction) =>
               transaction.source === "REFUND" &&
-              transaction.refundId === refund.refundId,
+              transaction.refundId === refund.refundId
           );
 
           if (!alreadyCredited) {
@@ -255,16 +295,24 @@ const AdminRefundsPage = () => {
               source: "REFUND",
               amount: refund.walletCreditAmount ?? refund.amount,
               description: `Wallet credit for refund ${refund.refundId}`,
-              createdAt: new Date().toISOString(),
+              createdAt: now,
               referenceId: refund.refundId,
               refundId: refund.refundId,
-              orderId: refund.orderId,
+              orderId: refund.orderId
             });
           }
         }
       }
 
-      setSuccessMessage(`Refund ${refund.refundId} updated.`);
+      setRefunds((previousRefunds) =>
+        previousRefunds.map((item) =>
+          item.id === updatedRefund.id ? updatedRefund : item
+        )
+      );
+
+      setSuccessMessage(
+        `Refund ${refund.refundId} updated to ${statusLabels[status]}.`
+      );
     } catch {
       setErrorMessage("Unable to update refund status.");
     } finally {
@@ -282,7 +330,7 @@ const AdminRefundsPage = () => {
         <div>
           <h1 className="fw-bold mb-1">Refunds</h1>
           <p className="text-muted mb-0">
-            Initiate and manage customer refunds, coupons and wallet credits.
+            Initiate and manage customer refunds, coupons, and wallet credits.
           </p>
         </div>
 
@@ -326,19 +374,18 @@ const AdminRefundsPage = () => {
 
               <tbody>
                 {refundableRequests.map((request) => {
-                  const refundAmount = request.items.reduce(
-                    (sum, item) => sum + item.subtotal,
-                    0,
-                  );
+                  const refundAmount = getReturnRefundAmount(request);
 
                   return (
                     <tr key={request.id}>
                       <td>
-                        <strong>{request.requestId}</strong>
+                        <strong>{getReturnRequestDisplayId(request)}</strong>
                         <p className="small text-muted mb-0">
-                          {new Date(request.requestedAt).toLocaleString(
-                            "en-IN",
-                          )}
+                          {request.requestedAt
+                            ? new Date(request.requestedAt).toLocaleString(
+                                "en-IN"
+                              )
+                            : "Requested date not available"}
                         </p>
                       </td>
 
@@ -357,11 +404,13 @@ const AdminRefundsPage = () => {
                               key={method}
                               variant="outline-primary"
                               className="btn-sm"
-                              isLoading={creatingReturnRequestId === request.id}
+                              isLoading={
+                                creatingReturnRequestId === request.id
+                              }
                               onClick={() =>
                                 void createRefundFromReturnRequest(
                                   request,
-                                  method,
+                                  method
                                 )
                               }
                             >
@@ -453,7 +502,7 @@ const AdminRefundsPage = () => {
                       onChange={(event) =>
                         void updateRefundStatus(
                           refund,
-                          event.target.value as RefundStatus,
+                          event.target.value as RefundStatus
                         )
                       }
                     >
