@@ -11,24 +11,47 @@ import type {
   SellerPayoutSettlementSummary
 } from "../types/sellerPayoutSettlement";
 
+const USERS_ENDPOINT = "/users";
+const PRODUCTS_ENDPOINT = "/products";
 const RETURN_REQUESTS_ENDPOINT = "/returnRequests";
 const SELLER_RETURN_DISPUTES_ENDPOINT = "/sellerReturnDisputes";
 const DAMAGED_RETURN_INVENTORY_ENDPOINT = "/damagedReturnInventory";
-const SELLERS_ENDPOINT = "/sellers";
 const SELLER_PAYOUT_ADJUSTMENTS_ENDPOINT = "/sellerPayoutAdjustments";
 
 type SellerLike = {
   id?: string;
   sellerId?: string;
+  userId?: string;
+
   sellerName?: string;
   name?: string;
+  fullName?: string;
   storeName?: string;
   shopName?: string;
   businessName?: string;
+
   email?: string;
   sellerEmail?: string;
   phone?: string;
+  mobile?: string;
   sellerPhone?: string;
+
+  role?: string;
+  userRole?: string;
+  accountType?: string;
+  userType?: string;
+  isSeller?: boolean | string;
+};
+
+type ProductLike = {
+  id?: string;
+  productId?: string;
+  sellerId?: string;
+  sellerName?: string;
+  sellerEmail?: string;
+  sellerPhone?: string;
+  storeName?: string;
+  shopName?: string;
 };
 
 type SellerReturnDisputeLike = {
@@ -83,6 +106,7 @@ type ReturnRequestWithSellerFallback = ReturnRequest & {
 };
 
 type SellerAccumulator = SellerPayoutSettlementRow & {
+  hasCustomAdjustmentRecord?: boolean;
   returnReasonMap: Map<string, number>;
 };
 
@@ -149,7 +173,6 @@ const isCompletedReturn = (request: ReturnRequest): boolean => {
 
 const isRejectedReturn = (request: ReturnRequest): boolean => {
   const status = normalizeStatus(request.status);
-
   return status === "REJECTED" || status === "CANCELLED";
 };
 
@@ -211,13 +234,17 @@ const getItemRefundAmount = ({
 };
 
 const getSellerIdFromSeller = (seller: SellerLike): string => {
-  return normalizeText(seller.sellerId ?? seller.id);
+  return normalizeText(seller.sellerId ?? seller.userId ?? seller.id);
 };
 
-const getSellerNameFromSeller = (seller: SellerLike, fallbackId: string): string => {
+const getSellerNameFromSeller = (
+  seller: SellerLike,
+  fallbackId: string
+): string => {
   return (
     seller.sellerName ??
     seller.name ??
+    seller.fullName ??
     seller.storeName ??
     seller.shopName ??
     seller.businessName ??
@@ -225,19 +252,145 @@ const getSellerNameFromSeller = (seller: SellerLike, fallbackId: string): string
   );
 };
 
+const isSellerUser = (user: SellerLike): boolean => {
+  const roleText = [
+    user.role,
+    user.userRole,
+    user.accountType,
+    user.userType
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toUpperCase();
+
+  const isSellerFlag =
+    user.isSeller === true ||
+    (typeof user.isSeller === "string" &&
+      user.isSeller.toLowerCase() === "true");
+
+  return (
+    isSellerFlag ||
+    roleText.includes("SELLER") ||
+    roleText.includes("VENDOR") ||
+    Boolean(user.sellerId) ||
+    Boolean(user.storeName) ||
+    Boolean(user.shopName) ||
+    Boolean(user.businessName)
+  );
+};
+
+const addSellerToMap = ({
+  sellerMap,
+  sellerId,
+  sellerName,
+  sellerEmail,
+  sellerPhone,
+  storeName
+}: {
+  sellerMap: Map<string, SellerLike>;
+  sellerId?: string;
+  sellerName?: string;
+  sellerEmail?: string;
+  sellerPhone?: string;
+  storeName?: string;
+}): void => {
+  const normalizedSellerId = normalizeText(sellerId);
+
+  if (!normalizedSellerId || sellerMap.has(normalizedSellerId)) {
+    return;
+  }
+
+  sellerMap.set(normalizedSellerId, {
+    id: normalizedSellerId,
+    sellerId: normalizedSellerId,
+    sellerName: sellerName ?? `Seller ${normalizedSellerId}`,
+    sellerEmail,
+    sellerPhone,
+    storeName
+  });
+};
+
+const buildSellersFromAvailableData = ({
+  users,
+  products,
+  requests,
+  disputes,
+  damagedInventory
+}: {
+  users: SellerLike[];
+  products: ProductLike[];
+  requests: ReturnRequest[];
+  disputes: SellerReturnDisputeLike[];
+  damagedInventory: DamagedInventoryLike[];
+}): SellerLike[] => {
+  const sellerMap = new Map<string, SellerLike>();
+
+  users.filter(isSellerUser).forEach((user) => {
+    const sellerId = getSellerIdFromSeller(user);
+
+    if (!sellerId) {
+      return;
+    }
+
+    sellerMap.set(sellerId, {
+      ...user,
+      id: sellerId,
+      sellerId,
+      sellerName: getSellerNameFromSeller(user, sellerId),
+      sellerEmail: user.sellerEmail ?? user.email,
+      sellerPhone: user.sellerPhone ?? user.phone ?? user.mobile,
+      storeName: user.storeName ?? user.shopName ?? user.businessName
+    });
+  });
+
+  products.forEach((product) => {
+    addSellerToMap({
+      sellerMap,
+      sellerId: product.sellerId,
+      sellerName: product.sellerName,
+      sellerEmail: product.sellerEmail,
+      sellerPhone: product.sellerPhone,
+      storeName: product.storeName ?? product.shopName
+    });
+  });
+
+  requests.forEach((request) => {
+    getItems(request).forEach((item) => {
+      addSellerToMap({
+        sellerMap,
+        sellerId: item.sellerId,
+        sellerName: item.sellerName,
+        sellerEmail: item.sellerEmail,
+        sellerPhone: item.sellerPhone
+      });
+    });
+  });
+
+  disputes.forEach((dispute) => {
+    addSellerToMap({
+      sellerMap,
+      sellerId: dispute.sellerId,
+      sellerName: dispute.sellerName,
+      sellerEmail: dispute.sellerEmail,
+      sellerPhone: dispute.sellerPhone
+    });
+  });
+
+  damagedInventory.forEach((item) => {
+    addSellerToMap({
+      sellerMap,
+      sellerId: item.sellerId,
+      sellerName: item.sellerName
+    });
+  });
+
+  return Array.from(sellerMap.values());
+};
+
 const getRiskLevel = (riskScore: number): SellerPayoutRiskLevel => {
-  if (riskScore >= 85) {
-    return "CRITICAL";
-  }
-
-  if (riskScore >= 65) {
-    return "HIGH";
-  }
-
-  if (riskScore >= 40) {
-    return "MEDIUM";
-  }
-
+  if (riskScore >= 85) return "CRITICAL";
+  if (riskScore >= 65) return "HIGH";
+  if (riskScore >= 40) return "MEDIUM";
   return "LOW";
 };
 
@@ -270,9 +423,7 @@ const getAdjustmentType = ({
 const getSettlementStatus = (
   adjustmentType: SellerPayoutAdjustmentType
 ): SellerPayoutSettlementStatus => {
-  if (adjustmentType === "PAYOUT_HOLD") {
-    return "ON_HOLD";
-  }
+  if (adjustmentType === "PAYOUT_HOLD") return "ON_HOLD";
 
   if (
     adjustmentType === "PAYOUT_DEDUCTION" ||
@@ -281,9 +432,7 @@ const getSettlementStatus = (
     return "PENDING";
   }
 
-  if (adjustmentType === "MANUAL_REVIEW") {
-    return "UNDER_REVIEW";
-  }
+  if (adjustmentType === "MANUAL_REVIEW") return "UNDER_REVIEW";
 
   return "APPROVED";
 };
@@ -388,6 +537,44 @@ const buildRecommendedActions = ({
   return actions;
 };
 
+const createDefaultAccumulator = (
+  sellerId: string,
+  name?: string
+): SellerAccumulator => ({
+  sellerId,
+  sellerName: name ?? "Unknown Seller",
+  totalReturns: 0,
+  completedReturns: 0,
+  rejectedReturns: 0,
+  activeReturns: 0,
+  totalRefundAmount: 0,
+  sellerLiabilityAmount: 0,
+  damagedInventoryCount: 0,
+  damagedInventoryValue: 0,
+  disputesRaised: 0,
+  disputesApproved: 0,
+  disputesRejected: 0,
+  disputesPending: 0,
+  payoutBaseAmount: 0,
+  payoutHoldAmount: 0,
+  payoutDeductionAmount: 0,
+  payoutCreditAmount: 0,
+  finalPayableAmount: 0,
+  adjustmentType: "NO_ACTION",
+  settlementStatus: "APPROVED",
+  liabilityRate: 0,
+  disputeApprovalRate: 0,
+  damageRate: 0,
+  riskScore: 0,
+  riskLevel: "LOW",
+  settlementReasons: [],
+  recommendedActions: [],
+  lastReturnAt: undefined,
+  lastUpdatedAt: new Date().toISOString(),
+  hasCustomAdjustmentRecord: false,
+  returnReasonMap: new Map<string, number>()
+});
+
 const buildSellerRows = ({
   sellers,
   requests,
@@ -406,56 +593,20 @@ const buildSellerRows = ({
   sellers.forEach((seller) => {
     const sellerId = getSellerIdFromSeller(seller);
 
-    if (!sellerId) {
-      return;
-    }
+    if (!sellerId) return;
 
-    sellerMap.set(sellerId, {
+    const accumulator = createDefaultAccumulator(
       sellerId,
-      sellerName: getSellerNameFromSeller(seller, sellerId),
-      sellerEmail: seller.sellerEmail ?? seller.email,
-      sellerPhone: seller.sellerPhone ?? seller.phone,
-      storeName: seller.storeName ?? seller.shopName ?? seller.businessName,
+      getSellerNameFromSeller(seller, sellerId)
+    );
 
-      totalReturns: 0,
-      completedReturns: 0,
-      rejectedReturns: 0,
-      activeReturns: 0,
+    accumulator.sellerEmail = seller.sellerEmail ?? seller.email;
+    accumulator.sellerPhone =
+      seller.sellerPhone ?? seller.phone ?? seller.mobile;
+    accumulator.storeName =
+      seller.storeName ?? seller.shopName ?? seller.businessName;
 
-      totalRefundAmount: 0,
-      sellerLiabilityAmount: 0,
-      damagedInventoryCount: 0,
-      damagedInventoryValue: 0,
-
-      disputesRaised: 0,
-      disputesApproved: 0,
-      disputesRejected: 0,
-      disputesPending: 0,
-
-      payoutBaseAmount: 0,
-      payoutHoldAmount: 0,
-      payoutDeductionAmount: 0,
-      payoutCreditAmount: 0,
-      finalPayableAmount: 0,
-
-      adjustmentType: "NO_ACTION",
-      settlementStatus: "APPROVED",
-
-      liabilityRate: 0,
-      disputeApprovalRate: 0,
-      damageRate: 0,
-
-      riskScore: 0,
-      riskLevel: "LOW",
-
-      settlementReasons: [],
-      recommendedActions: [],
-
-      lastReturnAt: undefined,
-      lastUpdatedAt: new Date().toISOString(),
-
-      returnReasonMap: new Map<string, number>()
-    });
+    sellerMap.set(sellerId, accumulator);
   });
 
   requests.forEach((request) => {
@@ -465,47 +616,14 @@ const buildSellerRows = ({
     items.forEach((item) => {
       const sellerId = normalizeText(item.sellerId);
 
-      if (!sellerId) {
-        return;
-      }
+      if (!sellerId) return;
 
       const existing =
         sellerMap.get(sellerId) ??
-        ({
-          sellerId,
-          sellerName: item.sellerName ?? "Unknown Seller",
-          sellerEmail: item.sellerEmail,
-          sellerPhone: item.sellerPhone,
-          totalReturns: 0,
-          completedReturns: 0,
-          rejectedReturns: 0,
-          activeReturns: 0,
-          totalRefundAmount: 0,
-          sellerLiabilityAmount: 0,
-          damagedInventoryCount: 0,
-          damagedInventoryValue: 0,
-          disputesRaised: 0,
-          disputesApproved: 0,
-          disputesRejected: 0,
-          disputesPending: 0,
-          payoutBaseAmount: 0,
-          payoutHoldAmount: 0,
-          payoutDeductionAmount: 0,
-          payoutCreditAmount: 0,
-          finalPayableAmount: 0,
-          adjustmentType: "NO_ACTION",
-          settlementStatus: "APPROVED",
-          liabilityRate: 0,
-          disputeApprovalRate: 0,
-          damageRate: 0,
-          riskScore: 0,
-          riskLevel: "LOW",
-          settlementReasons: [],
-          recommendedActions: [],
-          lastReturnAt: undefined,
-          lastUpdatedAt: new Date().toISOString(),
-          returnReasonMap: new Map<string, number>()
-        } satisfies SellerAccumulator);
+        createDefaultAccumulator(sellerId, item.sellerName);
+
+      if (!existing.sellerEmail) existing.sellerEmail = item.sellerEmail;
+      if (!existing.sellerPhone) existing.sellerPhone = item.sellerPhone;
 
       const itemRefundAmount = getItemRefundAmount({
         item,
@@ -531,6 +649,7 @@ const buildSellerRows = ({
       );
 
       const updatedAt = request.updatedAt ?? request.createdAt;
+
       if (
         updatedAt &&
         (!existing.lastReturnAt ||
@@ -546,47 +665,14 @@ const buildSellerRows = ({
   disputes.forEach((dispute) => {
     const sellerId = normalizeText(dispute.sellerId);
 
-    if (!sellerId) {
-      return;
-    }
+    if (!sellerId) return;
 
     const existing =
       sellerMap.get(sellerId) ??
-      ({
-        sellerId,
-        sellerName: dispute.sellerName ?? "Unknown Seller",
-        sellerEmail: dispute.sellerEmail,
-        sellerPhone: dispute.sellerPhone,
-        totalReturns: 0,
-        completedReturns: 0,
-        rejectedReturns: 0,
-        activeReturns: 0,
-        totalRefundAmount: 0,
-        sellerLiabilityAmount: 0,
-        damagedInventoryCount: 0,
-        damagedInventoryValue: 0,
-        disputesRaised: 0,
-        disputesApproved: 0,
-        disputesRejected: 0,
-        disputesPending: 0,
-        payoutBaseAmount: 0,
-        payoutHoldAmount: 0,
-        payoutDeductionAmount: 0,
-        payoutCreditAmount: 0,
-        finalPayableAmount: 0,
-        adjustmentType: "NO_ACTION",
-        settlementStatus: "APPROVED",
-        liabilityRate: 0,
-        disputeApprovalRate: 0,
-        damageRate: 0,
-        riskScore: 0,
-        riskLevel: "LOW",
-        settlementReasons: [],
-        recommendedActions: [],
-        lastReturnAt: undefined,
-        lastUpdatedAt: new Date().toISOString(),
-        returnReasonMap: new Map<string, number>()
-      } satisfies SellerAccumulator);
+      createDefaultAccumulator(sellerId, dispute.sellerName);
+
+    if (!existing.sellerEmail) existing.sellerEmail = dispute.sellerEmail;
+    if (!existing.sellerPhone) existing.sellerPhone = dispute.sellerPhone;
 
     existing.disputesRaised += 1;
 
@@ -610,45 +696,11 @@ const buildSellerRows = ({
   damagedInventory.forEach((item) => {
     const sellerId = normalizeText(item.sellerId);
 
-    if (!sellerId) {
-      return;
-    }
+    if (!sellerId) return;
 
     const existing =
       sellerMap.get(sellerId) ??
-      ({
-        sellerId,
-        sellerName: item.sellerName ?? "Unknown Seller",
-        totalReturns: 0,
-        completedReturns: 0,
-        rejectedReturns: 0,
-        activeReturns: 0,
-        totalRefundAmount: 0,
-        sellerLiabilityAmount: 0,
-        damagedInventoryCount: 0,
-        damagedInventoryValue: 0,
-        disputesRaised: 0,
-        disputesApproved: 0,
-        disputesRejected: 0,
-        disputesPending: 0,
-        payoutBaseAmount: 0,
-        payoutHoldAmount: 0,
-        payoutDeductionAmount: 0,
-        payoutCreditAmount: 0,
-        finalPayableAmount: 0,
-        adjustmentType: "NO_ACTION",
-        settlementStatus: "APPROVED",
-        liabilityRate: 0,
-        disputeApprovalRate: 0,
-        damageRate: 0,
-        riskScore: 0,
-        riskLevel: "LOW",
-        settlementReasons: [],
-        recommendedActions: [],
-        lastReturnAt: undefined,
-        lastUpdatedAt: new Date().toISOString(),
-        returnReasonMap: new Map<string, number>()
-      } satisfies SellerAccumulator);
+      createDefaultAccumulator(sellerId, item.sellerName);
 
     const damagedValue =
       getNumber(item.estimatedLossAmount) ||
@@ -666,9 +718,7 @@ const buildSellerRows = ({
     const sellerId = normalizeText(record.sellerId);
     const existing = sellerMap.get(sellerId);
 
-    if (!existing) {
-      return;
-    }
+    if (!existing) return;
 
     existing.adjustmentType = record.adjustmentType;
     existing.settlementStatus = record.settlementStatus;
@@ -677,6 +727,7 @@ const buildSellerRows = ({
     existing.payoutCreditAmount = record.payoutCreditAmount;
     existing.finalPayableAmount = record.finalPayableAmount;
     existing.lastUpdatedAt = record.updatedAt;
+    existing.hasCustomAdjustmentRecord = true;
 
     sellerMap.set(sellerId, existing);
   });
@@ -698,20 +749,20 @@ const buildSellerRows = ({
         disputesApproved: row.disputesApproved
       });
 
-      const adjustmentType =
-        row.adjustmentType === "NO_ACTION"
-          ? calculatedAdjustmentType
-          : row.adjustmentType;
+      const adjustmentType = row.hasCustomAdjustmentRecord
+        ? row.adjustmentType
+        : calculatedAdjustmentType;
 
-      const settlementStatus =
-        row.settlementStatus === "APPROVED" && adjustmentType !== "NO_ACTION"
-          ? getSettlementStatus(adjustmentType)
-          : row.settlementStatus;
+      const settlementStatus = row.hasCustomAdjustmentRecord
+        ? row.settlementStatus
+        : getSettlementStatus(adjustmentType);
 
       const payoutDeductionAmount =
         row.payoutDeductionAmount > 0
           ? row.payoutDeductionAmount
-          : Math.min(row.sellerLiabilityAmount, row.payoutBaseAmount);
+          : ["PAYOUT_DEDUCTION", "PARTIAL_DEDUCTION"].includes(adjustmentType)
+            ? Math.min(row.sellerLiabilityAmount, row.payoutBaseAmount)
+            : 0;
 
       const payoutHoldAmount =
         row.payoutHoldAmount > 0
@@ -723,7 +774,10 @@ const buildSellerRows = ({
       const payoutCreditAmount = row.payoutCreditAmount;
 
       const finalPayableAmount = Math.max(
-        row.payoutBaseAmount - payoutDeductionAmount - payoutHoldAmount + payoutCreditAmount,
+        row.payoutBaseAmount -
+          payoutDeductionAmount -
+          payoutHoldAmount +
+          payoutCreditAmount,
         0
       );
 
@@ -755,12 +809,18 @@ const buildSellerRows = ({
         settlementStatus
       });
 
-      // Safely strip returnReasonMap without creating an unused variable declaration for ESLint
-      const safeRow: Partial<SellerAccumulator> = { ...row };
-      delete safeRow.returnReasonMap;
+      const safeRow: Omit<
+        SellerAccumulator,
+        "returnReasonMap" | "hasCustomAdjustmentRecord"
+      > = {
+        ...row
+      };
+
+      delete (safeRow as Partial<SellerAccumulator>).returnReasonMap;
+      delete (safeRow as Partial<SellerAccumulator>).hasCustomAdjustmentRecord;
 
       return {
-        ...(safeRow as SellerPayoutSettlementRow),
+        ...safeRow,
         payoutDeductionAmount,
         payoutHoldAmount,
         payoutCreditAmount,
@@ -801,7 +861,10 @@ const buildSummary = (
     ),
     totalPayoutAdjustmentAmount: rows.reduce(
       (total, row) =>
-        total + row.payoutHoldAmount + row.payoutDeductionAmount - row.payoutCreditAmount,
+        total +
+        row.payoutHoldAmount +
+        row.payoutDeductionAmount -
+        row.payoutCreditAmount,
       0
     ),
 
@@ -833,45 +896,20 @@ const buildAdjustmentRecord = (
   const now = new Date().toISOString();
 
   const nextSettlementStatus = (() => {
-    if (payload.action === "APPROVE_SETTLEMENT") {
-      return "APPROVED" as const;
-    }
-
-    if (payload.action === "HOLD_PAYOUT") {
-      return "ON_HOLD" as const;
-    }
-
-    if (payload.action === "RELEASE_PAYOUT") {
-      return "APPROVED" as const;
-    }
-
-    if (payload.action === "MARK_SETTLED") {
-      return "SETTLED" as const;
-    }
-
-    if (payload.action === "REJECT_SETTLEMENT") {
-      return "REJECTED" as const;
-    }
+    if (payload.action === "APPROVE_SETTLEMENT") return "APPROVED" as const;
+    if (payload.action === "HOLD_PAYOUT") return "ON_HOLD" as const;
+    if (payload.action === "RELEASE_PAYOUT") return "APPROVED" as const;
+    if (payload.action === "MARK_SETTLED") return "SETTLED" as const;
+    if (payload.action === "REJECT_SETTLEMENT") return "REJECTED" as const;
 
     return "UNDER_REVIEW" as const;
   })();
 
   const adjustmentType: SellerPayoutAdjustmentType = (() => {
-    if (payload.action === "HOLD_PAYOUT") {
-      return "PAYOUT_HOLD";
-    }
-
-    if (payload.action === "RELEASE_PAYOUT") {
-      return "PAYOUT_RELEASE";
-    }
-
-    if (payload.action === "MARK_SETTLED") {
-      return "PAYOUT_DEDUCTION";
-    }
-
-    if (payload.action === "REJECT_SETTLEMENT") {
-      return "NO_ACTION";
-    }
+    if (payload.action === "HOLD_PAYOUT") return "PAYOUT_HOLD";
+    if (payload.action === "RELEASE_PAYOUT") return "PAYOUT_RELEASE";
+    if (payload.action === "MARK_SETTLED") return "PAYOUT_DEDUCTION";
+    if (payload.action === "REJECT_SETTLEMENT") return "NO_ACTION";
 
     return "MANUAL_REVIEW";
   })();
@@ -897,16 +935,31 @@ const buildAdjustmentRecord = (
 
 export const sellerPayoutSettlementService = {
   getDashboardData: async (): Promise<SellerPayoutSettlementDashboardData> => {
-    const [sellers, requests, disputes, damagedInventory, adjustmentRecords] =
-      await Promise.all([
-        safeGetArray<SellerLike>(SELLERS_ENDPOINT),
-        safeGetArray<ReturnRequest>(RETURN_REQUESTS_ENDPOINT),
-        safeGetArray<SellerReturnDisputeLike>(SELLER_RETURN_DISPUTES_ENDPOINT),
-        safeGetArray<DamagedInventoryLike>(DAMAGED_RETURN_INVENTORY_ENDPOINT),
-        safeGetArray<SellerPayoutAdjustmentRecord>(
-          SELLER_PAYOUT_ADJUSTMENTS_ENDPOINT
-        )
-      ]);
+    const [
+      users,
+      products,
+      requests,
+      disputes,
+      damagedInventory,
+      adjustmentRecords
+    ] = await Promise.all([
+      safeGetArray<SellerLike>(USERS_ENDPOINT),
+      safeGetArray<ProductLike>(PRODUCTS_ENDPOINT),
+      safeGetArray<ReturnRequest>(RETURN_REQUESTS_ENDPOINT),
+      safeGetArray<SellerReturnDisputeLike>(SELLER_RETURN_DISPUTES_ENDPOINT),
+      safeGetArray<DamagedInventoryLike>(DAMAGED_RETURN_INVENTORY_ENDPOINT),
+      safeGetArray<SellerPayoutAdjustmentRecord>(
+        SELLER_PAYOUT_ADJUSTMENTS_ENDPOINT
+      )
+    ]);
+
+    const sellers = buildSellersFromAvailableData({
+      users,
+      products,
+      requests,
+      disputes,
+      damagedInventory
+    });
 
     const rows = buildSellerRows({
       sellers,
@@ -943,15 +996,11 @@ export const sellerPayoutSettlementService = {
   },
 
   formatDateTime: (dateValue?: string): string => {
-    if (!dateValue) {
-      return "N/A";
-    }
+    if (!dateValue) return "N/A";
 
     const date = new Date(dateValue);
 
-    if (Number.isNaN(date.getTime())) {
-      return "N/A";
-    }
+    if (Number.isNaN(date.getTime())) return "N/A";
 
     return date.toLocaleString("en-IN", {
       day: "2-digit",
