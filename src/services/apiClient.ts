@@ -2,11 +2,14 @@ import type { ApiRequestOptions } from "../types/api";
 
 export const API_BASE_URL = "http://localhost:4000";
 
-const buildHeaders = (headers?: HeadersInit): HeadersInit => {
-  return {
-    "Content-Type": "application/json",
-    ...headers
-  };
+const buildHeaders = (headers?: HeadersInit): Headers => {
+  const requestHeaders = new Headers(headers);
+
+  if (!requestHeaders.has("Content-Type")) {
+    requestHeaders.set("Content-Type", "application/json");
+  }
+
+  return requestHeaders;
 };
 
 const request = async <TResponse, TBody = unknown>(
@@ -18,17 +21,42 @@ const request = async <TResponse, TBody = unknown>(
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method,
     headers: buildHeaders(headers),
-    body: body ? JSON.stringify(body) : undefined
+    body:
+      body !== undefined
+        ? JSON.stringify(body)
+        : undefined
   });
 
   if (!response.ok) {
-    let errorMessage = "Something went wrong while processing the request.";
+    let errorMessage =
+      response.statusText ||
+      "Something went wrong while processing the request.";
 
     try {
-      const errorResponse = (await response.json()) as { message?: string };
-      errorMessage = errorResponse.message ?? errorMessage;
+      const contentType =
+        response.headers.get("content-type");
+
+      if (contentType?.includes("application/json")) {
+        const errorResponse =
+          (await response.json()) as {
+            message?: string;
+            error?: string;
+          };
+
+        errorMessage =
+          errorResponse.message ??
+          errorResponse.error ??
+          errorMessage;
+      } else {
+        const responseText =
+          await response.text();
+
+        if (responseText.trim()) {
+          errorMessage = responseText;
+        }
+      }
     } catch {
-      errorMessage = response.statusText || errorMessage;
+      // Keep the resolved fallback error.
     }
 
     throw new Error(errorMessage);
@@ -38,11 +66,19 @@ const request = async <TResponse, TBody = unknown>(
     return undefined as TResponse;
   }
 
-  return (await response.json()) as TResponse;
+  const responseText = await response.text();
+
+  if (!responseText.trim()) {
+    return undefined as TResponse;
+  }
+
+  return JSON.parse(responseText) as TResponse;
 };
 
 export const apiClient = {
-  get: <TResponse>(endpoint: string): Promise<TResponse> => {
+  get: <TResponse>(
+    endpoint: string
+  ): Promise<TResponse> => {
     return request<TResponse>(endpoint);
   },
 
@@ -76,16 +112,11 @@ export const apiClient = {
     });
   },
 
-  /*delete: <TResponse>(endpoint: string): Promise<TResponse> => {
+  delete: <TResponse>(
+    endpoint: string
+  ): Promise<TResponse> => {
     return request<TResponse>(endpoint, {
       method: "DELETE"
     });
-  }*/
- delete: <TResponse>(endpoint: string): Promise<TResponse> => {
-  console.warn("[API DELETE REQUEST]", endpoint);
-
-  return request<TResponse>(endpoint, {
-    method: "DELETE"
-  });
-}
+  }
 };

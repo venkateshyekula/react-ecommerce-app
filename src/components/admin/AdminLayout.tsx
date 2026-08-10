@@ -158,6 +158,16 @@ const adminNavGroups: AdminNavGroup[] = [
             path: "/admin/refunds",
             icon: "bi bi-cash-coin",
           },
+          {
+            label: "Return SLA Monitoring",
+            path: "/admin/return-sla-monitoring",
+            icon: "bi bi-clock-history",
+          },
+          {
+            label: "Return Logistics Automation",
+            path: "/admin/return-logistics-automation-rules",
+            icon: "bi bi-diagram-3",
+          },
         ],
       },
       {
@@ -173,6 +183,17 @@ const adminNavGroups: AdminNavGroup[] = [
             label: "Seller Payout Settlement",
             path: "/admin/seller-payout-settlement",
             icon: "bi bi-wallet2",
+          },
+        ],
+      },
+      {
+        label: "Compliance",
+        icon: "bi bi-journal-text",
+        items: [
+          {
+            label: "Unified Audit Export",
+            path: "/admin/unified-operations-audit",
+            icon: "bi bi-journal-text",
           },
         ],
       },
@@ -232,6 +253,11 @@ const adminNavGroups: AdminNavGroup[] = [
         label: "Agent Payouts",
         path: "/admin/agent-payouts",
         icon: "bi bi-wallet2",
+      },
+      {
+        label: "Agent Escalation",
+        path: "/admin/agent-escalation-reassignment",
+        icon: "bi bi-diagram-3",
       },
     ],
   },

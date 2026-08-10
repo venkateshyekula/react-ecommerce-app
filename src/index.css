@@ -554,7 +554,7 @@ main {
   color: #ffffff;
   font-size: 0.52rem;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
@@ -686,9 +686,9 @@ main {
   gap: 0.1rem;
   min-width: 58px;
   padding: 0.4rem 0.35rem !important;
-  color: #64748b !important;
+  color: #111827 !important;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   transition: color 0.18s ease;
 }
@@ -701,6 +701,17 @@ main {
 .shopease-action-link:hover,
 .shopease-action-link.active {
   color: #ff3f6c !important;
+}
+
+/* Keeps icon aligned and transitioning smoothly */
+.shopease-action-link img {
+  transition: filter 0.18s ease;
+}
+
+/* Turns a dark SVG into the pink/red #ff3f6c on hover */
+.shopease-action-link:hover img,
+.shopease-action-link.active img {
+  filter: invert(33%) sepia(85%) saturate(3011%) hue-rotate(326deg) brightness(101%) contrast(101%);
 }
 
 .shopease-count-badge {
@@ -740,9 +751,9 @@ main {
   padding: 0.4rem 0.35rem !important;
   background: transparent;
   border: 0;
-  color: #64748b !important;
+  color: #111827 !important;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 600;
   transition: color 0.18s ease;
   height: 100%;
 }
@@ -1011,7 +1022,6 @@ main {
   z-index: 1040;
   background-color: #fff;
   border-bottom: 1.5px solid #eef0f4 !important;
-  box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.08) !important;
   backdrop-filter: saturate(180%) blur(8px);
   overflow: visible;
 }
@@ -2032,6 +2042,127 @@ main {
 }
 
 /* ==========================================================================
+   Footer Registered Office Address
+   ========================================================================== */
+
+.footer-registered-office {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(300px, 0.75fr);
+  align-items: start;
+  gap: 3rem;
+}
+
+.footer-registered-office-content {
+  min-width: 0;
+}
+
+.footer-office-address {
+  display: flex;
+  flex-direction: column;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.footer-office-address strong {
+  margin-bottom: 0.25rem;
+  color: var(--bs-emphasis-color);
+  font-weight: 700;
+}
+
+.footer-office-address span {
+  display: block;
+}
+
+.footer-office-legal-details {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  background-color: var(--bs-body-bg);
+}
+
+.footer-office-legal-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.footer-office-legal-row:first-child {
+  padding-top: 0;
+}
+
+.footer-office-legal-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.footer-office-legal-row dt {
+  color: var(--bs-secondary-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.footer-office-legal-row dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--bs-body-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.footer-office-legal-row a {
+  color: var(--bs-primary);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-office-legal-row a:hover,
+.footer-office-legal-row a:focus {
+  color: var(--bs-primary-text-emphasis);
+  text-decoration: underline;
+}
+
+.footer-office-legal-row a:focus-visible {
+  border-radius: var(--bs-border-radius-sm);
+  outline: 3px solid
+    rgba(var(--bs-primary-rgb), 0.25);
+  outline-offset: 2px;
+}
+
+@media (max-width: 991.98px) {
+  .footer-registered-office {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-office-legal-details {
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footer-registered-office {
+    gap: 1.25rem;
+  }
+
+  .footer-office-legal-details {
+    padding: 0.9rem;
+  }
+
+  .footer-office-legal-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+/* ==========================================================================
    Footer - Role Based ShopEase Footer
    Bootstrap-based theme colors
    ========================================================================== */
@@ -2045,6 +2176,8 @@ main {
   color: var(--bs-emphasis-color);
   font-size: 0.82rem;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
   margin-bottom: 0.9rem;
 }
 
@@ -2074,10 +2207,15 @@ main {
   color: #64748b;
 }
 
+.experience-shopease-text {
+  color: #64748b;
+  font-size: 0.92rem !important;
+}
+
 .footer-contact {
   text-decoration: none;
-  font-weight: 700;
-  color: #526cd0
+  font-weight: 600;
+  color: #526cd0 !important;
 }
 
 .footer-muted {
@@ -2251,6 +2389,257 @@ main {
 
   .footer-search-links {
     line-height: 1.9;
+  }
+}
+
+/* ==========================================================================
+   Detailed ShopEase Footer Content
+   Content displayed after Registered Office Address
+   ========================================================================== */
+
+.footer-content-section {
+  width: 100%;
+  margin-top: 2rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+/* ==========================================================================
+   Individual Content Blocks
+   ========================================================================== */
+
+.footer-content-block {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.footer-content-block:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Main and Subsection Headings
+   ========================================================================== */
+
+.footer-content-title,
+.footer-content-subtitle {
+  color: var(--bs-emphasis-color);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.footer-content-title {
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+}
+
+.footer-content-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   Paragraph Content
+   ========================================================================== */
+
+.footer-content-block p {
+  margin: 0 0 0.85rem;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.footer-content-block p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Content Lists
+   ========================================================================== */
+
+.footer-content-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.footer-content-list li {
+  margin-bottom: 0.7rem;
+  padding-left: 0.1rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.footer-content-list li:last-child {
+  margin-bottom: 0;
+}
+
+.footer-content-list strong {
+  color: var(--bs-body-color);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Links Inside Detailed Footer Content
+   ========================================================================== */
+
+.footer-content-section a {
+  color: var(--bs-primary);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 0.18s ease,
+    text-decoration-color 0.18s ease;
+}
+
+.footer-content-section a:hover,
+.footer-content-section a:focus {
+  color: var(--bs-primary-text-emphasis);
+  text-decoration: underline;
+}
+
+.footer-content-section a:focus-visible {
+  border-radius: var(--bs-border-radius-sm);
+  outline: 3px solid
+    rgba(var(--bs-primary-rgb), 0.25);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Optional Section Separation
+   ========================================================================== */
+
+.footer-content-block + .footer-content-block {
+  padding-top: 0.25rem;
+}
+
+.footer-content-block + .footer-content-block::before {
+  content: "";
+  display: block;
+  height: 1.3px;
+  margin-bottom: 1.35rem;
+  border-radius: var(--bs-border-radius-pill);
+  background-color: var(--bs-border-color);
+}
+
+/* ==========================================================================
+   Footer Content Selection
+   ========================================================================== */
+
+.footer-content-section ::selection {
+  background-color: var(--bs-primary-bg-subtle);
+  color: var(--bs-primary-text-emphasis);
+}
+
+/* ==========================================================================
+   Tablet
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  .footer-content-section {
+    margin-top: 1.75rem;
+  }
+
+  .footer-content-block {
+    margin-bottom: 1.75rem;
+  }
+
+  .footer-content-title {
+    font-size: 0.975rem;
+  }
+
+  .footer-content-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  .footer-content-section {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .footer-content-block {
+    margin-bottom: 1.6rem;
+  }
+
+  .footer-content-title {
+    margin-bottom: 0.85rem;
+    font-size: 0.925rem;
+    line-height: 1.45;
+  }
+
+  .footer-content-subtitle {
+    margin-bottom: 0.65rem;
+    font-size: 0.825rem;
+    line-height: 1.45;
+  }
+
+  .footer-content-block p {
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  .footer-content-list {
+    padding-left: 1.1rem;
+  }
+
+  .footer-content-list li {
+    margin-bottom: 0.65rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .footer-content-block + .footer-content-block::before {
+    width: 40px;
+    margin-bottom: 1.15rem;
+  }
+}
+
+/* ==========================================================================
+   Small Mobile
+   ========================================================================== */
+
+@media (max-width: 575.98px) {
+  .footer-content-section {
+    margin-top: 1.35rem;
+  }
+
+  .footer-content-block {
+    margin-bottom: 1.45rem;
+  }
+
+  .footer-content-title {
+    font-size: 0.9rem;
+  }
+
+  .footer-content-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .footer-content-block p,
+  .footer-content-list li {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-content-section a {
+    transition: none;
   }
 }
 

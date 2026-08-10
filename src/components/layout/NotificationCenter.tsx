@@ -10,8 +10,9 @@ import type {
 } from "../../types/notification";
 import {
   confirmBulkDelete,
-  confirmDelete
+  confirmDelete,
 } from "../../utils/deleteConfirmationUtils";
+import notificationBell from "../../assets/notification_bell.svg";
 
 const getNotificationIcon = (category?: NotificationType): string => {
   switch (category) {
@@ -224,74 +225,73 @@ const NotificationCenter = () => {
       );
     }
   };
-  
 
-const handleDeleteNotification = async (
-  notificationId: string
-): Promise<void> => {
-  const confirmed = confirmDelete({
-    entityLabel: "Notification",
-    entityId: notificationId
-  });
-
-  if (!confirmed) {
-    return;
-  }
-
-  try {
-    await notificationService.deleteNotification(notificationId);
-
-    setNotifications((previousNotifications) =>
-      previousNotifications.filter(
-        (notification) => notification.id !== notificationId
-      )
-    );
-
-    showToast(
-      "Notification deleted",
-      "The notification has been removed successfully.",
-      "success"
-    );
-  } catch {
-    showToast(
-      "Unable to delete notification",
-      "Please make sure JSON Server is running and try again.",
-      "danger"
-    );
-  }
-};
-
-  const handleClearAll = async (): Promise<void> => {
-  if (!currentUser) {
-    return;
-  }
-
-  const confirmed = confirmBulkDelete({
-    entityLabel: "notifications",
-    count: notifications.length
-  });
-
-  if (!confirmed) {
-    return;
-  }
-
-  try {
-    await notificationService.deleteAllVisibleForUser({
-      userId: currentUser.id,
-      role: getCurrentUserRole(currentUser.role)
+  const handleDeleteNotification = async (
+    notificationId: string,
+  ): Promise<void> => {
+    const confirmed = confirmDelete({
+      entityLabel: "Notification",
+      entityId: notificationId,
     });
 
-    setNotifications([]);
+    if (!confirmed) {
+      return;
+    }
 
-    showToast(
-      "Notifications cleared",
-      "All notifications were removed.",
-      "success"
-    );
-  } catch {
-    showToast("Unable to clear notifications", "Please try again.", "danger");
-  }
-};
+    try {
+      await notificationService.deleteNotification(notificationId);
+
+      setNotifications((previousNotifications) =>
+        previousNotifications.filter(
+          (notification) => notification.id !== notificationId,
+        ),
+      );
+
+      showToast(
+        "Notification deleted",
+        "The notification has been removed successfully.",
+        "success",
+      );
+    } catch {
+      showToast(
+        "Unable to delete notification",
+        "Please make sure JSON Server is running and try again.",
+        "danger",
+      );
+    }
+  };
+
+  const handleClearAll = async (): Promise<void> => {
+    if (!currentUser) {
+      return;
+    }
+
+    const confirmed = confirmBulkDelete({
+      entityLabel: "notifications",
+      count: notifications.length,
+    });
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await notificationService.deleteAllVisibleForUser({
+        userId: currentUser.id,
+        role: getCurrentUserRole(currentUser.role),
+      });
+
+      setNotifications([]);
+
+      showToast(
+        "Notifications cleared",
+        "All notifications were removed.",
+        "success",
+      );
+    } catch {
+      showToast("Unable to clear notifications", "Please try again.", "danger");
+    }
+  };
 
   if (!isAuthenticated) {
     return null;
@@ -306,7 +306,13 @@ const handleDeleteNotification = async (
         aria-label="Open notifications"
         aria-expanded={isOpen}
       >
-        <i className="bi bi-bell" />
+        <img
+          src={notificationBell}
+          alt="Notifications"
+          className="notification-icon-svg"
+          width="24"
+          height="24"
+        />
 
         {unreadCount > 0 ? (
           <span className="notification-count-badge">{unreadCount}</span>

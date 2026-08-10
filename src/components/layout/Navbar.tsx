@@ -9,6 +9,9 @@ import { useCart } from "../../context/useCart";
 import { useWishlist } from "../../context/useWishlist";
 
 import ShopEaseLogo from "../../assets/shopease.svg";
+import ShoppingBagIcon from "../../assets/shopping_bag.svg";
+import WishlistIcon from "../../assets/whishlist.svg";
+import ProfileIcon from "../../assets/profile.svg";
 
 interface CategoryLink {
   label: string;
@@ -605,7 +608,13 @@ const Navbar = () => {
                 aria-expanded="false"
                 aria-label="Profile"
               >
-                <i className="bi bi-person" />
+                <img
+                    src={ProfileIcon}
+                    alt="Profile"
+                    width="20"
+                    height="20"
+                    className="shopease-action-icon"
+                  />
                 <span>Profile</span>
               </button>
 
@@ -959,7 +968,13 @@ const Navbar = () => {
                   onClick={closeMenu}
                   aria-label="Wishlist"
                 >
-                  <i className="bi bi-heart" />
+                  <img
+                    src={WishlistIcon}
+                    alt="Wishlist"
+                    width="24"
+                    height="24"
+                    className="shopease-action-icon"
+                  />
                   <span>Wishlist</span>
 
                   {wishlistCount > 0 ? (
@@ -979,7 +994,13 @@ const Navbar = () => {
                   onClick={closeMenu}
                   aria-label="Shopping bag"
                 >
-                  <i className="bi bi-bag" />
+                  <img
+                    src={ShoppingBagIcon}
+                    alt="Shopping Bag"
+                    width="24"
+                    height="24"
+                    className="shopease-action-icon"
+                  />
                   <span>Bag</span>
 
                   {cartCount > 0 ? (

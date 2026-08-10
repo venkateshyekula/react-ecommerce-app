@@ -7502,6 +7502,18 @@
       "createdByUserId": "admin-001",
       "createdByName": "Administrator",
       "createdAt": "2026-07-24T11:44:59.335Z"
+    },
+    {
+      "id": "agent-task-log-db-1785940345197-ilvanw",
+      "assignmentId": "AGT-ASG-20260723-1001",
+      "taskType": "RETURN_PICKUP",
+      "taskId": "RET-20260717-1784300001002",
+      "agentId": "RPP-001",
+      "status": "OUT_FOR_PICKUP",
+      "remarks": "Pickup agent started the return pickup.",
+      "createdByUserId": "RPP-001",
+      "createdByName": "Naveen Pickup Services",
+      "createdAt": "2026-08-05T14:32:25.197Z"
     }
   ],
   "agentAssignments": [
@@ -7519,14 +7531,14 @@
       "agentId": "RPP-001",
       "agentName": "Naveen Pickup Services",
       "agentPhone": "9876500101",
-      "status": "PICKUP_ATTEMPTED",
+      "status": "OUT_FOR_PICKUP",
       "priority": "MEDIUM",
       "scheduledDate": "2026-07-20T00:00:00.000Z",
       "scheduledSlot": "1 PM - 4 PM",
       "attemptCount": 1,
       "createdAt": "2026-07-23T10:00:00.000Z",
-      "updatedAt": "2026-07-24T08:17:41.238Z",
-      "remarks": "Customer requested reschedule",
+      "updatedAt": "2026-08-05T14:32:25.102Z",
+      "remarks": "Pickup agent started the return pickup.",
       "lastAttemptAt": "2026-07-24T08:17:41.238Z"
     },
     {
@@ -7801,6 +7813,7 @@
       "updatedAt": "2026-07-27T10:16:24.724Z"
     }
   ],
+  "agentMobileActivityLogs": [],
   "returnAutomationRules": [
     {
       "id": "RULE-1785505042869-3hagx7",
@@ -7871,5 +7884,65 @@
   ],
   "sellerPayoutAdjustments": [],
   "returnOperationsAuditExports": [],
-  "sellers": []
+  "sellers": [],
+  "returnSlaEscalations": [],
+  "returnLogisticsAutomationRules": [],
+  "returnLogisticsAutomationRuleAuditLogs": [
+    {
+      "id": "RLOGAUD-1785849166113-dalg2r",
+      "auditId": "RLAA-1785849166113-2ddh1u",
+      "ruleId": "RLOG-1785849165980-7uhnah",
+      "ruleName": "Escalate delayed pickups",
+      "action": "BULK_IMPORTED",
+      "changedBy": "Admin",
+      "changedAt": "2026-08-04T13:12:46.113Z",
+      "details": "Rule \"Escalate delayed pickups\" was imported through bulk import.",
+      "afterSnapshot": {
+        "id": "RLAR-1785849165980-yg3kil",
+        "ruleId": "RLOG-1785849165980-7uhnah",
+        "ruleName": "Escalate delayed pickups",
+        "description": "Escalate pickup SLA breaches",
+        "trigger": "PICKUP_DELAYED",
+        "action": "ESCALATE_TO_PICKUP_MANAGER",
+        "priority": "HIGH",
+        "status": "ACTIVE",
+        "conditions": [
+          {
+            "id": "COND-1",
+            "field": "breachedHours",
+            "operator": "GREATER_THAN",
+            "value": 8
+          }
+        ],
+        "targetTeam": "PICKUP_TEAM",
+        "stopFurtherRules": true,
+        "requiresAudit": true,
+        "executionCount": 0,
+        "successCount": 0,
+        "failureCount": 0,
+        "createdBy": "Admin",
+        "createdAt": "2026-08-04T13:12:45.980Z",
+        "updatedAt": "2026-08-04T13:12:45.980Z"
+      }
+    }
+  ],
+  "agentEscalations": [],
+  "unifiedOperationsAuditExports": [
+    {
+      "id": "UOEXP-1785869315219-ugx9az",
+      "exportId": "UOAE-1785869315219-c3uso1",
+      "exportType": "CSV",
+      "recordCount": 22,
+      "generatedBy": "Admin",
+      "generatedAt": "2026-08-04T18:48:35.219Z"
+    },
+    {
+      "id": "UOEXP-1785869323686-zlwwx3",
+      "exportId": "UOAE-1785869323686-tq1p0v",
+      "exportType": "JSON",
+      "recordCount": 22,
+      "generatedBy": "Admin",
+      "generatedAt": "2026-08-04T18:48:43.686Z"
+    }
+  ]
 }

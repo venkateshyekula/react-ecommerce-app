@@ -94,6 +94,11 @@ import AdminReturnFraudPatternDashboardPage from "../pages/admin/AdminReturnFrau
 import AdminReturnAutomationRulesPage from "../pages/admin/AdminReturnAutomationRulesPage";
 import AdminSellerPayoutSettlementPage from "../pages/admin/AdminSellerPayoutSettlementPage";
 import AdminReturnOperationsAuditPage from "../pages/admin/AdminReturnOperationsAuditPage";
+import AdminReturnSlaMonitoringPage from "../pages/admin/AdminReturnSlaMonitoringPage";
+import AdminReturnLogisticsAutomationRulesPage from "../pages/admin/AdminReturnLogisticsAutomationRulesPage";
+import AdminAgentEscalationReassignmentPage from "../pages/admin/AdminAgentEscalationReassignmentPage";
+import AdminUnifiedOperationsAuditPage from "../pages/admin/AdminUnifiedOperationsAuditPage";
+import AgentMobileExperiencePage from "../pages/agent/AgentMobileExperiencePage";
 
 const AppRoutes = () => {
   return (
@@ -195,6 +200,10 @@ const AppRoutes = () => {
             element={<AdminReturnOperationsAuditPage />}
           />
           <Route
+            path="return-sla-monitoring"
+            element={<AdminReturnSlaMonitoringPage />}
+          />
+          <Route
             path="seller-risk-compliance"
             element={<AdminSellerRiskCompliancePage />}
           />
@@ -205,6 +214,10 @@ const AppRoutes = () => {
           <Route
             path="return-analytics-risk-dashboard"
             element={<AdminReturnAnalyticsRiskDashboardPage />}
+          />
+          <Route
+            path="return-logistics-automation-rules"
+            element={<AdminReturnLogisticsAutomationRulesPage />}
           />
           <Route path="refunds" element={<AdminRefundsPage />} />
           <Route path="wallet-credits" element={<AdminWalletCreditsPage />} />
@@ -231,6 +244,10 @@ const AppRoutes = () => {
             path="agent-proof-verification"
             element={<AdminAgentProofVerificationPage />}
           />
+          <Route
+            path="agent-escalation-reassignment"
+            element={<AdminAgentEscalationReassignmentPage />}
+          />
           <Route path="delivery-sla" element={<AdminDeliverySlaRulesPage />} />
           <Route
             path="seller-fulfillment"
@@ -247,6 +264,10 @@ const AppRoutes = () => {
           <Route path="coupons" element={<AdminCouponsPage />} />
           <Route path="reviews" element={<AdminReviewsPage />} />
           <Route path="questions" element={<AdminQuestionsPage />} />
+          <Route
+            path="unified-operations-audit"
+            element={<AdminUnifiedOperationsAuditPage />}
+          />
         </Route>
       </Route>
 
@@ -306,13 +327,44 @@ const AppRoutes = () => {
       >
         <Route path="/agent" element={<AgentLayout />}>
           <Route index element={<Navigate to="/agent/dashboard" replace />} />
+          <Route
+            element={
+              <RoleRoute allowedRoles={["PICKUP_AGENT", "DELIVERY_AGENT"]} />
+            }
+          >
+            <Route path="mobile" element={<AgentMobileExperiencePage />} />
+          </Route>
+
           <Route path="dashboard" element={<AgentDashboardPage />} />
+
+          <Route path="mobile" element={<AgentMobileExperiencePage />} />
+
           <Route path="returns" element={<PickupAgentDashboardPage />} />
+
           <Route path="deliveries" element={<DeliveryAgentDashboardPage />} />
 
-          {/* Optional temporary legacy route */}
           <Route path="returns-legacy" element={<AgentReturnPickupsPage />} />
         </Route>
+
+        {/* Optional legacy redirects */}
+        <Route
+          path="/pickup-agent/dashboard"
+          element={<Navigate to="/agent/dashboard" replace />}
+        />
+        <Route
+          path="/pickup-agent/returns"
+          element={<Navigate to="/agent/returns" replace />}
+        />
+
+        <Route
+          path="/delivery-agent/deliveries"
+          element={<Navigate to="/agent/deliveries" replace />}
+        />
+
+        <Route
+          path="/logistics-agent/returns"
+          element={<Navigate to="/agent/returns" replace />}
+        />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

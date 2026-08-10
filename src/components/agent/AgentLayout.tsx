@@ -13,20 +13,26 @@ const agentNavItems: AgentNavItem[] = [
   {
     label: "Dashboard",
     path: "/agent/dashboard",
-    icon: "bi bi-speedometer2"
+    icon: "bi bi-speedometer2",
+  },
+  {
+    label: "Agent Mobile",
+    path: "/agent/mobile",
+    icon: "bi bi-phone",
+    allowedRoles: ["PICKUP_AGENT", "DELIVERY_AGENT", "ADMIN"],
   },
   {
     label: "Return Pickups",
     path: "/agent/returns",
     icon: "bi bi-arrow-return-left",
-    allowedRoles: ["PICKUP_AGENT", "LOGISTICS_AGENT", "ADMIN"]
+    allowedRoles: ["PICKUP_AGENT", "LOGISTICS_AGENT", "ADMIN"],
   },
   {
     label: "Deliveries",
     path: "/agent/deliveries",
     icon: "bi bi-truck",
-    allowedRoles: ["DELIVERY_AGENT", "LOGISTICS_AGENT", "ADMIN"]
-  }
+    allowedRoles: ["DELIVERY_AGENT", "LOGISTICS_AGENT", "ADMIN"],
+  },
 ];
 
 interface AgentUserShape {
@@ -37,7 +43,7 @@ const allowedAgentPortalRoles = [
   "PICKUP_AGENT",
   "DELIVERY_AGENT",
   "LOGISTICS_AGENT",
-  "ADMIN"
+  "ADMIN",
 ];
 
 const AgentLayout = () => {
