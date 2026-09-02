@@ -321,13 +321,14 @@ const loadQuestions = useCallback(async (signal?: AbortSignal): Promise<void> =>
             </p>
           </div>
 
-          <Button
-            variant="outline-primary"
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm mb-1 align-self-lg-start"
             onClick={() => void loadQuestions()}
           >
             <i className="bi bi-arrow-repeat me-2" />
             Refresh
-          </Button>
+          </button>
         </div>
       </div>
 

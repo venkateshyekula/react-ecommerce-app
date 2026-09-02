@@ -7814,6 +7814,8 @@
     }
   ],
   "agentMobileActivityLogs": [],
+  "agentLiveTrackingSessions": [],
+  "agentLocationTracking": [],
   "returnAutomationRules": [
     {
       "id": "RULE-1785505042869-3hagx7",
@@ -7944,5 +7946,6 @@
       "generatedBy": "Admin",
       "generatedAt": "2026-08-04T18:48:43.686Z"
     }
-  ]
+  ],
+  "agentGeoLocationLogs": []
 }

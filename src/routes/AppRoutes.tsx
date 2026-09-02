@@ -99,6 +99,7 @@ import AdminReturnLogisticsAutomationRulesPage from "../pages/admin/AdminReturnL
 import AdminAgentEscalationReassignmentPage from "../pages/admin/AdminAgentEscalationReassignmentPage";
 import AdminUnifiedOperationsAuditPage from "../pages/admin/AdminUnifiedOperationsAuditPage";
 import AgentMobileExperiencePage from "../pages/agent/AgentMobileExperiencePage";
+import AdminAgentGeoTrackingPage from "../pages/admin/AdminAgentGeoTrackingPage";
 
 const AppRoutes = () => {
   return (
@@ -247,6 +248,10 @@ const AppRoutes = () => {
           <Route
             path="agent-escalation-reassignment"
             element={<AdminAgentEscalationReassignmentPage />}
+          />
+          <Route
+            path="agent-geo-tracking"
+            element={<AdminAgentGeoTrackingPage />}
           />
           <Route path="delivery-sla" element={<AdminDeliverySlaRulesPage />} />
           <Route

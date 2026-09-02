@@ -259,6 +259,11 @@ const adminNavGroups: AdminNavGroup[] = [
         path: "/admin/agent-escalation-reassignment",
         icon: "bi bi-diagram-3",
       },
+      {
+  label: "Agent Geo Tracking",
+  path: "/admin/agent-geo-tracking",
+  icon: "bi bi-geo-alt"
+}
     ],
   },
   {
